@@ -21,12 +21,28 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 
 import frc.robot.generated.TunerConstants;
+import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
+import frc.robot.subsystems.EagleEye;
+import frc.robot.subsystems.FeedRoller;
+import frc.robot.subsystems.HoodAngler;
+import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Spindexer;
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.ClimbOnlyCommand;
+import frc.robot.commands.EagleEyeCommand;
+import frc.robot.commands.FeedRollOnly;
+import frc.robot.commands.HoodAngleOnlyCommand;
+import frc.robot.commands.IntakeOnlyCommand;
+import frc.robot.commands.PositionIntakeCommand;
+import frc.robot.commands.ShootingOnlyCommand;
+import frc.robot.commands.SpindexOnlyCommand;
 
 public class RobotContainer {
     private double MaxSpeed = Constants.OperatorConstants.MAX_SPEED; // kSpeedAt12Volts desired top speed
@@ -49,7 +65,30 @@ public class RobotContainer {
     private Joystick rightJoystick;
     private Joystick leftJoystick;
 
+    // Subsystems
+    private final EagleEye eagleEye;
+    private final HoodAngler hoodAngler = new HoodAngler();
+    private final Intake intake =  new Intake();
+    private final Shooter shooter = new Shooter();
+    private final Climber climber = new Climber();
+    private final Spindexer spindexer = new Spindexer();
+    private final FeedRoller feedRoller = new FeedRoller();
+
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
+    private final EagleEyeCommand eagleEyeCommand;
+
+    // Basic Teleop Commands
+    private final HoodAngleOnlyCommand hoodAngleOnlyCommandUp = new HoodAngleOnlyCommand(hoodAngler, 0.1);
+    private final HoodAngleOnlyCommand hoodAngleOnlyCommandDown = new HoodAngleOnlyCommand(hoodAngler, -0.1);
+    private final IntakeOnlyCommand intakeOnlyCommand = new IntakeOnlyCommand(intake, 0.1);
+    private final IntakeOnlyCommand outtakeOnlyCommand = new IntakeOnlyCommand(intake, -0.1);
+    private final ShootingOnlyCommand shootingOnlyCommand = new ShootingOnlyCommand(shooter, 0.1);
+    private final ClimbOnlyCommand climbOnlyCommandUp = new ClimbOnlyCommand(climber, 0.1);
+    private final ClimbOnlyCommand climbOnlyCommandDown = new ClimbOnlyCommand(climber, -0.1);
+    private final SpindexOnlyCommand spindexOnlyCommand = new SpindexOnlyCommand(spindexer, 0.1);
+    private final FeedRollOnly feedRollOnly = new FeedRollOnly(feedRoller, 0.1);
+    private final PositionIntakeCommand deployIntake = new PositionIntakeCommand(intake, -0.1);
+    private final PositionIntakeCommand deployIntakeDown = new PositionIntakeCommand(intake, 0.1);
 
     /* Path follower */
     private final SendableChooser<Command> autoChooser;
@@ -57,6 +96,14 @@ public class RobotContainer {
     public RobotContainer() {
         autoChooser = AutoBuilder.buildAutoChooser("Tests");
         SmartDashboard.putData("Auto Mode", autoChooser);
+
+        if (Constants.EagleEyeConstants.EAGLEEYE_ENABLED) {
+            eagleEye = new EagleEye();
+            eagleEyeCommand = new EagleEyeCommand(eagleEye);
+        } else {
+            eagleEye = null;
+            eagleEyeCommand = null;
+        }
 
         // Connect the controllers before binding
         if (Constants.OperatorConstants.XBOX_DRIVE) {
@@ -76,6 +123,12 @@ public class RobotContainer {
         }
 
         configureBindings();
+
+        // Set default commands
+        if (Constants.EagleEyeConstants.EAGLEEYE_ENABLED)
+        {
+            eagleEye.setDefaultCommand(eagleEyeCommand);
+        }
 
         // Warmup PathPlanner to avoid Java pauses
         FollowPathCommand.warmupCommand().schedule();
@@ -113,6 +166,7 @@ public class RobotContainer {
             * +------------------------------+-------------------------------+
             */
             new JoystickButton(driverXbox, 7).onTrue(drivetrain.runOnce(drivetrain::seedFieldCentric));
+
         } else {
             /*
             * Joystick bindings
@@ -123,6 +177,20 @@ public class RobotContainer {
             * +------------------------------+-------------------------------+
             */
             new JoystickButton(leftJoystick, 4).onTrue(drivetrain.runOnce(drivetrain::seedFieldCentric));
+            new JoystickButton(buttonsXbox, 8).whileTrue(shootingOnlyCommand); // Right Stick Button
+            new JoystickButton(buttonsXbox, 1).whileTrue(intakeOnlyCommand); // A
+
+            //new JoystickButton(buttonsXbox, 4).whileTrue(deployIntake); // Y
+
+            new POVButton(buttonsXbox, 0).whileTrue(climbOnlyCommandUp); // DPad Up
+            new POVButton(buttonsXbox, 180).whileTrue(climbOnlyCommandDown); // DPad Down
+
+            new POVButton(buttonsXbox, 90).whileTrue(hoodAngleOnlyCommandUp); // DPad Right
+            new POVButton(buttonsXbox, 270).whileTrue(hoodAngleOnlyCommandDown); // DPad Left
+
+            new JoystickButton(buttonsXbox, 3).whileTrue(spindexOnlyCommand); // X
+
+            new JoystickButton(buttonsXbox, 8).whileTrue(shootingOnlyCommand); // Right Stick Button
         }
 
         drivetrain.registerTelemetry(logger::telemeterize);
