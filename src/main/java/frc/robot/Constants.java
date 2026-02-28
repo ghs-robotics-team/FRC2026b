@@ -3,6 +3,8 @@ package frc.robot;
 import com.pathplanner.lib.config.PIDConstants;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.util.Units;
+import static edu.wpi.first.units.Units.*;
+import frc.robot.generated.TunerConstants;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
@@ -59,6 +61,8 @@ public final class Constants {
  
     public static final double MAX_SPEED_MODIFIER = WORKSHOP_MODE ? WORKSHOP_MAX_SPEED_MODIFIER : 1.0; // Percent as decimal
     public static final double MAX_ROTATIONS_PER_SECOND_MODIFIER = WORKSHOP_MODE ? WORKSHOP_MAX_ROTATIONS_PER_SECOND_MODIFIER : 0.75; // Percent as decimal
+    public static final double MAX_SPEED = MAX_SPEED_MODIFIER * TunerConstants.kSpeedAt12Volts.in(MetersPerSecond);
+    public static final double MAX_ANGULAR_SPEED = RotationsPerSecond.of(OperatorConstants.MAX_ROTATIONS_PER_SECOND_MODIFIER).in(RadiansPerSecond);
 
     // Joystick Deadband
     public static final double TRANSLATION_DEADBAND = 0.1; // Percent as decimal

@@ -29,8 +29,8 @@ import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.Constants.OperatorConstants;
 
 public class RobotContainer {
-    private double MaxSpeed = OperatorConstants.MAX_SPEED_MODIFIER * TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
-    private double MaxAngularRate = RotationsPerSecond.of(OperatorConstants.MAX_ROTATIONS_PER_SECOND_MODIFIER).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
+    private double MaxSpeed = Constants.OperatorConstants.MAX_SPEED; // kSpeedAt12Volts desired top speed
+    private double MaxAngularRate = Constants.OperatorConstants.MAX_ANGULAR_SPEED; // 3/4 of a rotation per second max angular velocity
 
     /* Setting up bindings for necessary control of the swerve drive platform */
     private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
