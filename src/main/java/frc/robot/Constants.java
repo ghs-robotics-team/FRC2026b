@@ -71,7 +71,7 @@ public final class Constants {
     public static final boolean  DYNAMIC_POWER_CONTROL = true;
 
     // XBOX mode
-    public static final boolean XBOX_DRIVE = false;
+    public static final boolean XBOX_DRIVE = true;
   }
 
   /**
@@ -83,6 +83,11 @@ public final class Constants {
     public static final double MAX_VISION_SPEED = 2.25; // Units are m/s. Usually 1.5-2.5 before it stops reading vision measurements
     public static final double MAX_TAG_DISTANCE_METERS = Units.feetToMeters(20);
     public static final double MAX_ROTATION_VELOCITY = Math.PI / 2; // Units are radians per second
+    public static final double MIN_CONFIDENCE = 0.15; // Minimum confidence threshold for accepting vision measurements
+    public static final double X_SIGMA = 0.5; // meters
+    public static final double Y_SIGMA = 0.5; // meters
+    public static final double THETA_SIGMA = Math.toRadians(20); // radians
+
     public static final boolean IN_PATH_END = false;
   }
 
