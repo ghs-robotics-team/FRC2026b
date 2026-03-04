@@ -6,6 +6,8 @@ package frc.robot;
 
 import static edu.wpi.first.units.Units.*;
 
+import java.io.SequenceInputStream;
+
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 
@@ -19,6 +21,9 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
@@ -43,6 +48,7 @@ import frc.robot.commands.IntakeOnlyCommand;
 import frc.robot.commands.PositionIntakeCommand;
 import frc.robot.commands.ShootingOnlyCommand;
 import frc.robot.commands.SpindexOnlyCommand;
+import frc.robot.commands.ShootingRPMCommand;
 
 public class RobotContainer {
     private double MaxSpeed = Constants.OperatorConstants.MAX_SPEED; // kSpeedAt12Volts desired top speed
@@ -78,15 +84,37 @@ public class RobotContainer {
     private final EagleEyeCommand eagleEyeCommand;
 
     // Basic Teleop Commands
+    private final ShootingRPMCommand shootingRPMCommand = new ShootingRPMCommand(shooter, 4000);
+
     private final HoodAngleOnlyCommand hoodAngleOnlyCommandUp = new HoodAngleOnlyCommand(hoodAngler, 0.1);
     private final HoodAngleOnlyCommand hoodAngleOnlyCommandDown = new HoodAngleOnlyCommand(hoodAngler, -0.1);
-    private final IntakeOnlyCommand intakeOnlyCommand = new IntakeOnlyCommand(intake, 0.1);
-    private final IntakeOnlyCommand outtakeOnlyCommand = new IntakeOnlyCommand(intake, -0.1);
-    private final ShootingOnlyCommand shootingOnlyCommand = new ShootingOnlyCommand(shooter, 0.1);
-    private final ClimbOnlyCommand climbOnlyCommandUp = new ClimbOnlyCommand(climber, 0.1);
-    private final ClimbOnlyCommand climbOnlyCommandDown = new ClimbOnlyCommand(climber, -0.1);
-    private final SpindexOnlyCommand spindexOnlyCommand = new SpindexOnlyCommand(spindexer, 0.1);
-    private final FeedRollOnly feedRollOnly = new FeedRollOnly(feedRoller, 0.1);
+
+    private final IntakeOnlyCommand intakeOnlyCommand = new IntakeOnlyCommand(intake, 0.5);
+    private final SequentialCommandGroup intakeRampDown = new IntakeOnlyCommand(intake, 0.25).withTimeout(0.25).andThen(
+        new IntakeOnlyCommand(intake, 0.1).withTimeout(0.25));
+
+    private final IntakeOnlyCommand outtakeOnlyCommand = new IntakeOnlyCommand(intake, -0.5);
+    private final SequentialCommandGroup outtakeRampDown = new IntakeOnlyCommand(intake, -0.25).withTimeout(0.25).andThen(
+        new IntakeOnlyCommand(intake, -0.1).withTimeout(0.25));
+
+    private final ShootingOnlyCommand shootingOnlyCommand = new ShootingOnlyCommand(shooter, .75);
+    private final SequentialCommandGroup shootingRampDown = new ShootingOnlyCommand(shooter, 0.5).withTimeout(.25).andThen(
+        new ShootingOnlyCommand(shooter, .25).withTimeout(.25).andThen(
+            new ShootingOnlyCommand(shooter, .1).withTimeout(.1)));
+
+    private final ClimbOnlyCommand climbOnlyCommandUp = new ClimbOnlyCommand(climber, 0.3);
+    private final ClimbOnlyCommand climbOnlyCommandDown = new ClimbOnlyCommand(climber, -0.3);
+
+    private final SpindexOnlyCommand spindexOnlyCommand = new SpindexOnlyCommand(spindexer, 0.5);
+    private final SequentialCommandGroup spindexRampDown = new SpindexOnlyCommand(spindexer, 0.25).withTimeout(0.25).andThen(
+        new SpindexOnlyCommand(spindexer, 0.1).withTimeout(0.25));
+
+    private final FeedRollOnly feedRollOnlyCommand = new FeedRollOnly(feedRoller, 1);
+    private final SequentialCommandGroup feedRollRampDown = new FeedRollOnly(feedRoller, 0.75).withTimeout(0.25).andThen(
+        new FeedRollOnly(feedRoller, 0.5).withTimeout(0.25).andThen(
+            new FeedRollOnly(feedRoller, 0.25).withTimeout(0.25).andThen(
+                new FeedRollOnly(feedRoller, 0.1).withTimeout(0.25))));
+
     private final PositionIntakeCommand deployIntake = new PositionIntakeCommand(intake, -0.1);
     private final PositionIntakeCommand deployIntakeDown = new PositionIntakeCommand(intake, 0.1);
 
@@ -132,6 +160,7 @@ public class RobotContainer {
 
         // Warmup PathPlanner to avoid Java pauses
         FollowPathCommand.warmupCommand().schedule();
+        SmartDashboard.putData("Command Scheduler", CommandScheduler.getInstance());
     }
 
     private void configureBindings() {
@@ -158,7 +187,7 @@ public class RobotContainer {
 
         if (OperatorConstants.XBOX_DRIVE) {
             /*
-            * Joystick bindings
+            * Xbox bindings
             * +------------------------------+-------------------------------+
             * | Control                      | Action                        |
             * +------------------------------+-------------------------------+
@@ -177,20 +206,31 @@ public class RobotContainer {
             * +------------------------------+-------------------------------+
             */
             new JoystickButton(leftJoystick, 4).onTrue(drivetrain.runOnce(drivetrain::seedFieldCentric));
-            new JoystickButton(buttonsXbox, 8).whileTrue(shootingOnlyCommand); // Right Stick Button
-            new JoystickButton(buttonsXbox, 1).whileTrue(intakeOnlyCommand); // A
 
-            //new JoystickButton(buttonsXbox, 4).whileTrue(deployIntake); // Y
+            new JoystickButton(buttonsXbox, 6).whileTrue(shootingOnlyCommand); // Right Bumper Button
+            new JoystickButton(buttonsXbox, 6).onFalse(shootingRampDown); 
+            //new JoystickButton(buttonsXbox, 6).whileTrue(shootingRPMCommand);
+
+            new JoystickButton(buttonsXbox, 1).whileTrue(intakeOnlyCommand); // A
+            new JoystickButton(buttonsXbox, 1).onFalse(intakeRampDown);
+
+            new JoystickButton(buttonsXbox, 2).whileTrue(feedRollOnlyCommand); // B
+            new JoystickButton(buttonsXbox, 2).onFalse(feedRollRampDown);
+
+            new JoystickButton(buttonsXbox, 3).whileTrue(spindexOnlyCommand); // X
+            new JoystickButton(buttonsXbox, 3).onFalse(spindexRampDown);
+
+            new JoystickButton(buttonsXbox, 4).whileTrue(outtakeOnlyCommand); // Y
+            new JoystickButton(buttonsXbox, 4).onFalse(outtakeRampDown);
+
+            new JoystickButton(buttonsXbox, 5).whileTrue(deployIntake); // Left Bumper Button
+            new JoystickButton(buttonsXbox, 7).whileTrue(deployIntakeDown);
 
             new POVButton(buttonsXbox, 0).whileTrue(climbOnlyCommandUp); // DPad Up
             new POVButton(buttonsXbox, 180).whileTrue(climbOnlyCommandDown); // DPad Down
 
             new POVButton(buttonsXbox, 90).whileTrue(hoodAngleOnlyCommandUp); // DPad Right
             new POVButton(buttonsXbox, 270).whileTrue(hoodAngleOnlyCommandDown); // DPad Left
-
-            new JoystickButton(buttonsXbox, 3).whileTrue(spindexOnlyCommand); // X
-
-            new JoystickButton(buttonsXbox, 8).whileTrue(shootingOnlyCommand); // Right Stick Button
         }
 
         drivetrain.registerTelemetry(logger::telemeterize);
