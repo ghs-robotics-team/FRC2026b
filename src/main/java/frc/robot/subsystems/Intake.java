@@ -46,9 +46,9 @@ public class Intake extends SubsystemBase {
   public void deploy(double power) {
     // When limits are needed on position, check last years code for reference.
     // Needs PID.
-    if (Constants.OperatorConstants.DYNAMIC_POWER_CONTROL && power != 0) {
-      power = SmartDashboard.getNumber("IntakeDeploy V", 0.1);
-    }
+    //if (Constants.OperatorConstants.DYNAMIC_POWER_CONTROL && power != 0) {
+    //  power = SmartDashboard.getNumber("IntakeDeploy V", 0.1);
+    //}
     /* Tune location numbers
     if(power<=0){
       if(getPos() <= 0){ 
