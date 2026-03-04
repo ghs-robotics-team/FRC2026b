@@ -44,6 +44,7 @@ import frc.robot.commands.ClimbOnlyCommand;
 import frc.robot.commands.EagleEyeCommand;
 import frc.robot.commands.FeedRollOnly;
 import frc.robot.commands.HoodAngleOnlyCommand;
+import frc.robot.commands.HoodAnglerPositionCommand;
 import frc.robot.commands.IntakeOnlyCommand;
 import frc.robot.commands.PositionIntakeCommand;
 import frc.robot.commands.ShootingOnlyCommand;
@@ -88,6 +89,10 @@ public class RobotContainer {
 
     private final HoodAngleOnlyCommand hoodAngleOnlyCommandUp = new HoodAngleOnlyCommand(hoodAngler, 0.1);
     private final HoodAngleOnlyCommand hoodAngleOnlyCommandDown = new HoodAngleOnlyCommand(hoodAngler, -0.1);
+
+    private final HoodAnglerPositionCommand hoodAngleLowPosition = new HoodAnglerPositionCommand(hoodAngler, -1050);
+    private final HoodAnglerPositionCommand hoodAngleMiddlePosition = new HoodAnglerPositionCommand(hoodAngler, -650);
+    private final HoodAnglerPositionCommand hoodAngleHighPosition = new HoodAnglerPositionCommand(hoodAngler, -100);
 
     private final IntakeOnlyCommand intakeOnlyCommand = new IntakeOnlyCommand(intake, 0.5);
     private final SequentialCommandGroup intakeRampDown = new IntakeOnlyCommand(intake, 0.25).withTimeout(0.25).andThen(
@@ -229,8 +234,10 @@ public class RobotContainer {
             new POVButton(buttonsXbox, 0).whileTrue(climbOnlyCommandUp); // DPad Up
             new POVButton(buttonsXbox, 180).whileTrue(climbOnlyCommandDown); // DPad Down
 
-            new POVButton(buttonsXbox, 90).whileTrue(hoodAngleOnlyCommandUp); // DPad Right
-            new POVButton(buttonsXbox, 270).whileTrue(hoodAngleOnlyCommandDown); // DPad Left
+            //new POVButton(buttonsXbox, 90).whileTrue(hoodAngleOnlyCommandUp); // DPad Right
+            //new POVButton(buttonsXbox, 270).whileTrue(hoodAngleOnlyCommandDown); // DPad Left
+            new POVButton(buttonsXbox, 90).whileTrue(hoodAngleLowPosition);
+            new POVButton(buttonsXbox, 270).whileTrue(hoodAngleHighPosition);
         }
 
         drivetrain.registerTelemetry(logger::telemeterize);

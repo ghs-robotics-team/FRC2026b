@@ -37,7 +37,7 @@ public class HoodAngler extends SubsystemBase {
       power = SmartDashboard.getNumber("HoodAngle V", 0.1);
     } */
     // Tune limits when encoder wire arrives.
-    power = -power;
+    //power = -power;
     if(power<=0){
       if(getPos() <= 0){ 
         hoodAngler.set(-power);
@@ -54,7 +54,6 @@ public class HoodAngler extends SubsystemBase {
         hoodAngler.set(0);
       }
     } 
-    SmartDashboard.putNumber("HOOD AbsPos", getPos()); // Doesn't show up
     hoodAngler.set(power);
   }
 
@@ -72,6 +71,6 @@ public class HoodAngler extends SubsystemBase {
   @Override
   public void periodic() {
     hoodEncoderVal = encoder.getRaw();
-    SmartDashboard.putNumber("HOOD Pos", hoodEncoderVal);
+    SmartDashboard.putNumber("HOOD AbsPos", getPos()); // Doesn't show up
   }
 }

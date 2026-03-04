@@ -30,8 +30,9 @@ public class HoodAnglerPositionCommand extends Command {
     public HoodAnglerPositionCommand(HoodAngler hoodAngler, double desiredPos) {
       this.hoodAngler = hoodAngler;
       this.desiredPos = desiredPos;
-      this.currentPos = SmartDashboard.getNumber("HOOD Pos", 0);
-      this.pid = new PIDController(0.08, 0, 0.004);
+      //this.currentPos = SmartDashboard.getNumber("HOOD Pos", 0);
+      this.currentPos = hoodAngler.getPos();
+      this.pid = new PIDController(0.2, 0, 0.004);
       // ADD FEEDFORWARD ONCE K VALUES ARE TESTED.
 
       SmartDashboard.putNumber("HOOD-PID-P", pid.getP());
@@ -46,6 +47,7 @@ public class HoodAnglerPositionCommand extends Command {
     @Override
     public void initialize() {
       hoodAngler.adjust(0);
+      this.currentPos = hoodAngler.getPos();
     }
   
     /**
@@ -54,11 +56,11 @@ public class HoodAnglerPositionCommand extends Command {
      */
     @Override
     public void execute() {
-      currentPos = SmartDashboard.getNumber("HOOD Pos", 0);
+      this.currentPos = hoodAngler.getPos();
       
-      double P = SmartDashboard.getNumber("HOOD-PID-P", 1.0 / 150.0);
+      double P = SmartDashboard.getNumber("HOOD-PID-P", 0.2);
       double I = SmartDashboard.getNumber("HOOD-PID-I", 0.0);
-      double D = SmartDashboard.getNumber("HOOD-PID-D", 0);
+      double D = SmartDashboard.getNumber("HOOD-PID-D", 0.004);
 
       pid.setP(P);
       pid.setI(I);
@@ -67,7 +69,7 @@ public class HoodAnglerPositionCommand extends Command {
       directionFactor = pid.calculate(currentPos, desiredPos);
       directionFactor = MathUtil.clamp(directionFactor, -1, 1);
       SmartDashboard.putNumber("HOOD DirectionFactor", directionFactor);
-      if (pid.getPositionError() > -100 && pid.getPositionError() < 100) {
+      if (pid.getPositionError() > -20 && pid.getPositionError() < 20) {
         // Dead Zone
         hoodAngler.adjust(0);
       } else {
