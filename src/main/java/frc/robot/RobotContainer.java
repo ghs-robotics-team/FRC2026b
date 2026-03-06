@@ -110,9 +110,15 @@ public class RobotContainer {
     private final ClimbOnlyCommand climbOnlyCommandUp = new ClimbOnlyCommand(climber, 0.3);
     private final ClimbOnlyCommand climbOnlyCommandDown = new ClimbOnlyCommand(climber, -0.3);
 
-    private final SpindexOnlyCommand spindexOnlyCommand = new SpindexOnlyCommand(spindexer, 0.5);
-    private final SequentialCommandGroup spindexRampDown = new SpindexOnlyCommand(spindexer, 0.25).withTimeout(0.25).andThen(
+    private final SpindexOnlyCommand spindexOnlyCommandShoot = new SpindexOnlyCommand(spindexer, 0.5);
+    private final SequentialCommandGroup spindexRampDownShoot = new SpindexOnlyCommand(spindexer, 0.25).withTimeout(0.25).andThen(
         new SpindexOnlyCommand(spindexer, 0.1).withTimeout(0.25));
+
+    private final SpindexOnlyCommand spindexOnlyCommandIntake = new SpindexOnlyCommand(spindexer, 0.5);
+    private final SequentialCommandGroup spindexRampDownIntake = new SpindexOnlyCommand(spindexer, 0.25).withTimeout(0.25).andThen(
+        new SpindexOnlyCommand(spindexer, 0.1).withTimeout(0.25));
+
+    
 
     private final FeedRollOnly feedRollOnlyCommand = new FeedRollOnly(feedRoller, 1);
     private final SequentialCommandGroup feedRollRampDown = new FeedRollOnly(feedRoller, 0.75).withTimeout(0.25).andThen(
@@ -200,18 +206,6 @@ public class RobotContainer {
             * +------------------------------+-------------------------------+
             */
             new JoystickButton(driverXbox, 7).onTrue(drivetrain.runOnce(drivetrain::seedFieldCentric));
-
-        } else {
-            /*
-            * Joystick bindings
-            * +------------------------------+-------------------------------+
-            * | Control                      | Action                        |
-            * +------------------------------+-------------------------------+
-            * | Left Joystick Button 4       | Reset field direction         |
-            * +------------------------------+-------------------------------+
-            */
-            new JoystickButton(leftJoystick, 4).onTrue(drivetrain.runOnce(drivetrain::seedFieldCentric));
-
             new JoystickButton(buttonsXbox, 6).whileTrue(shootingOnlyCommand); // Right Bumper Button
             new JoystickButton(buttonsXbox, 6).onFalse(shootingRampDown); 
             //new JoystickButton(buttonsXbox, 6).whileTrue(shootingRPMCommand);
@@ -238,6 +232,44 @@ public class RobotContainer {
             //new POVButton(buttonsXbox, 270).whileTrue(hoodAngleOnlyCommandDown); // DPad Left
             new POVButton(buttonsXbox, 90).whileTrue(hoodAngleLowPosition);
             new POVButton(buttonsXbox, 270).whileTrue(hoodAngleHighPosition);
+        } else {
+            /*
+            * Joystick bindings
+            * +------------------------------+-------------------------------+
+            * | Control                      | Action                        |
+            * +------------------------------+-------------------------------+
+            * | Left Joystick Button 4       | Reset field direction         |
+            * +------------------------------+-------------------------------+
+            */
+            new JoystickButton(leftJoystick, 4).onTrue(drivetrain.runOnce(drivetrain::seedFieldCentric));
+
+            new JoystickButton(buttonsXbox, 6).whileTrue(new ParallelCommandGroup(feedRollOnlyCommand, spindexOnlyCommandShoot)); // Right Bumper Button
+            new JoystickButton(buttonsXbox, 6).onFalse(new ParallelCommandGroup(feedRollRampDown, spindexRampDownShoot)); 
+            //new JoystickButton(buttonsXbox, 6).whileTrue(shootingRPMCommand);
+
+            //new JoystickButton(buttonsXbox, 1).whileTrue(); // A
+            //new JoystickButton(buttonsXbox, 1).onFalse();
+
+            //new JoystickButton(buttonsXbox, 2).whileTrue(); // B
+            //new JoystickButton(buttonsXbox, 2).onFalse();
+
+            //new JoystickButton(buttonsXbox, 3).whileTrue(); // X
+            //new JoystickButton(buttonsXbox, 3).onFalse();
+
+            //new JoystickButton(buttonsXbox, 4).whileTrue(outtakeOnlyCommand); // Y
+            //new JoystickButton(buttonsXbox, 4).onFalse(outtakeRampDown);
+
+            new JoystickButton(buttonsXbox, 5).whileTrue(new ParallelCommandGroup(intakeOnlyCommand, spindexOnlyCommandIntake));
+            new JoystickButton(buttonsXbox, 5).onFalse(new ParallelCommandGroup(intakeRampDown, spindexRampDownIntake)); // Left Bumper Button
+
+            new JoystickButton(buttonsXbox, 7).whileTrue(outtakeOnlyCommand); // Menu
+            new JoystickButton(buttonsXbox, 7).onFalse(outtakeRampDown);
+
+            new POVButton(buttonsXbox, 0).whileTrue(climbOnlyCommandUp); // DPad Up
+            new POVButton(buttonsXbox, 180).whileTrue(climbOnlyCommandDown); // DPad Down
+
+            new POVButton(buttonsXbox, 90).whileTrue(deployIntake);
+            new POVButton(buttonsXbox, 270).whileTrue(deployIntakeDown);
         }
 
         drivetrain.registerTelemetry(logger::telemeterize);
