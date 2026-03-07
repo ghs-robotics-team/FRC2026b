@@ -13,7 +13,7 @@ import com.ctre.phoenix6.swerve.SwerveRequest;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.commands.FollowPathCommand;
-
+import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
@@ -84,6 +84,15 @@ public class RobotContainer {
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
     private final EagleEyeCommand eagleEyeCommand;
 
+    private final SendableChooser<Command> auto;
+    private final ShootingRPMCommand shootingFarShotAuto = new ShootingRPMCommand(shooter, 3215);
+    private final HoodAnglerPositionCommand hoodAnglerFarShotAuto = new HoodAnglerPositionCommand(hoodAngler, -300); 
+    private final FeedRollOnly feedRollFarShotAuto = new FeedRollOnly(feedRoller, 1);
+    private final SpindexOnlyCommand spindexOnlyFarShotAuto = new SpindexOnlyCommand(spindexer, 0.5); 
+    private final ParallelCommandGroup farShotCommandAuto = new ParallelCommandGroup(shootingFarShotAuto, hoodAnglerFarShotAuto
+    ,feedRollFarShotAuto, spindexOnlyFarShotAuto);
+
+
     // Basic Teleop Commands
     private final ShootingRPMCommand shootingMidShot = new ShootingRPMCommand(shooter, 2975);
     private final HoodAnglerPositionCommand hoodAngleMidShot = new HoodAnglerPositionCommand(hoodAngler, 0 /*who knows */);
@@ -150,6 +159,7 @@ public class RobotContainer {
     public RobotContainer() {
         autoChooser = AutoBuilder.buildAutoChooser("Tests");
         SmartDashboard.putData("Auto Mode", autoChooser);
+        NamedCommands.registerCommand("Far Shot", farShotCommandAuto);
 
         if (Constants.EagleEyeConstants.EAGLEEYE_ENABLED) {
             eagleEye = new EagleEye();
@@ -187,6 +197,8 @@ public class RobotContainer {
         // Warmup PathPlanner to avoid Java pauses
         FollowPathCommand.warmupCommand().schedule();
         SmartDashboard.putData("Command Scheduler", CommandScheduler.getInstance());
+        auto = AutoBuilder.buildAutoChooser();
+        SmartDashboard.putData("Choose Auto", auto);
     }
 
     private void configureBindings() {
