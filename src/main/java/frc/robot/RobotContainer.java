@@ -4,17 +4,12 @@
 
 package frc.robot;
 
-import static edu.wpi.first.units.Units.*;
-
-import java.io.SequenceInputStream;
-
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
-
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.FollowPathCommand;
 
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -24,21 +19,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
-import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
-
-import frc.robot.generated.TunerConstants;
-import frc.robot.subsystems.Climber;
-import frc.robot.subsystems.CommandSwerveDrivetrain;
-import frc.robot.subsystems.EagleEye;
-import frc.robot.subsystems.FeedRoller;
-import frc.robot.subsystems.HoodAngler;
-import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.Shooter;
-import frc.robot.subsystems.Spindexer;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.ClimbOnlyCommand;
 import frc.robot.commands.EagleEyeCommand;
@@ -48,8 +31,17 @@ import frc.robot.commands.HoodAnglerPositionCommand;
 import frc.robot.commands.IntakeOnlyCommand;
 import frc.robot.commands.PositionIntakeCommand;
 import frc.robot.commands.ShootingOnlyCommand;
-import frc.robot.commands.SpindexOnlyCommand;
 import frc.robot.commands.ShootingRPMCommand;
+import frc.robot.commands.SpindexOnlyCommand;
+import frc.robot.generated.TunerConstants;
+import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.CommandSwerveDrivetrain;
+import frc.robot.subsystems.EagleEye;
+import frc.robot.subsystems.FeedRoller;
+import frc.robot.subsystems.HoodAngler;
+import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Spindexer;
 
 public class RobotContainer {
     private double MaxSpeed = Constants.OperatorConstants.MAX_SPEED; // kSpeedAt12Volts desired top speed
@@ -83,6 +75,14 @@ public class RobotContainer {
 
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
     private final EagleEyeCommand eagleEyeCommand;
+
+    // Basic Auto Commands
+    private final SendableChooser<Command> auto;
+    private final ShootingRPMCommand shootingFarShotAuto = new ShootingRPMCommand(shooter, 3215);
+    private final HoodAnglerPositionCommand hoodAngleFarShotAuto = new HoodAnglerPositionCommand(hoodAngler, -300 /*who knows */);
+    private final FeedRollOnly feedRollFarShotAuto = new FeedRollOnly(feedRoller, 1);
+    private final SpindexOnlyCommand spindexOnlyFarShotAuto = new SpindexOnlyCommand(spindexer, 0.5);
+    private final ParallelCommandGroup farShotCommandAuto = new ParallelCommandGroup(shootingFarShotAuto, hoodAngleFarShotAuto, feedRollFarShotAuto, spindexOnlyFarShotAuto);
 
     // Basic Teleop Commands
     private final ShootingRPMCommand shootingMidShot = new ShootingRPMCommand(shooter, 2975);
@@ -142,7 +142,9 @@ public class RobotContainer {
     public RobotContainer() {
         autoChooser = AutoBuilder.buildAutoChooser("Tests");
         SmartDashboard.putData("Auto Mode", autoChooser);
-
+        NamedCommands.registerCommand("Far Shot", 
+    farShotCommandAuto
+    );
         if (Constants.EagleEyeConstants.EAGLEEYE_ENABLED) {
             eagleEye = new EagleEye();
             eagleEyeCommand = new EagleEyeCommand(eagleEye);
@@ -179,6 +181,8 @@ public class RobotContainer {
         // Warmup PathPlanner to avoid Java pauses
         FollowPathCommand.warmupCommand().schedule();
         SmartDashboard.putData("Command Scheduler", CommandScheduler.getInstance());
+        auto = AutoBuilder.buildAutoChooser();
+        SmartDashboard.putData("chooseAuto", auto); 
     }
 
     private void configureBindings() {
