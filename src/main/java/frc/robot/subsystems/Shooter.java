@@ -29,9 +29,9 @@ public class Shooter extends SubsystemBase {
   public Shooter() {
     // Configure the internal PID of the motor
 
-    SmartDashboard.putNumber("SH PID-P", 0.0005);
+    SmartDashboard.putNumber("SH PID-P", 0.0002);
     SmartDashboard.putNumber("SH PID-I", 0.0);
-    SmartDashboard.putNumber("SH PID-D", 0.01);
+    SmartDashboard.putNumber("SH PID-D", 0.00);
 
     config.closedLoop.pid(0.01, 0, 0);
 
@@ -59,7 +59,7 @@ public class Shooter extends SubsystemBase {
   }
 
   public void shootTargetSpeed(double rpm) {
-    double P = SmartDashboard.getNumber("SH PID-P", 1.0 / 150.0);
+    double P = SmartDashboard.getNumber("SH PID-P", 0.0002);
     double I = SmartDashboard.getNumber("SH PID-I", 0.0);
     double D = SmartDashboard.getNumber("SH PID-D", 0);
 
