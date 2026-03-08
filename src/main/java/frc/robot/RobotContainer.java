@@ -4,18 +4,12 @@
 
 package frc.robot;
 
-import static edu.wpi.first.units.Units.*;
-
-import java.io.SequenceInputStream;
-
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
-
 import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.commands.FollowPathCommand;
 import com.pathplanner.lib.auto.NamedCommands;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.DriverStation;
+import com.pathplanner.lib.commands.FollowPathCommand;
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -24,21 +18,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
-import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
-
-import frc.robot.generated.TunerConstants;
-import frc.robot.subsystems.Climber;
-import frc.robot.subsystems.CommandSwerveDrivetrain;
-import frc.robot.subsystems.EagleEye;
-import frc.robot.subsystems.FeedRoller;
-import frc.robot.subsystems.HoodAngler;
-import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.Shooter;
-import frc.robot.subsystems.Spindexer;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.ClimbOnlyCommand;
 import frc.robot.commands.EagleEyeCommand;
@@ -48,8 +30,17 @@ import frc.robot.commands.HoodAnglerPositionCommand;
 import frc.robot.commands.IntakeOnlyCommand;
 import frc.robot.commands.PositionIntakeCommand;
 import frc.robot.commands.ShootingOnlyCommand;
-import frc.robot.commands.SpindexOnlyCommand;
 import frc.robot.commands.ShootingRPMCommand;
+import frc.robot.commands.SpindexOnlyCommand;
+import frc.robot.generated.TunerConstants;
+import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.CommandSwerveDrivetrain;
+import frc.robot.subsystems.EagleEye;
+import frc.robot.subsystems.FeedRoller;
+import frc.robot.subsystems.HoodAngler;
+import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Spindexer;
 
 public class RobotContainer {
     private double MaxSpeed = Constants.OperatorConstants.MAX_SPEED; // kSpeedAt12Volts desired top speed
@@ -85,31 +76,31 @@ public class RobotContainer {
     private final EagleEyeCommand eagleEyeCommand;
 
     private final SendableChooser<Command> auto;
-    private final ShootingRPMCommand shootingFarShotAuto = new ShootingRPMCommand(shooter, 3215);
-    private final HoodAnglerPositionCommand hoodAnglerFarShotAuto = new HoodAnglerPositionCommand(hoodAngler, -300); 
+    private final ShootingRPMCommand shootingFarShotAuto = new ShootingRPMCommand(shooter, 5146);
+    private final HoodAnglerPositionCommand hoodAnglerFarShotAuto = new HoodAnglerPositionCommand(hoodAngler, 0); 
     private final FeedRollOnly feedRollFarShotAuto = new FeedRollOnly(feedRoller, 1);
     private final SpindexOnlyCommand spindexOnlyFarShotAuto = new SpindexOnlyCommand(spindexer, 0.5); 
-    private final ParallelCommandGroup farShotCommandAuto = new ParallelCommandGroup(shootingFarShotAuto, hoodAnglerFarShotAuto
-    ,feedRollFarShotAuto, spindexOnlyFarShotAuto);
+    //new ShootingRPMCommand(shooter, 5146).withTimeout(2).andThen(
+    private final ParallelCommandGroup farShotCommandAuto = new ParallelCommandGroup(shootingFarShotAuto.withTimeout(5), hoodAnglerFarShotAuto.withTimeout(5)
+    ,feedRollFarShotAuto.withTimeout(5), spindexOnlyFarShotAuto.withTimeout(5));
 
 
     // Basic Teleop Commands
-    private final ShootingRPMCommand shootingMidShot = new ShootingRPMCommand(shooter, 2975);
+    private final ShootingRPMCommand shootingMidShot = new ShootingRPMCommand(shooter, 4814);
     private final HoodAnglerPositionCommand hoodAngleMidShot = new HoodAnglerPositionCommand(hoodAngler, 0 /*who knows */);
     private final ParallelCommandGroup midShotCommand = new ParallelCommandGroup(shootingMidShot, hoodAngleMidShot);
 
-    private final ShootingRPMCommand shootingFarShot = new ShootingRPMCommand(shooter, 3215);
-    private final HoodAnglerPositionCommand hoodAngleFarShot = new HoodAnglerPositionCommand(hoodAngler, -300 /*who knows */);
+    private final ShootingRPMCommand shootingFarShot = new ShootingRPMCommand(shooter, 5146);
+    private final HoodAnglerPositionCommand hoodAngleFarShot = new HoodAnglerPositionCommand(hoodAngler, 0 /*who knows */);
     private final ParallelCommandGroup farShotCommand = new ParallelCommandGroup(shootingFarShot, hoodAngleFarShot);
 
-    private final ShootingRPMCommand shootingMidPass = new ShootingRPMCommand(shooter, 3420);
+    private final ShootingRPMCommand shootingMidPass = new ShootingRPMCommand(shooter, 5644);
     private final HoodAnglerPositionCommand hoodAngleMidPass = new HoodAnglerPositionCommand(hoodAngler, -600 /*who knows */);
     private final ParallelCommandGroup midPassCommand = new ParallelCommandGroup(shootingMidPass, hoodAngleMidPass);
 
-    private final ShootingRPMCommand shootingFarPass = new ShootingRPMCommand(shooter, 5130);
+    private final ShootingRPMCommand shootingFarPass = new ShootingRPMCommand(shooter, 10000);
     private final HoodAnglerPositionCommand hoodAngleFarPass = new HoodAnglerPositionCommand(hoodAngler, -900 /*who knows */);
     private final ParallelCommandGroup farPassCommand = new ParallelCommandGroup(shootingFarPass, hoodAngleFarPass);
-
 
     private final HoodAngleOnlyCommand hoodAngleOnlyCommandUp = new HoodAngleOnlyCommand(hoodAngler, 0.1);
     private final HoodAngleOnlyCommand hoodAngleOnlyCommandDown = new HoodAngleOnlyCommand(hoodAngler, -0.1);
@@ -134,7 +125,7 @@ public class RobotContainer {
     private final ClimbOnlyCommand climbOnlyCommandUp = new ClimbOnlyCommand(climber, 0.5);
     private final ClimbOnlyCommand climbOnlyCommandDown = new ClimbOnlyCommand(climber, -0.5);
 
-    private final SpindexOnlyCommand spindexOnlyCommandShoot = new SpindexOnlyCommand(spindexer, 0.5);
+    private final SpindexOnlyCommand spindexOnlyCommandShoot = new SpindexOnlyCommand(spindexer, 0.3);
     private final SequentialCommandGroup spindexRampDownShoot = new SpindexOnlyCommand(spindexer, 0.25).withTimeout(0.25).andThen(
         new SpindexOnlyCommand(spindexer, 0.1).withTimeout(0.25));
 
@@ -157,7 +148,7 @@ public class RobotContainer {
     private final SendableChooser<Command> autoChooser;
 
     public RobotContainer() {
-        autoChooser = AutoBuilder.buildAutoChooser("Tests");
+        autoChooser = AutoBuilder.buildAutoChooser("Far Shot (No Movement)");
         SmartDashboard.putData("Auto Mode", autoChooser);
         NamedCommands.registerCommand("Far Shot", farShotCommandAuto);
 
@@ -259,8 +250,9 @@ public class RobotContainer {
             new POVButton(buttonsXbox, 0).whileTrue(climbOnlyCommandUp); // DPad Up
             new POVButton(buttonsXbox, 180).whileTrue(climbOnlyCommandDown); // DPad Down
 
-            new POVButton(buttonsXbox, 90).whileTrue(deployIntake);
-            new POVButton(buttonsXbox, 270).whileTrue(deployIntakeDown);
+            new POVButton(buttonsXbox, 90).whileTrue(deployIntakeDown);
+            new POVButton(buttonsXbox, 270).whileTrue(deployIntake);
+            
 
             new JoystickButton(buttonsXbox, 1).whileTrue(farPassCommand); // A
             new JoystickButton(buttonsXbox, 2).whileTrue(midPassCommand); // B
