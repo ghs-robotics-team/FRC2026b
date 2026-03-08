@@ -28,7 +28,13 @@ public class Shooter extends SubsystemBase {
   
   public Shooter() {
     // Configure the internal PID of the motor
-    config.closedLoop.pid(0.1, 0, 0);
+
+    SmartDashboard.putNumber("SH PID-P", 0.0002);
+    SmartDashboard.putNumber("SH PID-I", 0.0);
+    SmartDashboard.putNumber("SH PID-D", 0.00);
+
+    config.closedLoop.pid(0.01, 0, 0);
+
     shooterTop.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
     shooterBottom.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
 
@@ -53,6 +59,15 @@ public class Shooter extends SubsystemBase {
   }
 
   public void shootTargetSpeed(double rpm) {
+    double P = SmartDashboard.getNumber("SH PID-P", 0.0002);
+    double I = SmartDashboard.getNumber("SH PID-I", 0.0);
+    double D = SmartDashboard.getNumber("SH PID-D", 0);
+
+    config.closedLoop.pid(P, I, D);
+
+    shooterTop.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
+    shooterBottom.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
+
     controllerTop.setSetpoint(rpm, ControlType.kVelocity);
     controllerBottom.setSetpoint(rpm, ControlType.kVelocity);
     //SmartDashboard.putNumber("Shooter RPM", rpm);

@@ -7,7 +7,19 @@
         {
           "type": "path",
           "data": {
-            "pathName": "SimplePath"
+            "pathName": "still"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Far Shot"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 5.0
           }
         }
       ]

@@ -55,7 +55,7 @@ public final class Constants {
   public static class OperatorConstants {
 
     // Makes testing safer and easier
-    public static final boolean WORKSHOP_MODE = true;
+    public static final boolean WORKSHOP_MODE = false;
     public static final double WORKSHOP_MAX_SPEED_MODIFIER = 0.2; // Percent as decimal
     public static final double WORKSHOP_MAX_ROTATIONS_PER_SECOND_MODIFIER = 0.5; // Percent as decimal
  
