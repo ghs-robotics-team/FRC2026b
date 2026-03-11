@@ -10,7 +10,6 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.FollowPathCommand;
-
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -53,9 +52,9 @@ import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Spindexer;
 
 public class RobotContainer {
+    /**<----------Drivetrain---------->*/
     private double MaxSpeed = Constants.OperatorConstants.MAX_SPEED; // kSpeedAt12Volts desired top speed
     private double MaxAngularRate = Constants.OperatorConstants.MAX_ANGULAR_SPEED; // 3/4 of a rotation per second max angular velocity
-
     /* Setting up bindings for necessary control of the swerve drive platform */
     private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
             .withDeadband(MaxSpeed * OperatorConstants.TRANSLATION_DEADBAND).withRotationalDeadband(MaxAngularRate * OperatorConstants.ROTATION_DEADBAND) // Add a deadband
@@ -67,13 +66,14 @@ public class RobotContainer {
 
     private final Telemetry logger = new Telemetry(MaxSpeed);
 
-    // Controllers
+
+    /**<----------Controllers---------->*/
     private XboxController buttonsXbox = new XboxController(2);
     private XboxController driverXbox;
     private Joystick rightJoystick;
     private Joystick leftJoystick;
 
-    // Subsystems
+    /**<----------Subsystems---------->*/
     private final EagleEye eagleEye;
     private final HoodAngler hoodAngler = new HoodAngler();
     private final Intake intake =  new Intake();
@@ -84,75 +84,106 @@ public class RobotContainer {
 
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
     private final EagleEyeCommand eagleEyeCommand;
-
     private final SendableChooser<Command> auto;
+
+    /**<----------Autonomous Commands---------->*/
     private final ShootingRPMCommand shootingFarShotAuto = new ShootingRPMCommand(shooter, 5146);
     private final HoodAnglerPositionCommand hoodAnglerFarShotAuto = new HoodAnglerPositionCommand(hoodAngler, 0); 
     private final FeedRollOnly feedRollFarShotAuto = new FeedRollOnly(feedRoller, 1);
     private final SpindexOnlyCommand spindexOnlyFarShotAuto = new SpindexOnlyCommand(spindexer, 0.5); 
-    //new ShootingRPMCommand(shooter, 5146).withTimeout(2).andThen(
-    private final ParallelCommandGroup farShotCommandAuto = new ParallelCommandGroup(shootingFarShotAuto.withTimeout(5), hoodAnglerFarShotAuto.withTimeout(5)
-    ,feedRollFarShotAuto.withTimeout(5), spindexOnlyFarShotAuto.withTimeout(5));
+    private final ParallelCommandGroup farShotCommandAuto = new ParallelCommandGroup(
+        shootingFarShotAuto.withTimeout(5), 
+        hoodAnglerFarShotAuto.withTimeout(5),
+        feedRollFarShotAuto.withTimeout(5), 
+        spindexOnlyFarShotAuto.withTimeout(5)
+    );
 
 
-    // Basic Teleop Commands
+    /**<----------Teleop Commands---------->*/
+
+    // Mid-Shot
     private final ShootingRPMCommand shootingMidShot = new ShootingRPMCommand(shooter, 4814);
     private final HoodAnglerPositionCommand hoodAngleMidShot = new HoodAnglerPositionCommand(hoodAngler, 0 /*who knows */);
-    private final ParallelCommandGroup midShotCommand = new ParallelCommandGroup(shootingMidShot, hoodAngleMidShot);
+    private final ParallelCommandGroup midShotCommand = new ParallelCommandGroup(
+        shootingMidShot, 
+        hoodAngleMidShot
+    );
 
+    // Far-Shot
     private final ShootingRPMCommand shootingFarShot = new ShootingRPMCommand(shooter, 5146);
     private final HoodAnglerPositionCommand hoodAngleFarShot = new HoodAnglerPositionCommand(hoodAngler, 0 /*who knows */);
-    private final ParallelCommandGroup farShotCommand = new ParallelCommandGroup(shootingFarShot, hoodAngleFarShot);
+    private final ParallelCommandGroup farShotCommand = new ParallelCommandGroup(
+        shootingFarShot, 
+        hoodAngleFarShot
+    );
 
+    // Mid-Pass
     private final ShootingRPMCommand shootingMidPass = new ShootingRPMCommand(shooter, 5644);
     private final HoodAnglerPositionCommand hoodAngleMidPass = new HoodAnglerPositionCommand(hoodAngler, -600 /*who knows */);
-    private final ParallelCommandGroup midPassCommand = new ParallelCommandGroup(shootingMidPass, hoodAngleMidPass);
+    private final ParallelCommandGroup midPassCommand = new ParallelCommandGroup(
+        shootingMidPass, 
+        hoodAngleMidPass
+    );
 
+    // Far-Pass
     private final ShootingRPMCommand shootingFarPass = new ShootingRPMCommand(shooter, 10000);
     private final HoodAnglerPositionCommand hoodAngleFarPass = new HoodAnglerPositionCommand(hoodAngler, -900 /*who knows */);
     private final ParallelCommandGroup farPassCommand = new ParallelCommandGroup(shootingFarPass, hoodAngleFarPass);
 
+    // Hood Angle Only
     private final HoodAngleOnlyCommand hoodAngleOnlyCommandUp = new HoodAngleOnlyCommand(hoodAngler, 0.1);
     private final HoodAngleOnlyCommand hoodAngleOnlyCommandDown = new HoodAngleOnlyCommand(hoodAngler, -0.1);
 
+    // Hood Angle Positioning Commands
     private final HoodAnglerPositionCommand hoodAngleLowPosition = new HoodAnglerPositionCommand(hoodAngler, -1050);
     private final HoodAnglerPositionCommand hoodAngleMiddlePosition = new HoodAnglerPositionCommand(hoodAngler, -650);
     private final HoodAnglerPositionCommand hoodAngleHighPosition = new HoodAnglerPositionCommand(hoodAngler, -100);
 
+    // Intaking / Outtaking
     private final IntakeOnlyCommand intakeOnlyCommand = new IntakeOnlyCommand(intake, 0.8);
     private final SequentialCommandGroup intakeRampDown = new IntakeOnlyCommand(intake, 0.25).withTimeout(0.25).andThen(
-        new IntakeOnlyCommand(intake, 0.1).withTimeout(0.25));
-
+        new IntakeOnlyCommand(intake, 0.1).withTimeout(0.25)
+    );
+    
     private final IntakeOnlyCommand outtakeOnlyCommand = new IntakeOnlyCommand(intake, -0.8);
     private final SequentialCommandGroup outtakeRampDown = new IntakeOnlyCommand(intake, -0.25).withTimeout(0.25).andThen(
-        new IntakeOnlyCommand(intake, -0.1).withTimeout(0.25));
-
-    private final ShootingOnlyCommand shootingOnlyCommand = new ShootingOnlyCommand(shooter, .75);
-    private final SequentialCommandGroup shootingRampDown = new ShootingOnlyCommand(shooter, 0.5).withTimeout(.25).andThen(
-        new ShootingOnlyCommand(shooter, .25).withTimeout(.25).andThen(
-            new ShootingOnlyCommand(shooter, .1).withTimeout(.1)));
-
-    private final ClimbOnlyCommand climbOnlyCommandUp = new ClimbOnlyCommand(climber, 0.5);
-    private final ClimbOnlyCommand climbOnlyCommandDown = new ClimbOnlyCommand(climber, -0.5);
-
-    private final SpindexOnlyCommand spindexOnlyCommandShoot = new SpindexOnlyCommand(spindexer, 0.3);
-    private final SequentialCommandGroup spindexRampDownShoot = new SpindexOnlyCommand(spindexer, 0.25).withTimeout(0.25).andThen(
-        new SpindexOnlyCommand(spindexer, 0.1).withTimeout(0.25));
-
-    private final SpindexOnlyCommand spindexOnlyCommandIntake = new SpindexOnlyCommand(spindexer, 0.5);
-    private final SequentialCommandGroup spindexRampDownIntake = new SpindexOnlyCommand(spindexer, 0.25).withTimeout(0.25).andThen(
-        new SpindexOnlyCommand(spindexer, 0.1).withTimeout(0.25));
-
-    private final FeedRollOnly feedRollOnlyCommand = new FeedRollOnly(feedRoller, 1);
-    private final SequentialCommandGroup feedRollRampDown = new FeedRollOnly(feedRoller, 0.75).withTimeout(0.25).andThen(
-        new FeedRollOnly(feedRoller, 0.5).withTimeout(0.25).andThen(
-            new FeedRollOnly(feedRoller, 0.25).withTimeout(0.25).andThen(
-                new FeedRollOnly(feedRoller, 0.1).withTimeout(0.25))));
+        new IntakeOnlyCommand(intake, -0.1).withTimeout(0.25)
+    );
 
     private final PositionIntakeCommand deployIntake = new PositionIntakeCommand(intake, -0.1);
     private final PositionIntakeCommand deployIntakeDown = new PositionIntakeCommand(intake, 0.1);
 
-    /* Path follower */
+    // Shooting
+    private final ShootingOnlyCommand shootingOnlyCommand = new ShootingOnlyCommand(shooter, .75);
+    private final SequentialCommandGroup shootingRampDown = new ShootingOnlyCommand(shooter, 0.5).withTimeout(.25).andThen(
+        new ShootingOnlyCommand(shooter, .25).withTimeout(.25).andThen(
+        new ShootingOnlyCommand(shooter, .1).withTimeout(.1))
+    );
+
+    // Climb
+    private final ClimbOnlyCommand climbOnlyCommandUp = new ClimbOnlyCommand(climber, 0.5);
+    private final ClimbOnlyCommand climbOnlyCommandDown = new ClimbOnlyCommand(climber, -0.5);
+
+    // Spindex 
+    private final SpindexOnlyCommand spindexOnlyCommandShoot = new SpindexOnlyCommand(spindexer, 0.3);
+    private final SequentialCommandGroup spindexRampDownShoot = new SpindexOnlyCommand(spindexer, 0.25).withTimeout(0.25).andThen(
+        new SpindexOnlyCommand(spindexer, 0.1).withTimeout(0.25)
+    );
+
+    private final SpindexOnlyCommand spindexOnlyCommandIntake = new SpindexOnlyCommand(spindexer, 0.5);
+    private final SequentialCommandGroup spindexRampDownIntake = new SpindexOnlyCommand(spindexer, 0.25).withTimeout(0.25).andThen(
+        new SpindexOnlyCommand(spindexer, 0.1).withTimeout(0.25)
+    );
+
+    // Feed Roller
+    private final FeedRollOnly feedRollOnlyCommand = new FeedRollOnly(feedRoller, 1);
+    private final SequentialCommandGroup feedRollRampDown = new FeedRollOnly(feedRoller, 0.75).withTimeout(0.25).andThen(
+        new FeedRollOnly(feedRoller, 0.5).withTimeout(0.25).andThen(
+        new FeedRollOnly(feedRoller, 0.25).withTimeout(0.25).andThen(
+        new FeedRollOnly(feedRoller, 0.1).withTimeout(0.25)))
+    );
+
+    /**<----------Path follower---------->*/
     private final SendableChooser<Command> autoChooser;
 
     public RobotContainer() {
