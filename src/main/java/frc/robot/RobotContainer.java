@@ -212,10 +212,8 @@ public class RobotContainer {
         } else {
             rightJoystick = new Joystick(0);
             leftJoystick = new Joystick(1);
-            //buttonsXbox = new XboxController(2);
             driverXbox = null; // Not used in joystick mode
         }
-
         configureBindings();
 
         // Set default commands
@@ -253,63 +251,63 @@ public class RobotContainer {
             drivetrain.applyRequest(() -> idle).ignoringDisable(true)
         );
 
+        // No differences in the two settings yet.
         if (OperatorConstants.XBOX_DRIVE) {
-            /*
-            * Xbox bindings
-            * +------------------------------+-------------------------------+
-            * | Control                      | Action                        |
-            * +------------------------------+-------------------------------+
-            * | Driver Xbox start            | Reset field direction         |
-            * +------------------------------+-------------------------------+
-            */
         } else {
-            /*
-            * Joystick bindings
-            * +------------------------------+-------------------------------+
-            * | Control                      | Action                        |
-            * +------------------------------+-------------------------------+
-            * | Left Joystick Button 4       | Reset field direction         |
-            * +------------------------------+-------------------------------+
-            */
-            new JoystickButton(leftJoystick, 4).onTrue(drivetrain.runOnce(drivetrain::seedFieldCentric));
-
-            new JoystickButton(buttonsXbox, 6).whileTrue(new ParallelCommandGroup(feedRollOnlyCommand, spindexOnlyCommandShoot)); // Right Bumper Button
-            //buttonsXbox.rightBumper().whileTrue(new ParallelCommandGroup(feedRollOnlyCommand, spindexOnlyCommandShoot));
-            //buttonsXbox.rightBumper().onFalse(new ParallelCommandGroup(feedRollRampDown, spindexRampDownShoot));
-            new JoystickButton(buttonsXbox, 6).onFalse(new ParallelCommandGroup(feedRollRampDown, spindexRampDownShoot)); 
-            //new JoystickButton(buttonsXbox, 6).whileTrue(shootingRPMCommand);
-
-
-            new JoystickButton(buttonsXbox, 5).whileTrue(new ParallelCommandGroup(intakeOnlyCommand, spindexOnlyCommandIntake));
-            new JoystickButton(buttonsXbox, 5).onFalse(new ParallelCommandGroup(intakeRampDown, spindexRampDownIntake)); // Left Bumper Button
-
-            new JoystickButton(buttonsXbox, 7).whileTrue(outtakeOnlyCommand); // Menu
-            new JoystickButton(buttonsXbox, 7).onFalse(outtakeRampDown);
-
-            new POVButton(buttonsXbox, 0).whileTrue(climbOnlyCommandUp); // DPad Up
-            new POVButton(buttonsXbox, 180).whileTrue(climbOnlyCommandDown); // DPad Down
-
-            new POVButton(buttonsXbox, 90).whileTrue(deployIntakeDown);
-            new POVButton(buttonsXbox, 270).whileTrue(deployIntake);
-            
-
-            new JoystickButton(buttonsXbox, 1).whileTrue(farPassCommand); // A
-            new JoystickButton(buttonsXbox, 2).whileTrue(midPassCommand); // B
-            new JoystickButton(buttonsXbox, 3).whileTrue(farShotCommand); // X
-            new JoystickButton(buttonsXbox, 4).whileTrue(midShotCommand); // Y
-            new JoystickButton(buttonsXbox, 1).onFalse(shootingRampDown);
-            new JoystickButton(buttonsXbox, 2).onFalse(shootingRampDown);
-            new JoystickButton(buttonsXbox, 3).onFalse(shootingRampDown);
-            new JoystickButton(buttonsXbox, 4).onFalse(shootingRampDown);
-
-            //buttonsXbox.x().whileTrue(shootingFarShot);
         }
+        new JoystickButton(leftJoystick, 4).onTrue(drivetrain.runOnce(drivetrain::seedFieldCentric));
 
+        // Right Bumper Button - Final Shooting
+        new JoystickButton(buttonsXbox, 6).whileTrue(new ParallelCommandGroup(
+            feedRollOnlyCommand, 
+            spindexOnlyCommandShoot)
+        ); 
+        new JoystickButton(buttonsXbox, 6).onFalse(new ParallelCommandGroup(
+            feedRollRampDown, 
+            spindexRampDownShoot)
+        ); 
+
+        // Left Bumper Button - Intaking
+        new JoystickButton(buttonsXbox, 5).whileTrue(new ParallelCommandGroup(
+            intakeOnlyCommand, 
+            spindexOnlyCommandIntake)
+        );
+        new JoystickButton(buttonsXbox, 5).onFalse(new ParallelCommandGroup(
+            intakeRampDown, 
+            spindexRampDownIntake)
+        );
+
+        // Menu Button - Outtaking
+        new JoystickButton(buttonsXbox, 7).whileTrue(outtakeOnlyCommand); 
+        new JoystickButton(buttonsXbox, 7).onFalse(outtakeRampDown);
+
+        // DPad Up - Climb Up
+        new POVButton(buttonsXbox, 0).whileTrue(climbOnlyCommandUp); 
+        // DPad Down - Climb Down
+        new POVButton(buttonsXbox, 180).whileTrue(climbOnlyCommandDown); 
+
+        // DPad Right - Hood Angle Up
+        new POVButton(buttonsXbox, 90).whileTrue(deployIntakeDown);
+        // DPad Left - Hood Angle Down
+        new POVButton(buttonsXbox, 270).whileTrue(deployIntake);
+        
+        // A Button - Far Pass
+        new JoystickButton(buttonsXbox, 1).whileTrue(farPassCommand); 
+        new JoystickButton(buttonsXbox, 1).onFalse(shootingRampDown);
+        // B Button - Mid Pass
+        new JoystickButton(buttonsXbox, 2).whileTrue(midPassCommand); 
+        new JoystickButton(buttonsXbox, 2).onFalse(shootingRampDown);
+        // X Button - Far Shot
+        new JoystickButton(buttonsXbox, 3).whileTrue(farShotCommand); 
+        new JoystickButton(buttonsXbox, 3).onFalse(shootingRampDown);
+        // Y Button - Mid Shot
+        new JoystickButton(buttonsXbox, 4).whileTrue(midShotCommand);
+        new JoystickButton(buttonsXbox, 4).onFalse(shootingRampDown);
+    
         drivetrain.registerTelemetry(logger::telemeterize);
     }
 
     public Command getAutonomousCommand() {
-        /* Run the path selected from the auto chooser */
         return autoChooser.getSelected();
     }
 }
