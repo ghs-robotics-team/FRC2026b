@@ -10,7 +10,6 @@ import com.revrobotics.spark.SparkMax;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
 
 /**
  * HoodAngler subsystem for adjusting the angle of the shooter hood.
@@ -18,55 +17,58 @@ import frc.robot.Constants;
  */
 public class HoodAngler extends SubsystemBase {
   SparkMax hoodAngler = new SparkMax(14, MotorType.kBrushed);
-  Encoder encoder = new Encoder(8,9);
+  Encoder encoder = new Encoder(8, 9);
   double hoodEncoderVal = encoder.getRaw();
-  
+
   /**
    * Nothing done in constructor.
    */
-  public HoodAngler() {}
+  public HoodAngler() {
+  }
 
   /**
-   * Sets the power level of the hood angler motor to adjust the angle of the shooter hood.
-   * @param power The power level to set the hood angler motor to, typically between -1.0 and 1.0.
+   * Sets the power level of the hood angler motor to adjust the angle of the
+   * shooter hood.
+   * 
+   * @param power The power level to set the hood angler motor to, typically
+   *              between -1.0 and 1.0.
    */
   public void adjust(double power) {
     // Needs limits
     // Needs PID
-    /*if (Constants.OperatorConstants.DYNAMIC_POWER_CONTROL && power != 0) {
-      power = SmartDashboard.getNumber("HoodAngle V", 0.1);
-    } */
-    // Tune limits when encoder wire arrives.
-    //power = -power;
-    if(power<=0){
-      if(getPos() <= 0){ 
+    /*
+     * if (Constants.OperatorConstants.DYNAMIC_POWER_CONTROL && power != 0) {
+     * power = SmartDashboard.getNumber("HoodAngle V", 0.1);
+     * }
+     */
+    if (power <= 0) {
+      if (getPos() <= 0) {
         hoodAngler.set(-power);
+      } else {
+        hoodAngler.set(0);
       }
-      else{
+    } else {
+      if (getPos() > -1300) {
+        hoodAngler.set(-power);
+      } else {
         hoodAngler.set(0);
       }
     }
-    else{
-      if(getPos() > -1300){
-        hoodAngler.set(-power);
-      }
-      else{
-        hoodAngler.set(0);
-      }
-    } 
     hoodAngler.set(power);
   }
 
   /**
    * Get absolute encoder position
+   * 
    * @return Absolute Encoder Position of the motor.
    */
-  public double getPos(){
+  public double getPos() {
     return hoodEncoderVal;
   }
 
   /**
-   * Periodically updates the SmartDashboard with the current position of the hood angler.
+   * Periodically updates the SmartDashboard with the current position of the hood
+   * angler.
    */
   @Override
   public void periodic() {

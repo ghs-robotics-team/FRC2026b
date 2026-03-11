@@ -2,26 +2,26 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands;
+package frc.robot.commands.Shooting;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Shooter;
 
 /**
- * Runs the shooter motor only.
+ * Command to run the shooter at a specific RPM using a PID controller in the Shooter subsystem.
  */
-public class ShootingOnlyCommand extends Command {
+public class ShootingRPMCommand extends Command {
   Shooter shooter;
-  double power;
+  double rpm;
 
   /**
    * Creates a new ShootingOnlyCommand.
    * @param shooter The shooter subsystem to run.
    * @param power The power level to set the shooter motor to, typically between -1.0 and 1.0.
    */
-  public ShootingOnlyCommand(Shooter shooter, double power) {
+  public ShootingRPMCommand(Shooter shooter, double rpm) {
     this.shooter = shooter;
-    this.power = power;
+    this.rpm = rpm;
     addRequirements(shooter);
   }
 
@@ -30,7 +30,7 @@ public class ShootingOnlyCommand extends Command {
    */
   @Override
   public void initialize() {
-    shooter.shoot(0);
+    shooter.shootTargetSpeed(0);
   }
 
   /**
@@ -38,7 +38,7 @@ public class ShootingOnlyCommand extends Command {
    */
   @Override
   public void execute() {
-    shooter.shoot(power);
+    shooter.shootTargetSpeed(rpm);
   }
 
   /**
@@ -46,13 +46,12 @@ public class ShootingOnlyCommand extends Command {
    */
   @Override
   public void end(boolean interrupted) {
-    shooter.shoot(0);
+    shooter.shootTargetSpeed(0);
   }
 
   /**
    * Returns false to keep the command running until interrupted.
    */
-  @Override
   public boolean isFinished() {
     return false;
   }

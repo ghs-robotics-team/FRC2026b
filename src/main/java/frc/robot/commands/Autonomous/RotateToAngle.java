@@ -2,36 +2,37 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands;
+package frc.robot.commands.Autonomous;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.LimelightHelpers;
+import frc.robot.LimelightHelpers.LimelightTarget_Fiducial;
 //import frc.robot.subsystems.SwerveSubsystem;
 
 /**
  * Command that rotates the robot to face a specific angle using PID control.
  */
-public class RotateToAngleExtended extends Command {
-  //private SwerveSubsystem swerve;
+public class RotateToAngle extends Command {
+  // private SwerveSubsystem swerve;
   private double degreeError;
   private PIDController pid;
   private double directionFactor;
   private double targetDegree;
-  private Translation2d speakerPos;
 
   /**
    * Sets SwerveSubsystem and initializes PIDController.
    * 
    * @param swerve
    */
-  public RotateToAngleExtended(/*SwerveSubsystem swerve, */Pose2d pose) {
-    //addRequirements(swerve);
-    //this.swerve = swerve;
-    this.speakerPos = pose.getTranslation();
+  public RotateToAngle(/* SwerveSubsystem swerve */) {
+    // addRequirements(swerve);
+    // this.swerve = swerve;
     this.pid = new PIDController(0.08, 0, 0.004);
     pid.enableContinuousInput(-180, 180);
 
@@ -47,14 +48,47 @@ public class RotateToAngleExtended extends Command {
    */
   @Override
   public void initialize() {
-    //swerve.drive(new Translation2d(0, 0), 0, true);
-    degreeError = 0;
-    /*degreeError = speakerPos.minus(swerve.getPose().getTranslation()).getAngle().getDegrees()
-          - swerve.getPose().getRotation().getDegrees();*/
-      degreeError = -degreeError;
+    // swerve.drive(new Translation2d(0, 0), 0, true);
 
-    //SmartDashboard.putNumber("distance", speakerPos.minus(swerve.getPose().getTranslation()).getNorm());
-    //targetDegree = swerve.getPose().getRotation().getDegrees() - degreeError;
+    // Get fiducial (AprilTag Sightings) targets from Limelight
+    LimelightTarget_Fiducial[] target_Fiducials = LimelightHelpers
+        .getLatestResults("limelight-april").targets_Fiducials;
+    degreeError = 0;
+
+    for (LimelightTarget_Fiducial target : target_Fiducials) {
+      if (target.fiducialID == 4) {
+        degreeError = target.tx;
+      }
+    }
+
+    // If no target seen, calculate angle to speaker based on position
+    if (degreeError == 0) {
+      Translation2d speakerPos;
+      if (DriverStation.getAlliance().get() == Alliance.Blue) {
+        speakerPos = new Translation2d(0.02, 5.5826);
+      } else {
+        speakerPos = new Translation2d(16.4646, 5.5826);
+      }
+      /*
+       * degreeError =
+       * speakerPos.minus(swerve.getPose().getTranslation()).getAngle().getDegrees()
+       * - swerve.getPose().getRotation().getDegrees();
+       * degreeError = -degreeError;
+       * SmartDashboard.putNumber("distance",
+       * speakerPos.minus(swerve.getPose().getTranslation()).getNorm());
+       */
+    }
+
+    Translation2d speakerPos;
+    if (DriverStation.getAlliance().get() == Alliance.Blue) {
+      speakerPos = new Translation2d(0.02, 5.5826);
+    } else {
+      speakerPos = new Translation2d(16.4646, 5.5826);
+    }
+
+    // SmartDashboard.putNumber("distance",
+    // speakerPos.minus(swerve.getPose().getTranslation()).getNorm());
+    // targetDegree = swerve.getPose().getRotation().getDegrees() - degreeError;
 
     if (targetDegree > 180) {
       targetDegree -= 360;
@@ -81,7 +115,8 @@ public class RotateToAngleExtended extends Command {
 
     // Calculates power using PID to move the motors to the target angle.
     SmartDashboard.putNumber("currentError", pid.getPositionError());
-    //directionFactor = pid.calculate(swerve.getPose().getRotation().getDegrees(), targetDegree);
+    // directionFactor = pid.calculate(swerve.getPose().getRotation().getDegrees(),
+    // targetDegree);
 
     if (directionFactor < 0.06 && directionFactor > -0.06) {
       directionFactor = Math.copySign(0.06, directionFactor);
@@ -92,9 +127,9 @@ public class RotateToAngleExtended extends Command {
     SmartDashboard.putNumber("Old direction", directionFactor);
     if (pid.getPositionError() > -0.25 && pid.getPositionError() < 0.25) {
       // Dead Zone
-      //swerve.drive(new Translation2d(0, 0), 0, true);
+      // swerve.drive(new Translation2d(0, 0), 0, true);
     } else {
-      //swerve.drive(new Translation2d(0, 0), directionFactor, true);
+      // swerve.drive(new Translation2d(0, 0), directionFactor, true);
     }
   }
 
@@ -103,7 +138,7 @@ public class RotateToAngleExtended extends Command {
    */
   @Override
   public void end(boolean interrupted) {
-    //swerve.drive(new Translation2d(0, 0), 0, true);
+    // swerve.drive(new Translation2d(0, 0), 0, true);
   }
 
   /**

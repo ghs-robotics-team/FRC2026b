@@ -11,21 +11,21 @@ import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkFlexConfig;
-
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 /**
- * Shoots game pieces at end of subsystem chain. 
- * Uses a single motor to shoot and a hood angler to adjust the angle of the shot.
+ * Shoots game pieces at end of subsystem chain.
+ * Uses a single motor to shoot and a hood angler to adjust the angle of the
+ * shot.
  */
 public class Shooter extends SubsystemBase {
   SparkFlex shooterTop = new SparkFlex(18, MotorType.kBrushless);
   SparkFlex shooterBottom = new SparkFlex(8, MotorType.kBrushless);
   SparkFlexConfig config = new SparkFlexConfig();
   SparkClosedLoopController controllerTop;
-  SparkClosedLoopController controllerBottom; 
-  
+  SparkClosedLoopController controllerBottom;
+
   public Shooter() {
     // Configure the internal PID of the motor
 
@@ -40,20 +40,22 @@ public class Shooter extends SubsystemBase {
 
     // Created PID controllers
     controllerTop = shooterTop.getClosedLoopController();
-    controllerBottom = shooterBottom.getClosedLoopController(); 
-    
-    
+    controllerBottom = shooterBottom.getClosedLoopController();
 
   }
 
   /**
    * Sets the power level of the shooter motor to shoot game pieces.
-   * @param power The power level to set the shooter motor to, typically between -1.0 and 1.0.
+   * 
+   * @param power The power level to set the shooter motor to, typically between
+   *              -1.0 and 1.0.
    */
   public void shoot(double power) {
-    /*if (Constants.OperatorConstants.DYNAMIC_POWER_CONTROL && power != 0) {
-      power = SmartDashboard.getNumber("Shooting V", 0.1);
-    }*/
+    /*
+     * if (Constants.OperatorConstants.DYNAMIC_POWER_CONTROL && power != 0) {
+     * power = SmartDashboard.getNumber("Shooting V", 0.1);
+     * }
+     */
     shooterTop.set(power);
     shooterBottom.set(power);
   }
@@ -70,8 +72,8 @@ public class Shooter extends SubsystemBase {
 
     controllerTop.setSetpoint(rpm, ControlType.kVelocity);
     controllerBottom.setSetpoint(rpm, ControlType.kVelocity);
-    //SmartDashboard.putNumber("Shooter RPM", rpm);
-    //SmartDashboard.putNumber("Shooter Error", config.pid);
+    // SmartDashboard.putNumber("Shooter RPM", rpm);
+    // SmartDashboard.putNumber("Shooter Error", config.pid);
   }
 
   /*

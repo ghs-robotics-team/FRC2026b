@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands;
+package frc.robot.commands.Shooting;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.FeedRoller;
@@ -16,8 +16,10 @@ public class FeedRollOnly extends Command {
 
   /**
    * Creates a new FeedRollOnly command.
+   * 
    * @param feedRoller The feed roller subsystem to run.
-   * @param power The power level to set the feed roller motor to, typically between -1.0 and 1.0.
+   * @param power      The power level to set the feed roller motor to, typically
+   *                   between -1.0 and 1.0.
    */
   public FeedRollOnly(FeedRoller feedRoller, double power) {
     this.feedRoller = feedRoller;

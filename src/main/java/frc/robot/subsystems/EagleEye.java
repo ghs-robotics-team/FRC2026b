@@ -23,7 +23,6 @@ import frc.robot.LimelightHelpers;
  * EagleEye subsystem for vision processing and pose estimation.
  */
 public class EagleEye extends SubsystemBase {
-  
 
   /**
    * Nothing done in init.
@@ -32,12 +31,14 @@ public class EagleEye extends SubsystemBase {
   }
 
   /**
-   * Determines confidence level of limelight estimations based on distance, tag count, and robot motion.
+   * Determines confidence level of limelight estimations based on distance, tag
+   * count, and robot motion.
+   * 
    * @param limelight The Limelight pose estimate.
    * @return Confidence level between 0 and 1.
    */
   public double limelightMeasurement(LimelightHelpers.PoseEstimate limelight) {
-    
+
     // Hard rejections
     if (limelight.tagCount < 1)
       return 0.0;
@@ -63,12 +64,14 @@ public class EagleEye extends SubsystemBase {
       confidence *= 0.75; // single-tag penalty
     }
 
-    /*  Compare with Odometry
-    double odomError = limelight.pose.getTranslation()
-        .getDistance(Globals.EagleEye.position.getTranslation());
-
-    double odomFactor = MathUtil.clamp(1.0 - odomError / 3.0, 0.2, 1.0);
-    confidence *= odomFactor;*/
+    /*
+     * Compare with Odometry
+     * double odomError = limelight.pose.getTranslation()
+     * .getDistance(Globals.EagleEye.position.getTranslation());
+     * 
+     * double odomFactor = MathUtil.clamp(1.0 - odomError / 3.0, 0.2, 1.0);
+     * confidence *= odomFactor;
+     */
 
     // Disabled or stationary bonus
     if (DriverStation.isDisabled()) {
@@ -80,7 +83,7 @@ public class EagleEye extends SubsystemBase {
   }
 
   /**
-   * Periodically updates vision measurements using two Limelight cameras, 
+   * Periodically updates vision measurements using two Limelight cameras,
    * getting confidence levels and storing the latest measurements in Globals.
    */
   @Override
@@ -181,8 +184,7 @@ public class EagleEye extends SubsystemBase {
           double elapsedTime = timer.get();
           Globals.shootingDataCollectionSettings.endPose = Globals.EagleEye.position;
           double distance = Globals.shootingDataCollectionSettings.endPose.getTranslation()
-          .getDistance(Globals.shootingDataCollectionSettings.startPose.getTranslation());
-
+              .getDistance(Globals.shootingDataCollectionSettings.startPose.getTranslation());
 
           File file = new File(Paths.get("src", "main", "deploy", "shootingTimeData.txt").toUri());
           try (FileWriter writer = new FileWriter(file)) {

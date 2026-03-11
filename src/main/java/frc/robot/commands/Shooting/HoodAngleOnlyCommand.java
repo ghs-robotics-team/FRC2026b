@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands;
+package frc.robot.commands.Shooting;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.HoodAngler;
@@ -13,11 +13,13 @@ import frc.robot.subsystems.HoodAngler;
 public class HoodAngleOnlyCommand extends Command {
   HoodAngler hoodAngler;
   double power;
-  
+
   /**
    * Creates a new HoodAngleOnlyCommand.
+   * 
    * @param hoodAngler The hood angler subsystem to control.
-   * @param power The power level to set the hood angler motor to, typically between -1.0 and 1.0.
+   * @param power      The power level to set the hood angler motor to, typically
+   *                   between -1.0 and 1.0.
    */
   public HoodAngleOnlyCommand(HoodAngler hoodAngler, double power) {
     this.hoodAngler = hoodAngler;

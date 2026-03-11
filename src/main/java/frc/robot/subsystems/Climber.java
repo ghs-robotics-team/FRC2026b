@@ -5,10 +5,8 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.spark.SparkFlex;
-
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
 
 /**
  * Climber subsystem using a hook.
@@ -20,41 +18,24 @@ public class Climber extends SubsystemBase {
   /**
    * Nothing done in constructor.
    */
-  public Climber() {}
+  public Climber() {
+  }
 
   /**
    * Runs the climber motor.
+   * 
    * @param power The power to run the motor at, ranging from -1 to 1.
    */
   public void climb(double power) {
-    /*if (Constants.OperatorConstants.DYNAMIC_POWER_CONTROL && power != 0) {
-      power = SmartDashboard.getNumber("Climber V", 0.1);
-    } */
-    /* Tune location numbers
-    if(power<=0){
-      if(getPos() <= 0){ 
-        climbMotor.set(-power);
-      }
-      else{
-        climbMotor.set(0);
-      }
-    }
-    else{
-      if(getPos() > -20.7){
-        climbMotor.set(-power);
-      }
-      else{
-        climbMotor.set(0);
-      }
-    } */
     climbMotor.set(-power);
   }
 
   /**
    * Get absolute encoder position
+   * 
    * @return Absolute Encoder Position of the motor.
    */
-  public double getPos(){
+  public double getPos() {
     return climbMotorEncoder;
   }
 

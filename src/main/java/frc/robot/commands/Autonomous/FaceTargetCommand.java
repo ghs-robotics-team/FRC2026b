@@ -1,4 +1,4 @@
-package frc.robot.commands;
+package frc.robot.commands.Autonomous;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
@@ -10,7 +10,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 //import frc.robot.subsystems.SwerveSubsystem;
 
 /**
- * Command that rotates the robot to face a specific target position on the field using PID control.
+ * Command that rotates the robot to face a specific target position on the
+ * field using PID control.
  */
 public class FaceTargetCommand extends Command {
   private static final String kExecutingKey = "FT Executing";
@@ -41,30 +42,34 @@ public class FaceTargetCommand extends Command {
     SmartDashboard.putNumber(kDKey, kDDefault);
   }
 
-  //private final SwerveSubsystem swerve;
+  // private final SwerveSubsystem swerve;
   private final Pose2d target;
   private final PIDController rotationController;
-  //private final double maxAngularVelocity;
+  // private final double maxAngularVelocity;
 
   /**
-   * Sets SwerveSubsystem, target position, initializes PIDController, 
+   * Sets SwerveSubsystem, target position, initializes PIDController,
    * and adds swerve as a requirement.
+   * 
    * @param swerve The SwerveSubsystem used to control the robot's movement.
    * @param target The target angle on the field to face.
    */
-  public FaceTargetCommand(/*SwerveSubsystem swerve, */Pose2d target) {
-    //this.swerve = swerve;
+  public FaceTargetCommand(/* SwerveSubsystem swerve, */Pose2d target) {
+    // this.swerve = swerve;
     this.target = target;
     this.rotationController = new PIDController(cachedP, kI, cachedD);
     this.rotationController.enableContinuousInput(-180.0, 180.0);
     this.rotationController.setTolerance(kAngleToleranceDeg);
-    //this.maxAngularVelocity = swerve.getSwerveDrive().getMaximumChassisAngularVelocity();
-    //addRequirements(swerve);
+    // this.maxAngularVelocity =
+    // swerve.getSwerveDrive().getMaximumChassisAngularVelocity();
+    // addRequirements(swerve);
   }
 
   /**
-   * Initializes the command by updating SmartDashboard to indicate that the command is executing,
-   * refreshing tunable PID values from SmartDashboard, setting the PIDController's P and D values,
+   * Initializes the command by updating SmartDashboard to indicate that the
+   * command is executing,
+   * refreshing tunable PID values from SmartDashboard, setting the
+   * PIDController's P and D values,
    * and resetting the PIDController's internal state.
    */
   @Override
@@ -77,19 +82,22 @@ public class FaceTargetCommand extends Command {
   }
 
   /**
-   * Continuously calculates the angle error to the target and rotates the robot to face the target angle using PID control.
-   * Also updates SmartDashboard with the current angle, target angle, error angle, and rotation output for debugging purposes.
+   * Continuously calculates the angle error to the target and rotates the robot
+   * to face the target angle using PID control.
+   * Also updates SmartDashboard with the current angle, target angle, error
+   * angle, and rotation output for debugging purposes.
    * If the robot is within the angle tolerance, it will stop rotating.
-   * If the calculated rotation output is below the minimum angular velocity, 
-   * it will be set to the minimum to ensure the robot continues rotating towards the target.
+   * If the calculated rotation output is below the minimum angular velocity,
+   * it will be set to the minimum to ensure the robot continues rotating towards
+   * the target.
    */
   @Override
   public void execute() {
-    Pose2d currentPose = new Pose2d();//swerve.getPose();
+    Pose2d currentPose = new Pose2d();// swerve.getPose();
     Translation2d toTarget = target.getTranslation().minus(currentPose.getTranslation());
 
     if (toTarget.getNorm() < 1e-4) {
-      //swerve.stop();
+      // swerve.stop();
       return;
     }
 
@@ -107,7 +115,8 @@ public class FaceTargetCommand extends Command {
 
     double rotationOutput = Units.degreesToRadians(rotationOutputDegPerSec);
     SmartDashboard.putNumber("FT Rot Output RAD", rotationOutput);
-    //rotationOutput = MathUtil.clamp(rotationOutput, -maxAngularVelocity, maxAngularVelocity);
+    // rotationOutput = MathUtil.clamp(rotationOutput, -maxAngularVelocity,
+    // maxAngularVelocity);
     SmartDashboard.putNumber("FT Rot Output CLAMP", rotationOutput);
 
     boolean rotating = true;
@@ -122,24 +131,27 @@ public class FaceTargetCommand extends Command {
 
     SmartDashboard.putBoolean(kRotatingKey, rotating);
 
-    //swerve.drive(new Translation2d(), -rotationOutput, true);
+    // swerve.drive(new Translation2d(), -rotationOutput, true);
   }
 
   /**
-   * Stops the robot and updates SmartDashboard to indicate that the 
+   * Stops the robot and updates SmartDashboard to indicate that the
    * command is no longer executing or rotating when the command ends.
+   * 
    * @param interrupted Whether the command was interrupted/canceled.
    */
   @Override
   public void end(boolean interrupted) {
-    //swerve.stop();
+    // swerve.stop();
     SmartDashboard.putBoolean(kExecutingKey, false);
     SmartDashboard.putBoolean(kRotatingKey, false);
   }
 
   /**
-   * This command is designed to run indefinitely until interrupted, 
-   * as it continuously adjusts the robot's orientation to face the target position.
+   * This command is designed to run indefinitely until interrupted,
+   * as it continuously adjusts the robot's orientation to face the target
+   * position.
+   * 
    * @return False, indicating that the command should not end on its own.
    */
   @Override
@@ -148,9 +160,11 @@ public class FaceTargetCommand extends Command {
   }
 
   /**
-   * Refreshes the tunable PID values from SmartDashboard and updates the cached values, 
+   * Refreshes the tunable PID values from SmartDashboard and updates the cached
+   * values,
    * ensuring they are within the defined min and max limits.
-   * This allows for real-time tuning of the PID controller while the command is running.
+   * This allows for real-time tuning of the PID controller while the command is
+   * running.
    */
   private static void refreshTunables() {
     double p = SmartDashboard.getNumber(kPKey, kPDefault);

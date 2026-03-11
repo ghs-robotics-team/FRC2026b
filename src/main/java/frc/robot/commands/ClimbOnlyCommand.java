@@ -16,8 +16,10 @@ public class ClimbOnlyCommand extends Command {
 
   /**
    * Creates a new ClimbOnlyCommand.
+   * 
    * @param climber The climber subsystem to run.
-   * @param power The power level to set the climber motor to, typically between -
+   * @param power   The power level to set the climber motor to, typically between
+   *                -
    */
   public ClimbOnlyCommand(Climber climber, double power) {
     this.climber = climber;
@@ -51,7 +53,7 @@ public class ClimbOnlyCommand extends Command {
 
   /**
    * Returns false to keep the command running until interrupted.
-   */ 
+   */
   @Override
   public boolean isFinished() {
     return false;

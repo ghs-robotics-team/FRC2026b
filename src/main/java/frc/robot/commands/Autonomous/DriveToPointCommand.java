@@ -1,4 +1,4 @@
-package frc.robot.commands;
+package frc.robot.commands.Autonomous;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.path.PathConstraints;
@@ -8,10 +8,11 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.Constants;
 import frc.robot.Globals;
-import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.TargetPoints;
 
 /**
- * Command that drives the robot to a specific point on the field using auto-pathfinding.
+ * Command that drives the robot to a specific point on the field using
+ * auto-pathfinding.
  */
 public class DriveToPointCommand extends Command {
   TargetPoints point;
@@ -19,7 +20,8 @@ public class DriveToPointCommand extends Command {
 
   /**
    * Sets point and heading for the command.
-   * @param point The target point on the field to drive to.
+   * 
+   * @param point   The target point on the field to drive to.
    * @param heading The desired heading of the robot at the target point.
    */
   public DriveToPointCommand(TargetPoints point, String heading) {
@@ -27,44 +29,48 @@ public class DriveToPointCommand extends Command {
     this.point = point;
     this.heading = heading;
   }
-  
+
   /**
-   * Initializes the command by building a pathfinding command based on the target point and heading, 
-   * and schedules it. Also updates SmartDashboard with the target point and sets a global variable 
+   * Initializes the command by building a pathfinding command based on the target
+   * point and heading,
+   * and schedules it. Also updates SmartDashboard with the target point and sets
+   * a global variable
    * to indicate that the robot is currently in a pathfinding command.
    */
   @Override
   public void initialize() {
     // Build Command based on Point and Constraints.
     Command pathfindingCommand;
-    if(heading.equals("Forward")){
-      pathfindingCommand = AutoBuilder.pathfindToPose(point.getForward(), new PathConstraints(Constants.OperatorConstants.MAX_SPEED, 2, 2*Math.PI, 4*Math.PI), 0.0);
+    if (heading.equals("Forward")) {
+      pathfindingCommand = AutoBuilder.pathfindToPose(point.getForward(),
+          new PathConstraints(Constants.OperatorConstants.MAX_SPEED, 2, 2 * Math.PI, 4 * Math.PI), 0.0);
+    } else {
+      pathfindingCommand = AutoBuilder.pathfindToPose(point.get(),
+          new PathConstraints(Constants.OperatorConstants.MAX_SPEED, 2, 2 * Math.PI, 4 * Math.PI), 0.0);
     }
-    else{
-      pathfindingCommand = AutoBuilder.pathfindToPose(point.get(), new PathConstraints(Constants.OperatorConstants.MAX_SPEED, 2, 2*Math.PI, 4*Math.PI), 0.0);
-    }
-    
+
     // Setup Variables for Field and Robotpose.
     Field2d field = new Field2d();
     field.setRobotPose(point.get());
     SmartDashboard.putData("DTP target point", field);
-    
+
     // Sends data to Globals to indicate that the robot is currently in a command.
     Globals.inPath = true;
     pathfindingCommand.andThen(new InstantCommand(() -> {
-        Globals.inPath = false;
-      })).schedule();
+      Globals.inPath = false;
+    })).schedule();
   }
 
   /**
-   * This method is intentionally left empty as the actual driving logic 
+   * This method is intentionally left empty as the actual driving logic
    * is handled by the scheduled pathfinding command.
    */
   @Override
-  public void execute() {}
+  public void execute() {
+  }
 
   /**
-   * This method is intentionally left empty as there are 
+   * This method is intentionally left empty as there are
    * no specific actions needed when the command ends,
    */
   @Override
@@ -72,8 +78,9 @@ public class DriveToPointCommand extends Command {
   }
 
   /**
-   * This command is designed to finish immediately after initialization, 
+   * This command is designed to finish immediately after initialization,
    * as the actual driving logic is handled by the scheduled pathfinding command.
+   * 
    * @return True, indicating that the command is finished after initialization.
    */
   @Override

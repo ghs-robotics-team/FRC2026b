@@ -2,34 +2,48 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands;
+package frc.robot.commands.Intaking;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Globals;
 import frc.robot.subsystems.Intake;
 
-/* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
+/**
+ * Keeps the deployed intake steady at its up or down positions using
+ * a PID controller.
+ */
 public class DeploySteady extends Command {
-  /** Creates a new DeploySteady. */
   Intake intake;
   PIDController pid;
+
+  /**
+   * Creates the PID controller and sets the intake subsystem as a requirement.
+   * 
+   * @param intake The intake subsystem to control.
+   */
   public DeploySteady(Intake intake) {
-    // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(intake);
     this.pid = new PIDController(0, 0, 0);
     this.intake = intake;
-
+    addRequirements(intake);
   }
 
-  // Called when the command is initially scheduled.
+  /**
+   * No initialization needed since the PID controller
+   * will handle everything in execute.
+   */
   @Override
-  public void initialize() {}
+  public void initialize() {
+  }
 
-  // Called every time the scheduler runs while the command is scheduled.
+  /**
+   * Calculates the PID output based on the current position of the intake
+   * and the target position, and applies it to the intake deploy motor.
+   * If the error is within a certain range, it applies a deadzone to prevent
+   * jittering.
+   */
   @Override
   public void execute() {
-    // Get PID Controller direction for elevator to go, find current error from position.
     double direction = pid.calculate(intake.getPos(), Globals.targetPos.intakeDeployTarget);
     double error = pid.getPositionError();
 
@@ -41,11 +55,16 @@ public class DeploySteady extends Command {
 
   }
 
-  // Called once the command ends or is interrupted.
+  /**
+   * Nothing done in end.
+   */
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+  }
 
-  // Returns true when the command should end.
+  /**
+   * Command does not finish on its own.
+   */
   @Override
   public boolean isFinished() {
     return false;

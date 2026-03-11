@@ -2,34 +2,47 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands;
+package frc.robot.commands.Shooting;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Globals;
 import frc.robot.subsystems.HoodAngler;
 
-/* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
+/**
+ * Command to hold the hood angler at a steady position using a PID controller.
+ */
 public class HoodSteady extends Command {
-  /** Creates a new DeploySteady. */
   HoodAngler hoodAngler;
   PIDController pid;
+
+  /**
+   * Creates the hood angler and PID controller.
+   * 
+   * @param hoodAngler The hood angler subsystem to control.
+   */
   public HoodSteady(HoodAngler hoodAngler) {
-    // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(hoodAngler);
     this.pid = new PIDController(0, 0, 0);
     this.hoodAngler = hoodAngler;
-
+    addRequirements(hoodAngler);
   }
 
-  // Called when the command is initially scheduled.
+  /**
+   * No initialization needed since the PID controller
+   * will handle everything in execute.
+   */
   @Override
-  public void initialize() {}
+  public void initialize() {
+  }
 
-  // Called every time the scheduler runs while the command is scheduled.
+  /**
+   * Calculates the PID output based on the current position of the hood angler
+   * and the target position, and applies it to the hood angler motor.
+   */
   @Override
   public void execute() {
-    // Get PID Controller direction for elevator to go, find current error from position.
+    // Get PID Controller direction for elevator to go, find current error from
+    // position.
     double direction = pid.calculate(hoodAngler.getPos(), Globals.targetPos.intakeDeployTarget);
     double error = pid.getPositionError();
 
@@ -41,11 +54,16 @@ public class HoodSteady extends Command {
 
   }
 
-  // Called once the command ends or is interrupted.
+  /**
+   * Nothing done in end.
+   */
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+  }
 
-  // Returns true when the command should end.
+  /**
+   * Command does not finish on its own.
+   */
   @Override
   public boolean isFinished() {
     return false;
