@@ -18,8 +18,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.ClimbOnlyCommand;
@@ -68,8 +68,8 @@ public class RobotContainer {
 
 
     /**<----------Controllers---------->*/
-    private XboxController buttonsXbox = new XboxController(2);
-    private XboxController driverXbox;
+    private CommandXboxController buttonsXbox = new CommandXboxController(2);
+    private CommandXboxController driverXbox;
     private Joystick rightJoystick;
     private Joystick leftJoystick;
 
@@ -258,51 +258,51 @@ public class RobotContainer {
         new JoystickButton(leftJoystick, 4).onTrue(drivetrain.runOnce(drivetrain::seedFieldCentric));
 
         // Right Bumper Button - Final Shooting
-        new JoystickButton(buttonsXbox, 6).whileTrue(new ParallelCommandGroup(
+        buttonsXbox.rightBumper().whileTrue(new ParallelCommandGroup(
             feedRollOnlyCommand, 
             spindexOnlyCommandShoot)
         ); 
-        new JoystickButton(buttonsXbox, 6).onFalse(new ParallelCommandGroup(
+        buttonsXbox.rightBumper().onFalse(new ParallelCommandGroup(
             feedRollRampDown, 
             spindexRampDownShoot)
         ); 
 
         // Left Bumper Button - Intaking
-        new JoystickButton(buttonsXbox, 5).whileTrue(new ParallelCommandGroup(
+        buttonsXbox.leftBumper().whileTrue(new ParallelCommandGroup(
             intakeOnlyCommand, 
             spindexOnlyCommandIntake)
         );
-        new JoystickButton(buttonsXbox, 5).onFalse(new ParallelCommandGroup(
+        buttonsXbox.leftBumper().onFalse(new ParallelCommandGroup(
             intakeRampDown, 
             spindexRampDownIntake)
         );
 
         // Menu Button - Outtaking
-        new JoystickButton(buttonsXbox, 7).whileTrue(outtakeOnlyCommand); 
-        new JoystickButton(buttonsXbox, 7).onFalse(outtakeRampDown);
+        buttonsXbox.button(7).whileTrue(outtakeOnlyCommand); 
+        buttonsXbox.button(7).onFalse(outtakeRampDown);
 
         // DPad Up - Climb Up
-        new POVButton(buttonsXbox, 0).whileTrue(climbOnlyCommandUp); 
+        buttonsXbox.pov(0).whileTrue(climbOnlyCommandUp); 
         // DPad Down - Climb Down
-        new POVButton(buttonsXbox, 180).whileTrue(climbOnlyCommandDown); 
+        buttonsXbox.pov(180).whileTrue(climbOnlyCommandDown); 
 
         // DPad Right - Hood Angle Up
-        new POVButton(buttonsXbox, 90).whileTrue(deployIntakeDown);
+        buttonsXbox.pov(90).whileTrue(deployIntakeDown);
         // DPad Left - Hood Angle Down
-        new POVButton(buttonsXbox, 270).whileTrue(deployIntake);
+        buttonsXbox.pov(270).whileTrue(deployIntake);
         
         // A Button - Far Pass
-        new JoystickButton(buttonsXbox, 1).whileTrue(farPassCommand); 
-        new JoystickButton(buttonsXbox, 1).onFalse(shootingRampDown);
+        buttonsXbox.a().whileTrue(farPassCommand); 
+        buttonsXbox.a().onFalse(shootingRampDown);
         // B Button - Mid Pass
-        new JoystickButton(buttonsXbox, 2).whileTrue(midPassCommand); 
-        new JoystickButton(buttonsXbox, 2).onFalse(shootingRampDown);
+        buttonsXbox.b().whileTrue(midPassCommand); 
+        buttonsXbox.b().onFalse(shootingRampDown);
         // X Button - Far Shot
-        new JoystickButton(buttonsXbox, 3).whileTrue(farShotCommand); 
-        new JoystickButton(buttonsXbox, 3).onFalse(shootingRampDown);
+        buttonsXbox.x().whileTrue(farShotCommand); 
+        buttonsXbox.x().onFalse(shootingRampDown);
         // Y Button - Mid Shot
-        new JoystickButton(buttonsXbox, 4).whileTrue(midShotCommand);
-        new JoystickButton(buttonsXbox, 4).onFalse(shootingRampDown);
+        buttonsXbox.y().whileTrue(midShotCommand);
+        buttonsXbox.y().onFalse(shootingRampDown);
     
         drivetrain.registerTelemetry(logger::telemeterize);
     }
