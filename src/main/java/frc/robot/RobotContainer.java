@@ -263,12 +263,12 @@ public class RobotContainer {
         // and Y is defined as to the left according to WPILib convention.
         drivetrain.setDefaultCommand(
             OperatorConstants.XBOX_DRIVE ? drivetrain.applyRequest(() ->
-                drive.withVelocityX(-driverXbox.getLeftX() * MaxSpeed) // Drive forward with negative Y (forward)
+                drive.withVelocityX(driverXbox.getLeftX() * MaxSpeed) // Drive forward with negative Y (forward)
                     .withVelocityY(-driverXbox.getLeftY() * MaxSpeed) // Drive left with negative X (left)
                     .withRotationalRate(-driverXbox.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)
             ) : drivetrain.applyRequest(() ->
-                drive.withVelocityX(-leftJoystick.getY() * MaxSpeed) // Drive forward with negative Y (forward)
-                    .withVelocityY(-leftJoystick.getX() * MaxSpeed) // Drive left with negative X (left)
+                drive.withVelocityX(-leftJoystick.getX() * MaxSpeed) // Drive forward with negative Y (forward)
+                    .withVelocityY(-leftJoystick.getY() * MaxSpeed) // Drive left with negative X (left)
                     .withRotationalRate(-rightJoystick.getX() * MaxAngularRate) // Drive counterclockwise with negative X (left)
             )
         );
@@ -280,11 +280,11 @@ public class RobotContainer {
             drivetrain.applyRequest(() -> idle).ignoringDisable(true)
         );
 
-        // No differences in the two settings yet.
         if (OperatorConstants.XBOX_DRIVE) {
         } else {
+            new JoystickButton(leftJoystick, 4).onTrue(drivetrain.runOnce(drivetrain::seedFieldCentric));
         }
-        new JoystickButton(leftJoystick, 4).onTrue(drivetrain.runOnce(drivetrain::seedFieldCentric));
+        
 
         // Right Bumper Button - Final Shooting
         buttonsXbox.rightBumper().whileTrue(new ParallelCommandGroup(
