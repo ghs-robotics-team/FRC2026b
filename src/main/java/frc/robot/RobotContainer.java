@@ -82,6 +82,8 @@ public class RobotContainer {
     private final SendableChooser<Command> auto;
 
     /**<----------Autonomous Commands---------->*/
+
+    // Far-Shot Auto
     private final ShootingRPMCommand shootingFarShotAuto = new ShootingRPMCommand(shooter, 5146);
     private final HoodAnglerPositionCommand hoodAnglerFarShotAuto = new HoodAnglerPositionCommand(hoodAngler, 0); 
     private final FeedRollOnly feedRollFarShotAuto = new FeedRollOnly(feedRoller, 1);
@@ -92,6 +94,31 @@ public class RobotContainer {
         feedRollFarShotAuto.withTimeout(5), 
         spindexOnlyFarShotAuto.withTimeout(5)
     );
+
+    // Mid-Shot Auto
+    private final ShootingRPMCommand shootingMidShotAuto = new ShootingRPMCommand(shooter, 5146);
+    private final HoodAnglerPositionCommand hoodAnglerMidShotAuto = new HoodAnglerPositionCommand(hoodAngler, 0); 
+    private final FeedRollOnly feedRollMidShotAuto = new FeedRollOnly(feedRoller, 1);
+    private final SpindexOnlyCommand spindexOnlyMidShotAuto = new SpindexOnlyCommand(spindexer, 0.5); 
+    private final ParallelCommandGroup midShotCommandAuto = new ParallelCommandGroup(
+        shootingMidShotAuto.withTimeout(5), 
+        hoodAnglerMidShotAuto.withTimeout(5),
+        feedRollMidShotAuto.withTimeout(5), 
+        spindexOnlyMidShotAuto.withTimeout(5)
+    );
+
+    // Auto Shoot Auto
+
+    // Intake Auto
+
+    // Climb Auto
+    private final ClimbOnlyCommand climbUpCommandAuto = new ClimbOnlyCommand(climber, 0.5);
+    private final ClimbOnlyCommand climbDownCommandAuto = new ClimbOnlyCommand(climber, -0.5);
+    private final SequentialCommandGroup climbCommandAuto = new SequentialCommandGroup(
+        climbUpCommandAuto.withTimeout(5), 
+        climbDownCommandAuto.withTimeout(3)
+    );
+
 
 
     /**<----------Teleop Commands---------->*/
@@ -184,7 +211,10 @@ public class RobotContainer {
     public RobotContainer() {
         autoChooser = AutoBuilder.buildAutoChooser("Far Shot (No Movement)");
         SmartDashboard.putData("Auto Mode", autoChooser);
+
         NamedCommands.registerCommand("Far Shot", farShotCommandAuto);
+        NamedCommands.registerCommand("Mid Shot", midShotCommandAuto);
+        NamedCommands.registerCommand("Climb", climbCommandAuto);
 
         if (Constants.EagleEyeConstants.EAGLEEYE_ENABLED) {
             eagleEye = new EagleEye();
@@ -233,8 +263,8 @@ public class RobotContainer {
         // and Y is defined as to the left according to WPILib convention.
         drivetrain.setDefaultCommand(
             OperatorConstants.XBOX_DRIVE ? drivetrain.applyRequest(() ->
-                drive.withVelocityX(-driverXbox.getLeftY() * MaxSpeed) // Drive forward with negative Y (forward)
-                    .withVelocityY(-driverXbox.getLeftX() * MaxSpeed) // Drive left with negative X (left)
+                drive.withVelocityX(-driverXbox.getLeftX() * MaxSpeed) // Drive forward with negative Y (forward)
+                    .withVelocityY(-driverXbox.getLeftY() * MaxSpeed) // Drive left with negative X (left)
                     .withRotationalRate(-driverXbox.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)
             ) : drivetrain.applyRequest(() ->
                 drive.withVelocityX(-leftJoystick.getY() * MaxSpeed) // Drive forward with negative Y (forward)
