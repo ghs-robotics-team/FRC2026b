@@ -30,6 +30,7 @@ public final class Constants {
    * Preset setpoints upper mechanicals
    */
   public static final class SetPointConstants {
+    public static final double TEST = -400; // Ticks
   }
 
   /**

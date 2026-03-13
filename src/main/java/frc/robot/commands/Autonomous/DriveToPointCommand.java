@@ -81,7 +81,7 @@ public class DriveToPointCommand extends Command {
    * This command is designed to finish immediately after initialization,
    * as the actual driving logic is handled by the scheduled pathfinding command.
    * 
-   * @return True, indicating that the command is finished after initialization.
+   * @return true, indicating that the command is finished after initialization.
    */
   @Override
   public boolean isFinished() {

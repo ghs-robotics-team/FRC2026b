@@ -8,10 +8,11 @@ import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
-import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.FollowPathCommand;
+
+import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -24,6 +25,7 @@ import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.ClimbOnlyCommand;
 import frc.robot.commands.EagleEyeCommand;
+import frc.robot.commands.Autonomous.ContinuousRotateToAngle;
 import frc.robot.commands.Intaking.IntakeOnlyCommand;
 import frc.robot.commands.Intaking.PositionIntakeCommand;
 import frc.robot.commands.Shooting.FeedRollOnly;
@@ -41,15 +43,7 @@ import frc.robot.subsystems.HoodAngler;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Spindexer;
-import frc.robot.generated.TunerConstants;
-import frc.robot.subsystems.Climber;
-import frc.robot.subsystems.CommandSwerveDrivetrain;
-import frc.robot.subsystems.EagleEye;
-import frc.robot.subsystems.FeedRoller;
-import frc.robot.subsystems.HoodAngler;
-import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.Shooter;
-import frc.robot.subsystems.Spindexer;
+import java.util.function.DoubleSupplier;
 
 public class RobotContainer {
     /**<----------Drivetrain---------->*/
@@ -84,6 +78,7 @@ public class RobotContainer {
 
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
     private final EagleEyeCommand eagleEyeCommand;
+    private final ContinuousRotateToAngle autoRotate;
     private final SendableChooser<Command> auto;
 
     /**<----------Autonomous Commands---------->*/
@@ -199,14 +194,18 @@ public class RobotContainer {
             eagleEyeCommand = null;
         }
 
+        autoRotate = new ContinuousRotateToAngle(drivetrain, 
+        (DoubleSupplier) () -> MathUtil.applyDeadband(-leftJoystick.getY() * MaxSpeed, OperatorConstants.TRANSLATION_DEADBAND),
+        (DoubleSupplier) () -> MathUtil.applyDeadband(-leftJoystick.getX() * MaxSpeed, OperatorConstants.ROTATION_DEADBAND));
+
         // Connect the controllers before binding
         if (Constants.OperatorConstants.XBOX_DRIVE) {
-            /**driverXbox = new XboxController(0);
+            driverXbox = new CommandXboxController(0);
             if (DriverStation.isJoystickConnected(1)) {
-                buttonsXbox = new XboxController(1);
+                buttonsXbox = new CommandXboxController(1);
             } else {
                 buttonsXbox = driverXbox;
-            }*/
+            }
             rightJoystick = null; // Not used in Xbox mode
             leftJoystick = null; // Not used in Xbox mode
         } else {

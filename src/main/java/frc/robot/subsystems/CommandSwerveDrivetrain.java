@@ -8,6 +8,7 @@ import java.util.function.Supplier;
 import com.ctre.phoenix6.SignalLogger;
 import com.ctre.phoenix6.Utils;
 import com.ctre.phoenix6.swerve.SwerveDrivetrainConstants;
+import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveModuleConstants;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 
@@ -33,6 +34,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.Constants;
+import frc.robot.Constants.OperatorConstants;
 import frc.robot.Globals;
 import frc.robot.generated.TunerConstants.TunerSwerveDrivetrain;
 
@@ -396,6 +398,17 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         Matrix<N3, N1> visionMeasurementStdDevs
     ) {
         super.addVisionMeasurement(visionRobotPoseMeters, Utils.fpgaToCurrentTime(timestampSeconds), visionMeasurementStdDevs);
+    }
+
+    public void drive(double xVal, double yVal, double rotVal) {
+        final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
+            .withDeadband(OperatorConstants.MAX_SPEED * OperatorConstants.TRANSLATION_DEADBAND).withRotationalDeadband(OperatorConstants.MAX_ANGULAR_SPEED * OperatorConstants.ROTATION_DEADBAND) // Add a deadband
+            .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
+
+        applyRequest(() ->
+                drive.withVelocityX(-xVal)
+                    .withVelocityY(-yVal)
+                    .withRotationalRate(-rotVal));
     }
 
     /**

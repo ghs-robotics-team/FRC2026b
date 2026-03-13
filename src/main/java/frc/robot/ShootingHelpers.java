@@ -65,7 +65,7 @@ public class ShootingHelpers {
    * @return Position of the speaker as a Translation2d.
    */
   public static Translation2d getHubPos(Alliance alliance) {
-    Translathub;
+    Translation2d hubPos;;
     if (alliance == Alliance.Blue) {
       hubPos = new Translation2d(4.6256, 4.0346);
     } else {
@@ -81,7 +81,7 @@ public class ShootingHelpers {
    * @hub Position of the speaker.
    * @return Target time in seconds.
    */
-  public static double timeInterp(Translathub) {
+  public static double timeInterp(Translation2d hubPos) {
     double distance = hubPos.minus(Globals.EagleEye.position.getTranslation()).getNorm();
     SmartDashboard.putNumber("dist", distance);
     Double[][] references = { { 0.0, 0.0 }, { 1.0, 1.0 } }; // Get Time data
@@ -127,11 +127,11 @@ public class ShootingHelpers {
     double xVel = Globals.EagleEye.xVel;
     double yVel = Globals.EagleEye.yVel;
     double time = timeInterp(hubPos);
-    Translation2d targetPos = new Translation2d(hubPos.getX() - xVel * hub.getY() - yVel * time);
+    Translation2d targetPos = new Translation2d(hubPos.getX() - xVel * time, hubPos.getY() - yVel * time);
 
     for (int i = 0; i < 4; i++) {
       time = timeInterp(targetPos);
-      targetPos = new Translathub.getX() - xVel * hub.getY() - yVel * time);
+      targetPos = new Translation2d(hubPos.getX() - xVel * time, hubPos.getY() - yVel * time);
     }
 
     return targetPos;
