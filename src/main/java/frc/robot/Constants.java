@@ -55,7 +55,7 @@ public final class Constants {
   public static class OperatorConstants {
 
     // Makes testing safer and easier
-    public static final boolean WORKSHOP_MODE = false;
+    public static final boolean WORKSHOP_MODE = true;
     public static final double WORKSHOP_MAX_SPEED_MODIFIER = 0.2; // Percent as decimal
     public static final double WORKSHOP_MAX_ROTATIONS_PER_SECOND_MODIFIER = 0.5; // Percent as decimal
  
@@ -65,8 +65,8 @@ public final class Constants {
     public static final double MAX_ANGULAR_SPEED = RotationsPerSecond.of(OperatorConstants.MAX_ROTATIONS_PER_SECOND_MODIFIER).in(RadiansPerSecond);
 
     // Joystick Deadband
-    public static final double TRANSLATION_DEADBAND = 0.1; // Percent as decimal
-    public static final double ROTATION_DEADBAND = 0.1; // Percent as decimal
+    public static final double TRANSLATION_DEADBAND = 0.15; // Percent as decimal
+    public static final double ROTATION_DEADBAND = 0.15; // Percent as decimal
 
     // Makes data taking easier
     public static final boolean SHOOTING_DATA_COLLECTION_MODE = false;
@@ -75,14 +75,14 @@ public final class Constants {
     public static final boolean  DYNAMIC_POWER_CONTROL = true;
 
     // XBOX mode
-    public static final boolean XBOX_DRIVE = true;
+    public static final boolean XBOX_DRIVE = false;
   }
 
   /**
    * Eagle Eye vision system constants.
    */
   public static class EagleEyeConstants {
-    public static final boolean EAGLEEYE_ENABLED = false;
+    public static final boolean EAGLEEYE_ENABLED = true;
     public static final boolean EAGLEEYE_DURING_AUTO = true;
     public static final double MAX_VISION_SPEED = 2.25; // Units are m/s. Usually 1.5-2.5 before it stops reading vision measurements
     public static final double MAX_TAG_DISTANCE_METERS = Units.feetToMeters(20);

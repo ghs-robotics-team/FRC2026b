@@ -7,7 +7,7 @@
         {
           "type": "named",
           "data": {
-            "name": "Low Shot"
+            "name": "Mid Shot"
           }
         },
         {
@@ -19,13 +19,7 @@
         {
           "type": "named",
           "data": {
-            "name": "Climb Up"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Climb Down"
+            "name": "Climb"
           }
         }
       ]

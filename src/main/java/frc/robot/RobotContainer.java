@@ -80,7 +80,6 @@ public class RobotContainer {
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
     private final EagleEyeCommand eagleEyeCommand;
     private final ContinuousRotateToAngle autoRotate;
-    private final SendableChooser<Command> auto;
 
     /**<----------Autonomous Commands---------->*/
 
@@ -255,22 +254,56 @@ public class RobotContainer {
         // Warmup PathPlanner to avoid Java pauses
         FollowPathCommand.warmupCommand().schedule();
         SmartDashboard.putData("Command Scheduler", CommandScheduler.getInstance());
-        auto = AutoBuilder.buildAutoChooser();
-        SmartDashboard.putData("Choose Auto", auto);
     }
 
     private void configureBindings() {
         // Note that X is defined as forward according to WPILib convention,
         // and Y is defined as to the left according to WPILib convention.
-        drivetrain.setDefaultCommand(
+                drivetrain.setDefaultCommand(
             OperatorConstants.XBOX_DRIVE ? drivetrain.applyRequest(() ->
-                drive.withVelocityX(driverXbox.getLeftX() * MaxSpeed) // Drive forward with negative Y (forward)
-                    .withVelocityY(-driverXbox.getLeftY() * MaxSpeed) // Drive left with negative X (left)
-                    .withRotationalRate(-driverXbox.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)
+                drive.withVelocityX(MathUtil.applyDeadband(
+                        MathUtil.clamp(
+                            Math.pow(driverXbox.getLeftY(), 2), 
+                            -1, 
+                            1
+                        ) * Math.signum(driverXbox.getLeftY()), 
+                        OperatorConstants.TRANSLATION_DEADBAND) * MaxSpeed) 
+                    .withVelocityY(MathUtil.applyDeadband(
+                        MathUtil.clamp(
+                            Math.pow(driverXbox.getLeftX(), 2), 
+                            -1, 
+                            1
+                        ) * Math.signum(driverXbox.getLeftX()), 
+                        OperatorConstants.TRANSLATION_DEADBAND) * MaxSpeed) 
+                    .withRotationalRate(-MathUtil.applyDeadband(
+                        MathUtil.clamp(
+                            Math.pow(driverXbox.getRightX(), 2), 
+                            -1, 
+                            1
+                        ) * Math.signum(driverXbox.getRightX()), 
+                        OperatorConstants.ROTATION_DEADBAND) * MaxAngularRate) 
             ) : drivetrain.applyRequest(() ->
-                drive.withVelocityX(-leftJoystick.getX() * MaxSpeed) // Drive forward with negative Y (forward)
-                    .withVelocityY(-leftJoystick.getY() * MaxSpeed) // Drive left with negative X (left)
-                    .withRotationalRate(-rightJoystick.getX() * MaxAngularRate) // Drive counterclockwise with negative X (left)
+                drive.withVelocityX(-MathUtil.applyDeadband(
+                        MathUtil.clamp(
+                            Math.pow(leftJoystick.getY(), 2), 
+                            -1, 
+                            1
+                        ) * Math.signum(leftJoystick.getY()), 
+                        OperatorConstants.TRANSLATION_DEADBAND) * MaxSpeed) 
+                    .withVelocityY(-MathUtil.applyDeadband(
+                        MathUtil.clamp(
+                            Math.pow(leftJoystick.getX(), 2), 
+                            -1, 
+                            1
+                        ) * Math.signum(leftJoystick.getX()), 
+                        OperatorConstants.TRANSLATION_DEADBAND) * MaxSpeed) 
+                    .withRotationalRate(-MathUtil.applyDeadband(
+                        MathUtil.clamp(
+                            Math.pow(rightJoystick.getX(), 2), 
+                            -1, 
+                            1
+                        ) * Math.signum(rightJoystick.getX()), 
+                        OperatorConstants.ROTATION_DEADBAND) * MaxAngularRate) 
             )
         );
 

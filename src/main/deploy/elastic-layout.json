@@ -1129,9 +1129,9 @@
         "containers": [
           {
             "title": "Auto Mode",
-            "x": 512.0,
+            "x": 0.0,
             "y": 0.0,
-            "width": 384.0,
+            "width": 256.0,
             "height": 128.0,
             "type": "ComboBox Chooser",
             "properties": {
@@ -1142,7 +1142,7 @@
           },
           {
             "title": "Command Scheduler",
-            "x": 512.0,
+            "x": 0.0,
             "y": 256.0,
             "width": 256.0,
             "height": 384.0,
@@ -1153,27 +1153,10 @@
             }
           },
           {
-            "title": "Is Autonomous",
-            "x": 1152.0,
-            "y": 0.0,
-            "width": 128.0,
-            "height": 128.0,
-            "type": "Boolean Box",
-            "properties": {
-              "topic": "/SmartDashboard/ROS - Mode",
-              "period": 0.06,
-              "data_type": "boolean",
-              "true_color": 4283215696,
-              "false_color": 4294198070,
-              "true_icon": "None",
-              "false_icon": "None"
-            }
-          },
-          {
             "title": "Is Enabled",
-            "x": 1152.0,
+            "x": 0.0,
             "y": 128.0,
-            "width": 128.0,
+            "width": 256.0,
             "height": 128.0,
             "type": "Boolean Box",
             "properties": {
@@ -1188,16 +1171,15 @@
           },
           {
             "title": "Match Time",
-            "x": 1152.0,
+            "x": 256.0,
             "y": 256.0,
-            "width": 128.0,
-            "height": 128.0,
-            "type": "Text Display",
+            "width": 512.0,
+            "height": 384.0,
+            "type": "Large Text Display",
             "properties": {
               "topic": "/SmartDashboard/ROS - Match Time",
               "period": 0.06,
-              "data_type": "double",
-              "show_submit_button": false
+              "data_type": "string"
             }
           }
         ]
