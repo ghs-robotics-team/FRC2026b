@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Globals;
 import frc.robot.ShootingHelpers;
+import frc.robot.Constants;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 
@@ -45,9 +46,11 @@ public class ContinuousRotateToAngle extends Command {
     this.translationY = translationY;
     pid.enableContinuousInput(-180, 180);
 
-    SmartDashboard.putNumber("DRI - Rotate PID-P", pid.getP());
-    SmartDashboard.putNumber("DRI - Rotate PID-I", pid.getI());
-    SmartDashboard.putNumber("DRI - Rotate PID-D", pid.getD());
+    if (Constants.OperatorConstants.WORKSHOP_MODE) {
+      SmartDashboard.putNumber("DRI - Rotate Continuous PID-P", 0.08);
+      SmartDashboard.putNumber("DRI - Rotate Continuous PID-I", 0.0);
+      SmartDashboard.putNumber("DRI - Rotate Continuous PID-D", 0.004);
+    }
   }
 
   /**
@@ -86,9 +89,19 @@ public class ContinuousRotateToAngle extends Command {
 
     SmartDashboard.putNumber("HOO - Target Angle", targetDegree);
 
-    double P = SmartDashboard.getNumber("DRI - Rotate PID-P", 1.0 / 150.0);
-    double I = SmartDashboard.getNumber("DRI - Rotate PID-I", 0.0);
-    double D = SmartDashboard.getNumber("DRI - Rotate PID-D", 0);
+    double P = SmartDashboard.getNumber("DRI - Rotate Continuous PID-P", 0.08);
+    double I = SmartDashboard.getNumber("DRI - Rotate Continuous PID-I", 0.0);
+    double D = SmartDashboard.getNumber("DRI - Rotate Continuous PID-D", 0.004);
+
+    // Clamp PID values to safe ranges
+    if (Constants.OperatorConstants.WORKSHOP_MODE) {
+      P = Math.max(0.0, Math.min(0.5, P));
+      I = Math.max(0.0, Math.min(0.01, I));
+      D = Math.max(0.0, Math.min(0.05, D));
+      SmartDashboard.putNumber("DRI - Rotate Continuous PID-P", P);
+      SmartDashboard.putNumber("DRI - Rotate Continuous PID-I", I);
+      SmartDashboard.putNumber("DRI - Rotate Continuous PID-D", D);
+    }
 
     // Set PID numbers
     pid.setP(P);

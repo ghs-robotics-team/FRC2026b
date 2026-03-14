@@ -10,6 +10,7 @@ import com.revrobotics.spark.SparkMax;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 /**
  * HoodAngler subsystem for adjusting the angle of the shooter hood.
@@ -24,6 +25,29 @@ public class HoodAngler extends SubsystemBase {
    * Nothing done in constructor.
    */
   public HoodAngler() {
+    if (Constants.OperatorConstants.WORKSHOP_MODE) {
+      SmartDashboard.putNumber("HOO - PID-P", 0.2);
+      SmartDashboard.putNumber("HOO - PID-I", 0.0);
+      SmartDashboard.putNumber("HOO - PID-D", 0.004);
+    }
+  }
+
+  /**
+   * Clamps PID values to reasonable ranges.
+   * P: 0.0 - 0.5, I: 0.0 - 0.01, D: 0.0 - 0.05
+   */
+  private void clampPIDValues() {
+    double p = SmartDashboard.getNumber("HOO - PID-P", 0.2);
+    double i = SmartDashboard.getNumber("HOO - PID-I", 0.0);
+    double d = SmartDashboard.getNumber("HOO - PID-D", 0.004);
+
+    p = Math.max(0.0, Math.min(0.5, p));
+    i = Math.max(0.0, Math.min(0.01, i));
+    d = Math.max(0.0, Math.min(0.05, d));
+
+    SmartDashboard.putNumber("HOO - PID-P", p);
+    SmartDashboard.putNumber("HOO - PID-I", i);
+    SmartDashboard.putNumber("HOO - PID-D", d);
   }
 
   /**
@@ -75,5 +99,9 @@ public class HoodAngler extends SubsystemBase {
     hoodEncoderVal = encoder.getRaw();
     SmartDashboard.putNumber("HOO - Position", getPos());
     SmartDashboard.putNumber("HOO - Motor Power", hoodAngler.get());
+    
+    if (Constants.OperatorConstants.WORKSHOP_MODE) {
+      clampPIDValues();
+    }
   }
 }

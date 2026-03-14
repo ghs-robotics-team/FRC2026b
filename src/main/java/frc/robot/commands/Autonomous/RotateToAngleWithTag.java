@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.LimelightHelpers;
 import frc.robot.LimelightHelpers.LimelightTarget_Fiducial;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
@@ -38,9 +39,11 @@ public class RotateToAngleWithTag extends Command {
     pid.enableContinuousInput(-180, 180);
     addRequirements(swerve);
 
-    SmartDashboard.putNumber("DRI - Rotate PID-P", pid.getP());
-    SmartDashboard.putNumber("DRI - Rotate PID-I", pid.getI());
-    SmartDashboard.putNumber("DRI - Rotate PID-D", pid.getD());
+    if (Constants.OperatorConstants.WORKSHOP_MODE) {
+      SmartDashboard.putNumber("DRI - Rotate Tag PID-P", pid.getP());
+      SmartDashboard.putNumber("DRI - Rotate Tag PID-I", pid.getI());
+      SmartDashboard.putNumber("DRI - Rotate Tag PID-D", pid.getD());
+    }
   }
 
   /**
@@ -107,9 +110,20 @@ public class RotateToAngleWithTag extends Command {
    */
   @Override
   public void execute() {
-    double P = SmartDashboard.getNumber("DRI - Rotate PID-P", 1.0 / 150.0);
-    double I = SmartDashboard.getNumber("DRI - Rotate PID-I", 0.0);
-    double D = SmartDashboard.getNumber("DRI - Rotate PID-D", 0);
+    double P = SmartDashboard.getNumber("DRI - Rotate Tag PID-P", 1.0 / 150.0);
+    double I = SmartDashboard.getNumber("DRI - Rotate Tag PID-I", 0.0);
+    double D = SmartDashboard.getNumber("DRI - Rotate Tag PID-D", 0);
+
+    // Clamp PID values to reasonable ranges
+    P = Math.max(0.0, Math.min(0.5, P));
+    I = Math.max(0.0, Math.min(0.01, I));
+    D = Math.max(0.0, Math.min(0.05, D));
+
+    if (Constants.OperatorConstants.WORKSHOP_MODE) {
+      SmartDashboard.putNumber("DRI - Rotate Tag PID-P", P);
+      SmartDashboard.putNumber("DRI - Rotate Tag PID-I", I);
+      SmartDashboard.putNumber("DRI - Rotate Tag PID-D", D);
+    }
 
     pid.setP(P);
     pid.setI(I);

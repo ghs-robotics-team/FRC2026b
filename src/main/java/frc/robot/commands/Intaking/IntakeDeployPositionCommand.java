@@ -35,9 +35,9 @@ public class IntakeDeployPositionCommand extends Command {
     this.pid = new PIDController(0.2, 0, 0.004);
     // ADD FEEDFORWARD ONCE K VALUES ARE TESTED.
 
-    SmartDashboard.putNumber("INT - PID-P", pid.getP());
-    SmartDashboard.putNumber("INT - PID-I", pid.getI());
-    SmartDashboard.putNumber("INT - PID-D", pid.getD());
+    SmartDashboard.putNumber("INT - Deploy PID-P", pid.getP());
+    SmartDashboard.putNumber("INT - Deploy PID-I", pid.getI());
+    SmartDashboard.putNumber("INT - Deploy PID-D", pid.getD());
     addRequirements(intake);
   }
 
@@ -59,9 +59,9 @@ public class IntakeDeployPositionCommand extends Command {
   public void execute() {
     this.currentPos = intake.getPos();
 
-    double P = SmartDashboard.getNumber("INTAKE-PID-P", 0.2);
-    double I = SmartDashboard.getNumber("INTAKE-PID-I", 0.0);
-    double D = SmartDashboard.getNumber("INTAKE-PID-D", 0.004);
+    double P = SmartDashboard.getNumber("INT - Deploy PID-P", 0.2);
+    double I = SmartDashboard.getNumber("INT - Deploy PID-I", 0.0);
+    double D = SmartDashboard.getNumber("INT - Deploy PID-D", 0.004);
 
     pid.setP(P);
     pid.setI(I);

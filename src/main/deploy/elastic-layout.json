@@ -962,7 +962,7 @@
       }
     },
     {
-      "name": "Tab 4",
+      "name": "Swerve2",
       "grid_layout": {
         "layouts": [],
         "containers": [
@@ -1123,148 +1123,6 @@
       }
     },
     {
-      "name": "Hood",
-      "grid_layout": {
-        "layouts": [],
-        "containers": [
-          {
-            "title": "HOOD AbsPos",
-            "x": 0.0,
-            "y": 0.0,
-            "width": 256.0,
-            "height": 128.0,
-            "type": "Text Display",
-            "properties": {
-              "topic": "/SmartDashboard/HOOD AbsPos",
-              "period": 0.06,
-              "data_type": "double",
-              "show_submit_button": false
-            }
-          },
-          {
-            "title": "HOOD-PID-D",
-            "x": 0.0,
-            "y": 384.0,
-            "width": 256.0,
-            "height": 128.0,
-            "type": "Text Display",
-            "properties": {
-              "topic": "/SmartDashboard/HOOD-PID-D",
-              "period": 0.06,
-              "data_type": "double",
-              "show_submit_button": false
-            }
-          },
-          {
-            "title": "HOOD-PID-P",
-            "x": 0.0,
-            "y": 128.0,
-            "width": 256.0,
-            "height": 128.0,
-            "type": "Text Display",
-            "properties": {
-              "topic": "/SmartDashboard/HOOD-PID-P",
-              "period": 0.06,
-              "data_type": "double",
-              "show_submit_button": false
-            }
-          },
-          {
-            "title": "HOOD-PID-I",
-            "x": 0.0,
-            "y": 256.0,
-            "width": 256.0,
-            "height": 128.0,
-            "type": "Text Display",
-            "properties": {
-              "topic": "/SmartDashboard/HOOD-PID-I",
-              "period": 0.06,
-              "data_type": "double",
-              "show_submit_button": false
-            }
-          }
-        ]
-      }
-    },
-    {
-      "name": "Intake",
-      "grid_layout": {
-        "layouts": [],
-        "containers": [
-          {
-            "title": "INT Deploy Target Pos",
-            "x": 512.0,
-            "y": 0.0,
-            "width": 256.0,
-            "height": 128.0,
-            "type": "Text Display",
-            "properties": {
-              "topic": "/SmartDashboard/INT Deploy Target Pos",
-              "period": 0.06,
-              "data_type": "double",
-              "show_submit_button": false
-            }
-          },
-          {
-            "title": "INT POS",
-            "x": 512.0,
-            "y": 128.0,
-            "width": 256.0,
-            "height": 128.0,
-            "type": "Text Display",
-            "properties": {
-              "topic": "/SmartDashboard/INT POS",
-              "period": 0.06,
-              "data_type": "double",
-              "show_submit_button": false
-            }
-          },
-          {
-            "title": "SH PID-D",
-            "x": 768.0,
-            "y": 384.0,
-            "width": 128.0,
-            "height": 128.0,
-            "type": "Text Display",
-            "properties": {
-              "topic": "/SmartDashboard/SH PID-D",
-              "period": 0.06,
-              "data_type": "double",
-              "show_submit_button": false
-            }
-          },
-          {
-            "title": "SH PID-I",
-            "x": 640.0,
-            "y": 384.0,
-            "width": 128.0,
-            "height": 128.0,
-            "type": "Text Display",
-            "properties": {
-              "topic": "/SmartDashboard/SH PID-I",
-              "period": 0.06,
-              "data_type": "double",
-              "show_submit_button": false
-            }
-          },
-          {
-            "title": "SH PID-P",
-            "x": 256.0,
-            "y": 384.0,
-            "width": 128.0,
-            "height": 128.0,
-            "type": "Text Display",
-            "properties": {
-              "topic": "/SmartDashboard/SH PID-P",
-              "period": 0.06,
-              "data_type": "double",
-              "show_submit_button": false
-            }
-          }
-        ]
-      }
-    },
-    {
       "name": "Main",
       "grid_layout": {
         "layouts": [],
@@ -1360,7 +1218,10 @@
             "properties": {
               "topic": "/SmartDashboard/SHO - Top RPM",
               "period": 0.06,
-              "data_type": "double"
+              "data_type": "double",
+              "time_displayed": 5.0,
+              "color": 4278238420,
+              "line_width": 2.0
             }
           },
           {
@@ -1387,7 +1248,10 @@
             "properties": {
               "topic": "/SmartDashboard/SHO - Bottom RPM",
               "period": 0.06,
-              "data_type": "double"
+              "data_type": "double",
+              "time_displayed": 5.0,
+              "color": 4278238420,
+              "line_width": 2.0
             }
           },
           {
@@ -1414,7 +1278,10 @@
             "properties": {
               "topic": "/SmartDashboard/SHO - Top Power",
               "period": 0.06,
-              "data_type": "double"
+              "data_type": "double",
+              "time_displayed": 5.0,
+              "color": 4278238420,
+              "line_width": 2.0
             }
           },
           {
@@ -1441,7 +1308,10 @@
             "properties": {
               "topic": "/SmartDashboard/SHO - Bottom Power",
               "period": 0.06,
-              "data_type": "double"
+              "data_type": "double",
+              "time_displayed": 5.0,
+              "color": 4278238420,
+              "line_width": 2.0
             }
           },
           {
@@ -1470,20 +1340,23 @@
             "title": "Hood Position",
             "x": 0.0,
             "y": 0.0,
-            "width": 960.0,
+            "width": 850.0,
             "height": 360.0,
             "type": "Graph",
             "properties": {
               "topic": "/SmartDashboard/HOO - Position",
               "period": 0.06,
-              "data_type": "double"
+              "data_type": "double",
+              "time_displayed": 5.0,
+              "color": 4278238420,
+              "line_width": 2.0
             }
           },
           {
             "title": "Hood Position Value",
-            "x": 960.0,
+            "x": 850.0,
             "y": 0.0,
-            "width": 320.0,
+            "width": 212.0,
             "height": 360.0,
             "type": "Text Display",
             "properties": {
@@ -1497,24 +1370,120 @@
             "title": "Hood Motor Power",
             "x": 0.0,
             "y": 360.0,
-            "width": 960.0,
+            "width": 850.0,
             "height": 360.0,
             "type": "Graph",
             "properties": {
               "topic": "/SmartDashboard/HOO - Motor Power",
               "period": 0.06,
-              "data_type": "double"
+              "data_type": "double",
+              "time_displayed": 5.0,
+              "color": 4278238420,
+              "line_width": 2.0
             }
           },
           {
             "title": "Hood Motor Power Value",
-            "x": 960.0,
+            "x": 850.0,
             "y": 360.0,
-            "width": 320.0,
+            "width": 212.0,
             "height": 360.0,
             "type": "Text Display",
             "properties": {
               "topic": "/SmartDashboard/HOO - Motor Power",
+              "period": 0.06,
+              "data_type": "double",
+              "show_submit_button": false
+            }
+          },
+          {
+            "title": "HOO PID P",
+            "x": 1062.0,
+            "y": 0.0,
+            "width": 212.0,
+            "height": 240.0,
+            "type": "Number Slider",
+            "properties": {
+              "topic": "/SmartDashboard/HOO - PID-P",
+              "period": 0.06,
+              "data_type": "double",
+              "min_value": 0.0,
+              "max_value": 0.5,
+              "divisions": 50,
+              "update_continuously": false
+            }
+          },
+          {
+            "title": "HOO PID I",
+            "x": 1062.0,
+            "y": 240.0,
+            "width": 212.0,
+            "height": 240.0,
+            "type": "Number Slider",
+            "properties": {
+              "topic": "/SmartDashboard/HOO - PID-I",
+              "period": 0.06,
+              "data_type": "double",
+              "min_value": 0.0,
+              "max_value": 0.01,
+              "divisions": 50,
+              "update_continuously": false
+            }
+          },
+          {
+            "title": "HOO PID D",
+            "x": 1062.0,
+            "y": 480.0,
+            "width": 212.0,
+            "height": 240.0,
+            "type": "Number Slider",
+            "properties": {
+              "topic": "/SmartDashboard/HOO - PID-D",
+              "period": 0.06,
+              "data_type": "double",
+              "min_value": 0.0,
+              "max_value": 0.05,
+              "divisions": 50,
+              "update_continuously": false
+            }
+          },
+          {
+            "title": "HOO PID P Value",
+            "x": 1274.0,
+            "y": 0.0,
+            "width": 212.0,
+            "height": 240.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/SmartDashboard/HOO - PID-P",
+              "period": 0.06,
+              "data_type": "double",
+              "show_submit_button": false
+            }
+          },
+          {
+            "title": "HOO PID I Value",
+            "x": 1274.0,
+            "y": 240.0,
+            "width": 212.0,
+            "height": 240.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/SmartDashboard/HOO - PID-I",
+              "period": 0.06,
+              "data_type": "double",
+              "show_submit_button": false
+            }
+          },
+          {
+            "title": "HOO PID D Value",
+            "x": 1274.0,
+            "y": 480.0,
+            "width": 212.0,
+            "height": 240.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/SmartDashboard/HOO - PID-D",
               "period": 0.06,
               "data_type": "double",
               "show_submit_button": false
@@ -1524,7 +1493,7 @@
       }
     },
     {
-      "name": "Intake",
+      "name": "Intake Deploy",
       "grid_layout": {
         "layouts": [],
         "containers": [
@@ -1532,78 +1501,27 @@
             "title": "Intake Deploy Position",
             "x": 0.0,
             "y": 0.0,
-            "width": 960.0,
-            "height": 270.0,
+            "width": 850.0,
+            "height": 360.0,
             "type": "Graph",
             "properties": {
               "topic": "/SmartDashboard/INT - Deploy Position",
               "period": 0.06,
-              "data_type": "double"
+              "data_type": "double",
+              "time_displayed": 5.0,
+              "color": 4278238420,
+              "line_width": 2.0
             }
           },
           {
             "title": "Intake Deploy Position Value",
-            "x": 960.0,
+            "x": 850.0,
             "y": 0.0,
-            "width": 320.0,
-            "height": 270.0,
+            "width": 212.0,
+            "height": 360.0,
             "type": "Text Display",
             "properties": {
               "topic": "/SmartDashboard/INT - Deploy Position",
-              "period": 0.06,
-              "data_type": "double",
-              "show_submit_button": false
-            }
-          },
-          {
-            "title": "Intake Deploy Target",
-            "x": 0.0,
-            "y": 270.0,
-            "width": 960.0,
-            "height": 270.0,
-            "type": "Graph",
-            "properties": {
-              "topic": "/SmartDashboard/INT - Deploy Target",
-              "period": 0.06,
-              "data_type": "double"
-            }
-          },
-          {
-            "title": "Intake Deploy Target Value",
-            "x": 960.0,
-            "y": 270.0,
-            "width": 320.0,
-            "height": 270.0,
-            "type": "Text Display",
-            "properties": {
-              "topic": "/SmartDashboard/INT - Deploy Target",
-              "period": 0.06,
-              "data_type": "double",
-              "show_submit_button": false
-            }
-          },
-          {
-            "title": "Intake Motor Power",
-            "x": 0.0,
-            "y": 540.0,
-            "width": 960.0,
-            "height": 270.0,
-            "type": "Graph",
-            "properties": {
-              "topic": "/SmartDashboard/INT - Motor Power",
-              "period": 0.06,
-              "data_type": "double"
-            }
-          },
-          {
-            "title": "Intake Motor Power Value",
-            "x": 960.0,
-            "y": 540.0,
-            "width": 320.0,
-            "height": 270.0,
-            "type": "Text Display",
-            "properties": {
-              "topic": "/SmartDashboard/INT - Motor Power",
               "period": 0.06,
               "data_type": "double",
               "show_submit_button": false
@@ -1612,25 +1530,121 @@
           {
             "title": "Intake Deploy Motor Power",
             "x": 0.0,
-            "y": 810.0,
-            "width": 960.0,
-            "height": 270.0,
+            "y": 360.0,
+            "width": 850.0,
+            "height": 360.0,
             "type": "Graph",
             "properties": {
               "topic": "/SmartDashboard/INT - Deploy Power",
               "period": 0.06,
-              "data_type": "double"
+              "data_type": "double",
+              "time_displayed": 5.0,
+              "color": 4278238420,
+              "line_width": 2.0
             }
           },
           {
             "title": "Intake Deploy Motor Power Value",
-            "x": 960.0,
-            "y": 810.0,
-            "width": 320.0,
-            "height": 270.0,
+            "x": 850.0,
+            "y": 360.0,
+            "width": 212.0,
+            "height": 360.0,
             "type": "Text Display",
             "properties": {
               "topic": "/SmartDashboard/INT - Deploy Power",
+              "period": 0.06,
+              "data_type": "double",
+              "show_submit_button": false
+            }
+          },
+          {
+            "title": "INT Deploy PID P",
+            "x": 1062.0,
+            "y": 0.0,
+            "width": 212.0,
+            "height": 240.0,
+            "type": "Number Slider",
+            "properties": {
+              "topic": "/SmartDashboard/INT - Deploy PID-P",
+              "period": 0.06,
+              "data_type": "double",
+              "min_value": 0.0,
+              "max_value": 0.5,
+              "divisions": 50,
+              "update_continuously": false
+            }
+          },
+          {
+            "title": "INT Deploy PID I",
+            "x": 1062.0,
+            "y": 240.0,
+            "width": 212.0,
+            "height": 240.0,
+            "type": "Number Slider",
+            "properties": {
+              "topic": "/SmartDashboard/INT - Deploy PID-I",
+              "period": 0.06,
+              "data_type": "double",
+              "min_value": 0.0,
+              "max_value": 0.01,
+              "divisions": 50,
+              "update_continuously": false
+            }
+          },
+          {
+            "title": "INT Deploy PID D",
+            "x": 1062.0,
+            "y": 480.0,
+            "width": 212.0,
+            "height": 240.0,
+            "type": "Number Slider",
+            "properties": {
+              "topic": "/SmartDashboard/INT - Deploy PID-D",
+              "period": 0.06,
+              "data_type": "double",
+              "min_value": 0.0,
+              "max_value": 0.05,
+              "divisions": 50,
+              "update_continuously": false
+            }
+          },
+          {
+            "title": "INT Deploy PID P Value",
+            "x": 1274.0,
+            "y": 0.0,
+            "width": 212.0,
+            "height": 240.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/SmartDashboard/INT - Deploy PID-P",
+              "period": 0.06,
+              "data_type": "double",
+              "show_submit_button": false
+            }
+          },
+          {
+            "title": "INT Deploy PID I Value",
+            "x": 1274.0,
+            "y": 240.0,
+            "width": 212.0,
+            "height": 240.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/SmartDashboard/INT - Deploy PID-I",
+              "period": 0.06,
+              "data_type": "double",
+              "show_submit_button": false
+            }
+          },
+          {
+            "title": "INT Deploy PID D Value",
+            "x": 1274.0,
+            "y": 480.0,
+            "width": 212.0,
+            "height": 240.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/SmartDashboard/INT - Deploy PID-D",
               "period": 0.06,
               "data_type": "double",
               "show_submit_button": false
@@ -1654,7 +1668,10 @@
             "properties": {
               "topic": "/SmartDashboard/SPX - Motor Power",
               "period": 0.06,
-              "data_type": "double"
+              "data_type": "double",
+              "time_displayed": 5.0,
+              "color": 4278238420,
+              "line_width": 2.0
             }
           },
           {
@@ -1689,7 +1706,10 @@
             "properties": {
               "topic": "/SmartDashboard/FED - Motor Power",
               "period": 0.06,
-              "data_type": "double"
+              "data_type": "double",
+              "time_displayed": 5.0,
+              "color": 4278238420,
+              "line_width": 2.0
             }
           },
           {
@@ -1724,7 +1744,10 @@
             "properties": {
               "topic": "/SmartDashboard/CLM - Position",
               "period": 0.06,
-              "data_type": "double"
+              "data_type": "double",
+              "time_displayed": 5.0,
+              "color": 4278238420,
+              "line_width": 2.0
             }
           },
           {
@@ -1751,7 +1774,10 @@
             "properties": {
               "topic": "/SmartDashboard/CLM - Motor Power",
               "period": 0.06,
-              "data_type": "double"
+              "data_type": "double",
+              "time_displayed": 5.0,
+              "color": 4278238420,
+              "line_width": 2.0
             }
           },
           {
@@ -1772,6 +1798,167 @@
       }
     },
     {
+      "name": "PID Tuning",
+      "grid_layout": {
+        "layouts": [],
+        "containers": [
+          {
+            "title": "DRI - Rotate Tag PID P",
+            "x": 0.0,
+            "y": 0.0,
+            "width": 212.0,
+            "height": 240.0,
+            "type": "Number Slider",
+            "properties": {
+              "topic": "/SmartDashboard/DRI - Rotate Tag PID-P",
+              "period": 0.06,
+              "data_type": "double",
+              "min_value": 0.0,
+              "max_value": 0.5,
+              "divisions": 50,
+              "update_continuously": false
+            }
+          },
+          {
+            "title": "DRI - Rotate Tag PID I",
+            "x": 0.0,
+            "y": 240.0,
+            "width": 212.0,
+            "height": 240.0,
+            "type": "Number Slider",
+            "properties": {
+              "topic": "/SmartDashboard/DRI - Rotate Tag PID-I",
+              "period": 0.06,
+              "data_type": "double",
+              "min_value": 0.0,
+              "max_value": 0.01,
+              "divisions": 50,
+              "update_continuously": false
+            }
+          },
+          {
+            "title": "DRI - Rotate Tag PID D",
+            "x": 0.0,
+            "y": 480.0,
+            "width": 212.0,
+            "height": 240.0,
+            "type": "Number Slider",
+            "properties": {
+              "topic": "/SmartDashboard/DRI - Rotate Tag PID-D",
+              "period": 0.06,
+              "data_type": "double",
+              "min_value": 0.0,
+              "max_value": 0.05,
+              "divisions": 50,
+              "update_continuously": false
+            }
+          },
+          {
+            "title": "DRI - Rotate Pose PID P",
+            "x": 212.0,
+            "y": 0.0,
+            "width": 212.0,
+            "height": 240.0,
+            "type": "Number Slider",
+            "properties": {
+              "topic": "/SmartDashboard/DRI - Rotate Pose PID-P",
+              "period": 0.06,
+              "data_type": "double",
+              "min_value": 0.0,
+              "max_value": 0.5,
+              "divisions": 50,
+              "update_continuously": false
+            }
+          },
+          {
+            "title": "DRI - Rotate Pose PID I",
+            "x": 212.0,
+            "y": 240.0,
+            "width": 212.0,
+            "height": 240.0,
+            "type": "Number Slider",
+            "properties": {
+              "topic": "/SmartDashboard/DRI - Rotate Pose PID-I",
+              "period": 0.06,
+              "data_type": "double",
+              "min_value": 0.0,
+              "max_value": 0.01,
+              "divisions": 50,
+              "update_continuously": false
+            }
+          },
+          {
+            "title": "DRI - Rotate Pose PID D",
+            "x": 212.0,
+            "y": 480.0,
+            "width": 212.0,
+            "height": 240.0,
+            "type": "Number Slider",
+            "properties": {
+              "topic": "/SmartDashboard/DRI - Rotate Pose PID-D",
+              "period": 0.06,
+              "data_type": "double",
+              "min_value": 0.0,
+              "max_value": 0.05,
+              "divisions": 50,
+              "update_continuously": false
+            }
+          },
+          {
+            "title": "DRI - Rotate Continuous PID P",
+            "x": 424.0,
+            "y": 0.0,
+            "width": 212.0,
+            "height": 240.0,
+            "type": "Number Slider",
+            "properties": {
+              "topic": "/SmartDashboard/DRI - Rotate Continuous PID-P",
+              "period": 0.06,
+              "data_type": "double",
+              "min_value": 0.0,
+              "max_value": 0.5,
+              "divisions": 50,
+              "update_continuously": false
+            }
+          },
+          {
+            "title": "DRI - Rotate Continuous PID I",
+            "x": 424.0,
+            "y": 240.0,
+            "width": 212.0,
+            "height": 240.0,
+            "type": "Number Slider",
+            "properties": {
+              "topic": "/SmartDashboard/DRI - Rotate Continuous PID-I",
+              "period": 0.06,
+              "data_type": "double",
+              "min_value": 0.0,
+              "max_value": 0.01,
+              "divisions": 50,
+              "update_continuously": false
+            }
+          },
+          {
+            "title": "DRI - Rotate Continuous PID D",
+            "x": 424.0,
+            "y": 480.0,
+            "width": 212.0,
+            "height": 240.0,
+            "type": "Number Slider",
+            "properties": {
+              "topic": "/SmartDashboard/DRI - Rotate Continuous PID-D",
+              "period": 0.06,
+              "data_type": "double",
+              "min_value": 0.0,
+              "max_value": 0.05,
+              "divisions": 50,
+              "update_continuously": false
+            }
+          }
+        ]
+      }
+    },
+    {
       "name": "Vision",
       "grid_layout": {
         "layouts": [],
@@ -1786,7 +1973,10 @@
             "properties": {
               "topic": "/SmartDashboard/VIS - Confidence A",
               "period": 0.06,
-              "data_type": "double"
+              "data_type": "double",
+              "time_displayed": 5.0,
+              "color": 4278238420,
+              "line_width": 2.0
             }
           },
           {
@@ -1799,7 +1989,10 @@
             "properties": {
               "topic": "/SmartDashboard/VIS - Confidence B",
               "period": 0.06,
-              "data_type": "double"
+              "data_type": "double",
+              "time_displayed": 5.0,
+              "color": 4278238420,
+              "line_width": 2.0
             }
           },
           {
@@ -1840,7 +2033,10 @@
             "properties": {
               "topic": "/SmartDashboard/VIS - A Avg Distance",
               "period": 0.06,
-              "data_type": "double"
+              "data_type": "double",
+              "time_displayed": 5.0,
+              "color": 4278238420,
+              "line_width": 2.0
             }
           },
           {
@@ -1853,7 +2049,10 @@
             "properties": {
               "topic": "/SmartDashboard/VIS - B Avg Distance",
               "period": 0.06,
-              "data_type": "double"
+              "data_type": "double",
+              "time_displayed": 5.0,
+              "color": 4278238420,
+              "line_width": 2.0
             }
           },
           {
@@ -1866,7 +2065,10 @@
             "properties": {
               "topic": "/SmartDashboard/VIS - Rotation Velocity",
               "period": 0.06,
-              "data_type": "double"
+              "data_type": "double",
+              "time_displayed": 5.0,
+              "color": 4278238420,
+              "line_width": 2.0
             }
           },
           {
@@ -1879,7 +2081,10 @@
             "properties": {
               "topic": "/SmartDashboard/VIS - Total Velocity",
               "period": 0.06,
-              "data_type": "double"
+              "data_type": "double",
+              "time_displayed": 5.0,
+              "color": 4278238420,
+              "line_width": 2.0
             }
           }
         ]

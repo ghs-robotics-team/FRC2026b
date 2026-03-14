@@ -11,6 +11,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 //import frc.robot.subsystems.SwerveSubsystem;
+import frc.robot.Constants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 
 /**
@@ -36,9 +37,11 @@ public class RotateToAngleWithPose extends Command {
     pid.enableContinuousInput(-180, 180);
     addRequirements(swerve);
 
-    SmartDashboard.putNumber("DRI - Rotate PID-P", pid.getP());
-    SmartDashboard.putNumber("DRI - Rotate PID-I", pid.getI());
-    SmartDashboard.putNumber("DRI - Rotate PID-D", pid.getD());
+    if (Constants.OperatorConstants.WORKSHOP_MODE) {
+      SmartDashboard.putNumber("DRI - Rotate Pose PID-P", pid.getP());
+      SmartDashboard.putNumber("DRI - Rotate Pose PID-I", pid.getI());
+      SmartDashboard.putNumber("DRI - Rotate Pose PID-D", pid.getD());
+    }
   }
 
   /**
@@ -74,9 +77,20 @@ public class RotateToAngleWithPose extends Command {
    */
   @Override
   public void execute() {
-    double P = SmartDashboard.getNumber("DRI - Rotate PID-P", 1.0 / 150.0);
-    double I = SmartDashboard.getNumber("DRI - Rotate PID-I", 0.0);
-    double D = SmartDashboard.getNumber("DRI - Rotate PID-D", 0);
+    double P = SmartDashboard.getNumber("DRI - Rotate Pose PID-P", 1.0 / 150.0);
+    double I = SmartDashboard.getNumber("DRI - Rotate Pose PID-I", 0.0);
+    double D = SmartDashboard.getNumber("DRI - Rotate Pose PID-D", 0);
+
+    // Clamp PID values to reasonable ranges
+    P = Math.max(0.0, Math.min(0.5, P));
+    I = Math.max(0.0, Math.min(0.01, I));
+    D = Math.max(0.0, Math.min(0.05, D));
+
+    if (Constants.OperatorConstants.WORKSHOP_MODE) {
+      SmartDashboard.putNumber("DRI - Rotate Pose PID-P", P);
+      SmartDashboard.putNumber("DRI - Rotate Pose PID-I", I);
+      SmartDashboard.putNumber("DRI - Rotate Pose PID-D", D);
+    }
 
     pid.setP(P);
     pid.setI(I);
