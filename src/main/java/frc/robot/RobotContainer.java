@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
@@ -86,6 +87,7 @@ public class RobotContainer {
     private final EagleEyeCommand eagleEyeCommand;
 
     private final SendableChooser<Command> auto;
+    // Auto Commands
     private final ShootingRPMCommand shootingFarShotAuto = new ShootingRPMCommand(shooter, 5146);
     private final HoodAnglerPositionCommand hoodAnglerFarShotAuto = new HoodAnglerPositionCommand(hoodAngler, 0); 
     private final FeedRollOnly feedRollFarShotAuto = new FeedRollOnly(feedRoller, 1);
@@ -93,7 +95,8 @@ public class RobotContainer {
     //new ShootingRPMCommand(shooter, 5146).withTimeout(2).andThen(
     private final ParallelCommandGroup farShotCommandAuto = new ParallelCommandGroup(shootingFarShotAuto.withTimeout(5), hoodAnglerFarShotAuto.withTimeout(5)
     ,feedRollFarShotAuto.withTimeout(5), spindexOnlyFarShotAuto.withTimeout(5));
-
+    private final ParallelRaceGroup climbUpHubAuto = new ClimbOnlyCommand(climber, 0.3).withTimeout(0.5);
+    private final ParallelRaceGroup climbDownHubAuto = new ClimbOnlyCommand(climber, -0.3).withTimeout(0.5);
 
     // Basic Teleop Commands
     private final ShootingRPMCommand shootingMidShot = new ShootingRPMCommand(shooter, 4814);
@@ -159,6 +162,8 @@ public class RobotContainer {
         autoChooser = AutoBuilder.buildAutoChooser("Far Shot (No Movement)");
         SmartDashboard.putData("Auto Mode", autoChooser);
         NamedCommands.registerCommand("Far Shot", farShotCommandAuto);
+        NamedCommands.registerCommand("Climb Down", climbOnlyCommandDown);
+        NamedCommands.registerCommand("Climb Up", climbOnlyCommandUp);
 
         if (Constants.EagleEyeConstants.EAGLEEYE_ENABLED) {
             eagleEye = new EagleEye();

@@ -5,21 +5,27 @@
     "data": {
       "commands": [
         {
-          "type": "path",
-          "data": {
-            "pathName": null
-          }
-        },
-        {
           "type": "named",
           "data": {
             "name": "Low Shot"
           }
         },
         {
-          "type": "wait",
+          "type": "path",
           "data": {
-            "waitTime": 5.0
+            "pathName": "Hub to Tower"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Climb Up"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Climb Down"
           }
         }
       ]
