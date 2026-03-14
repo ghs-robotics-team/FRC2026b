@@ -124,7 +124,7 @@ public class RobotContainer {
     /**<----------Teleop Commands---------->*/
 
     // Mid-Shot
-    private final ShootingRPMCommand shootingMidShot = new ShootingRPMCommand(shooter, 4814);
+    private final ShootingRPMCommand shootingMidShot = new ShootingRPMCommand(shooter, 2800);
     private final HoodAnglerPositionCommand hoodAngleMidShot = new HoodAnglerPositionCommand(hoodAngler, 0 /*who knows */);
     private final ParallelCommandGroup midShotCommand = new ParallelCommandGroup(
         shootingMidShot, 
