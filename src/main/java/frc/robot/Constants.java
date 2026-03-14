@@ -30,6 +30,7 @@ public final class Constants {
    * Preset setpoints upper mechanicals
    */
   public static final class SetPointConstants {
+    public static final double TEST = -400; // Ticks
   }
 
   /**
@@ -74,7 +75,7 @@ public final class Constants {
     public static final boolean  DYNAMIC_POWER_CONTROL = true;
 
     // XBOX mode
-    public static final boolean XBOX_DRIVE = false;
+    public static final boolean XBOX_DRIVE = true;
   }
 
   /**
