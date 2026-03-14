@@ -1302,7 +1302,7 @@
             "height": 128.0,
             "type": "Boolean Box",
             "properties": {
-              "topic": "/SmartDashboard/Is Autonomous",
+              "topic": "/SmartDashboard/ROS - Mode",
               "period": 0.06,
               "data_type": "boolean",
               "true_color": 4283215696,
@@ -1319,7 +1319,7 @@
             "height": 128.0,
             "type": "Boolean Box",
             "properties": {
-              "topic": "/SmartDashboard/Is Enabled",
+              "topic": "/SmartDashboard/ROS - Is Enabled",
               "period": 0.06,
               "data_type": "boolean",
               "true_color": 4283215696,
@@ -1336,10 +1336,550 @@
             "height": 128.0,
             "type": "Text Display",
             "properties": {
-              "topic": "/SmartDashboard/Match Time",
+              "topic": "/SmartDashboard/ROS - Match Time",
               "period": 0.06,
               "data_type": "double",
               "show_submit_button": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Shooter",
+      "grid_layout": {
+        "layouts": [],
+        "containers": [
+          {
+            "title": "Shooter RPM Top",
+            "x": 0.0,
+            "y": 0.0,
+            "width": 960.0,
+            "height": 270.0,
+            "type": "Graph",
+            "properties": {
+              "topic": "/SmartDashboard/SHO - Top RPM",
+              "period": 0.06,
+              "data_type": "double"
+            }
+          },
+          {
+            "title": "Shooter RPM Top Value",
+            "x": 960.0,
+            "y": 0.0,
+            "width": 320.0,
+            "height": 270.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/SmartDashboard/SHO - Top RPM",
+              "period": 0.06,
+              "data_type": "double",
+              "show_submit_button": false
+            }
+          },
+          {
+            "title": "Shooter RPM Bottom",
+            "x": 0.0,
+            "y": 270.0,
+            "width": 960.0,
+            "height": 270.0,
+            "type": "Graph",
+            "properties": {
+              "topic": "/SmartDashboard/SHO - Bottom RPM",
+              "period": 0.06,
+              "data_type": "double"
+            }
+          },
+          {
+            "title": "Shooter RPM Bottom Value",
+            "x": 960.0,
+            "y": 270.0,
+            "width": 320.0,
+            "height": 270.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/SmartDashboard/SHO - Bottom RPM",
+              "period": 0.06,
+              "data_type": "double",
+              "show_submit_button": false
+            }
+          },
+          {
+            "title": "Shooter Power Top",
+            "x": 0.0,
+            "y": 540.0,
+            "width": 960.0,
+            "height": 270.0,
+            "type": "Graph",
+            "properties": {
+              "topic": "/SmartDashboard/SHO - Top Power",
+              "period": 0.06,
+              "data_type": "double"
+            }
+          },
+          {
+            "title": "Shooter Power Top Value",
+            "x": 960.0,
+            "y": 540.0,
+            "width": 320.0,
+            "height": 270.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/SmartDashboard/SHO - Top Power",
+              "period": 0.06,
+              "data_type": "double",
+              "show_submit_button": false
+            }
+          },
+          {
+            "title": "Shooter Power Bottom",
+            "x": 0.0,
+            "y": 810.0,
+            "width": 960.0,
+            "height": 270.0,
+            "type": "Graph",
+            "properties": {
+              "topic": "/SmartDashboard/SHO - Bottom Power",
+              "period": 0.06,
+              "data_type": "double"
+            }
+          },
+          {
+            "title": "Shooter Power Bottom Value",
+            "x": 960.0,
+            "y": 810.0,
+            "width": 320.0,
+            "height": 270.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/SmartDashboard/SHO - Bottom Power",
+              "period": 0.06,
+              "data_type": "double",
+              "show_submit_button": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Hood Angler",
+      "grid_layout": {
+        "layouts": [],
+        "containers": [
+          {
+            "title": "Hood Position",
+            "x": 0.0,
+            "y": 0.0,
+            "width": 960.0,
+            "height": 360.0,
+            "type": "Graph",
+            "properties": {
+              "topic": "/SmartDashboard/HOO - Position",
+              "period": 0.06,
+              "data_type": "double"
+            }
+          },
+          {
+            "title": "Hood Position Value",
+            "x": 960.0,
+            "y": 0.0,
+            "width": 320.0,
+            "height": 360.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/SmartDashboard/HOO - Position",
+              "period": 0.06,
+              "data_type": "double",
+              "show_submit_button": false
+            }
+          },
+          {
+            "title": "Hood Motor Power",
+            "x": 0.0,
+            "y": 360.0,
+            "width": 960.0,
+            "height": 360.0,
+            "type": "Graph",
+            "properties": {
+              "topic": "/SmartDashboard/HOO - Motor Power",
+              "period": 0.06,
+              "data_type": "double"
+            }
+          },
+          {
+            "title": "Hood Motor Power Value",
+            "x": 960.0,
+            "y": 360.0,
+            "width": 320.0,
+            "height": 360.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/SmartDashboard/HOO - Motor Power",
+              "period": 0.06,
+              "data_type": "double",
+              "show_submit_button": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Intake",
+      "grid_layout": {
+        "layouts": [],
+        "containers": [
+          {
+            "title": "Intake Deploy Position",
+            "x": 0.0,
+            "y": 0.0,
+            "width": 960.0,
+            "height": 270.0,
+            "type": "Graph",
+            "properties": {
+              "topic": "/SmartDashboard/INT - Deploy Position",
+              "period": 0.06,
+              "data_type": "double"
+            }
+          },
+          {
+            "title": "Intake Deploy Position Value",
+            "x": 960.0,
+            "y": 0.0,
+            "width": 320.0,
+            "height": 270.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/SmartDashboard/INT - Deploy Position",
+              "period": 0.06,
+              "data_type": "double",
+              "show_submit_button": false
+            }
+          },
+          {
+            "title": "Intake Deploy Target",
+            "x": 0.0,
+            "y": 270.0,
+            "width": 960.0,
+            "height": 270.0,
+            "type": "Graph",
+            "properties": {
+              "topic": "/SmartDashboard/INT - Deploy Target",
+              "period": 0.06,
+              "data_type": "double"
+            }
+          },
+          {
+            "title": "Intake Deploy Target Value",
+            "x": 960.0,
+            "y": 270.0,
+            "width": 320.0,
+            "height": 270.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/SmartDashboard/INT - Deploy Target",
+              "period": 0.06,
+              "data_type": "double",
+              "show_submit_button": false
+            }
+          },
+          {
+            "title": "Intake Motor Power",
+            "x": 0.0,
+            "y": 540.0,
+            "width": 960.0,
+            "height": 270.0,
+            "type": "Graph",
+            "properties": {
+              "topic": "/SmartDashboard/INT - Motor Power",
+              "period": 0.06,
+              "data_type": "double"
+            }
+          },
+          {
+            "title": "Intake Motor Power Value",
+            "x": 960.0,
+            "y": 540.0,
+            "width": 320.0,
+            "height": 270.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/SmartDashboard/INT - Motor Power",
+              "period": 0.06,
+              "data_type": "double",
+              "show_submit_button": false
+            }
+          },
+          {
+            "title": "Intake Deploy Motor Power",
+            "x": 0.0,
+            "y": 810.0,
+            "width": 960.0,
+            "height": 270.0,
+            "type": "Graph",
+            "properties": {
+              "topic": "/SmartDashboard/INT - Deploy Power",
+              "period": 0.06,
+              "data_type": "double"
+            }
+          },
+          {
+            "title": "Intake Deploy Motor Power Value",
+            "x": 960.0,
+            "y": 810.0,
+            "width": 320.0,
+            "height": 270.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/SmartDashboard/INT - Deploy Power",
+              "period": 0.06,
+              "data_type": "double",
+              "show_submit_button": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Spindexer",
+      "grid_layout": {
+        "layouts": [],
+        "containers": [
+          {
+            "title": "Spindexer Motor Power",
+            "x": 0.0,
+            "y": 0.0,
+            "width": 960.0,
+            "height": 360.0,
+            "type": "Graph",
+            "properties": {
+              "topic": "/SmartDashboard/SPX - Motor Power",
+              "period": 0.06,
+              "data_type": "double"
+            }
+          },
+          {
+            "title": "Spindexer Motor Power Value",
+            "x": 960.0,
+            "y": 0.0,
+            "width": 320.0,
+            "height": 360.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/SmartDashboard/SPX - Motor Power",
+              "period": 0.06,
+              "data_type": "double",
+              "show_submit_button": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Feed Roller",
+      "grid_layout": {
+        "layouts": [],
+        "containers": [
+          {
+            "title": "Feed Roller Power",
+            "x": 0.0,
+            "y": 0.0,
+            "width": 960.0,
+            "height": 360.0,
+            "type": "Graph",
+            "properties": {
+              "topic": "/SmartDashboard/FED - Motor Power",
+              "period": 0.06,
+              "data_type": "double"
+            }
+          },
+          {
+            "title": "Feed Roller Power Value",
+            "x": 960.0,
+            "y": 0.0,
+            "width": 320.0,
+            "height": 360.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/SmartDashboard/FED - Motor Power",
+              "period": 0.06,
+              "data_type": "double",
+              "show_submit_button": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Climber",
+      "grid_layout": {
+        "layouts": [],
+        "containers": [
+          {
+            "title": "Climber Position",
+            "x": 0.0,
+            "y": 0.0,
+            "width": 960.0,
+            "height": 360.0,
+            "type": "Graph",
+            "properties": {
+              "topic": "/SmartDashboard/CLM - Position",
+              "period": 0.06,
+              "data_type": "double"
+            }
+          },
+          {
+            "title": "Climber Position Value",
+            "x": 960.0,
+            "y": 0.0,
+            "width": 320.0,
+            "height": 360.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/SmartDashboard/CLM - Position",
+              "period": 0.06,
+              "data_type": "double",
+              "show_submit_button": false
+            }
+          },
+          {
+            "title": "Climber Motor Power",
+            "x": 0.0,
+            "y": 360.0,
+            "width": 960.0,
+            "height": 360.0,
+            "type": "Graph",
+            "properties": {
+              "topic": "/SmartDashboard/CLM - Motor Power",
+              "period": 0.06,
+              "data_type": "double"
+            }
+          },
+          {
+            "title": "Climber Motor Power Value",
+            "x": 960.0,
+            "y": 360.0,
+            "width": 320.0,
+            "height": 360.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/SmartDashboard/CLM - Motor Power",
+              "period": 0.06,
+              "data_type": "double",
+              "show_submit_button": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Vision",
+      "grid_layout": {
+        "layouts": [],
+        "containers": [
+          {
+            "title": "Vision Confidence A",
+            "x": 0.0,
+            "y": 0.0,
+            "width": 640.0,
+            "height": 360.0,
+            "type": "Graph",
+            "properties": {
+              "topic": "/SmartDashboard/VIS - Confidence A",
+              "period": 0.06,
+              "data_type": "double"
+            }
+          },
+          {
+            "title": "Vision Confidence B",
+            "x": 640.0,
+            "y": 0.0,
+            "width": 640.0,
+            "height": 360.0,
+            "type": "Graph",
+            "properties": {
+              "topic": "/SmartDashboard/VIS - Confidence B",
+              "period": 0.06,
+              "data_type": "double"
+            }
+          },
+          {
+            "title": "EEA Tag Count",
+            "x": 0.0,
+            "y": 360.0,
+            "width": 640.0,
+            "height": 360.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/SmartDashboard/VIS - A Tag Count",
+              "period": 0.06,
+              "data_type": "double",
+              "show_submit_button": false
+            }
+          },
+          {
+            "title": "EEB Tag Count",
+            "x": 640.0,
+            "y": 360.0,
+            "width": 640.0,
+            "height": 360.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/SmartDashboard/VIS - B Tag Count",
+              "period": 0.06,
+              "data_type": "double",
+              "show_submit_button": false
+            }
+          },
+          {
+            "title": "EEA Avg Tag Distance",
+            "x": 0.0,
+            "y": 720.0,
+            "width": 640.0,
+            "height": 360.0,
+            "type": "Graph",
+            "properties": {
+              "topic": "/SmartDashboard/VIS - A Avg Distance",
+              "period": 0.06,
+              "data_type": "double"
+            }
+          },
+          {
+            "title": "EEB Avg Tag Distance",
+            "x": 640.0,
+            "y": 720.0,
+            "width": 640.0,
+            "height": 360.0,
+            "type": "Graph",
+            "properties": {
+              "topic": "/SmartDashboard/VIS - B Avg Distance",
+              "period": 0.06,
+              "data_type": "double"
+            }
+          },
+          {
+            "title": "Robot Rotation Velocity",
+            "x": 0.0,
+            "y": 1080.0,
+            "width": 640.0,
+            "height": 360.0,
+            "type": "Graph",
+            "properties": {
+              "topic": "/SmartDashboard/VIS - Rotation Velocity",
+              "period": 0.06,
+              "data_type": "double"
+            }
+          },
+          {
+            "title": "Robot Total Velocity",
+            "x": 640.0,
+            "y": 1080.0,
+            "width": 640.0,
+            "height": 360.0,
+            "type": "Graph",
+            "properties": {
+              "topic": "/SmartDashboard/VIS - Total Velocity",
+              "period": 0.06,
+              "data_type": "double"
             }
           }
         ]

@@ -35,9 +35,9 @@ public class IntakeDeployPositionCommand extends Command {
     this.pid = new PIDController(0.2, 0, 0.004);
     // ADD FEEDFORWARD ONCE K VALUES ARE TESTED.
 
-    SmartDashboard.putNumber("INTAKE-PID-P", pid.getP());
-    SmartDashboard.putNumber("INTAKE-PID-I", pid.getI());
-    SmartDashboard.putNumber("INTAKE-PID-D", pid.getD());
+    SmartDashboard.putNumber("INT - PID-P", pid.getP());
+    SmartDashboard.putNumber("INT - PID-I", pid.getI());
+    SmartDashboard.putNumber("INT - PID-D", pid.getD());
     addRequirements(intake);
   }
 
@@ -69,7 +69,7 @@ public class IntakeDeployPositionCommand extends Command {
 
     directionFactor = pid.calculate(currentPos, desiredPos);
     directionFactor = MathUtil.clamp(directionFactor, -1, 1);
-    SmartDashboard.putNumber("INTAKE DirectionFactor", directionFactor);
+    SmartDashboard.putNumber("INT - Direction Factor", directionFactor);
     if (pid.getPositionError() > -20 && pid.getPositionError() < 20) {
       // Dead Zone
       intake.deploy(0);

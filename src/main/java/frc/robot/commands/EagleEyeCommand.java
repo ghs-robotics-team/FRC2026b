@@ -40,7 +40,7 @@ public class EagleEyeCommand extends Command {
    */
   @Override
   public void execute() {
-    SmartDashboard.putBoolean("inPath", Globals.inPath);
+    SmartDashboard.putBoolean("VIS - In Path", Globals.inPath);
   }
 
   /**

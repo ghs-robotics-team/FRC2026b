@@ -39,10 +39,10 @@ public class Robot extends TimedRobot {
         int minutes = (int) matchTimeSeconds / 60;
         int seconds = (int) matchTimeSeconds % 60;
         String matchTimeFormatted = String.format("%02d:%02d", minutes, seconds);
-        SmartDashboard.putString("Match Time", matchTimeFormatted);
+        SmartDashboard.putString("ROS - Match Time", matchTimeFormatted);
         
-        SmartDashboard.putBoolean("Is Enabled", DriverStation.isEnabled());
-        SmartDashboard.putString("Mode", DriverStation.isAutonomous() ? "Autonomous" : "Teleop");
+        SmartDashboard.putBoolean("ROS - Is Enabled", DriverStation.isEnabled());
+        SmartDashboard.putString("ROS - Mode", DriverStation.isAutonomous() ? "Autonomous" : "Teleop");
 
         /*
          * This example of adding Limelight is very simple and may not be sufficient for on-field use.

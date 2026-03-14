@@ -45,9 +45,9 @@ public class ContinuousRotateToAngle extends Command {
     this.translationY = translationY;
     pid.enableContinuousInput(-180, 180);
 
-    SmartDashboard.putNumber("PID-P", pid.getP());
-    SmartDashboard.putNumber("PID-I", pid.getI());
-    SmartDashboard.putNumber("PID-D", pid.getD());
+    SmartDashboard.putNumber("DRI - Rotate PID-P", pid.getP());
+    SmartDashboard.putNumber("DRI - Rotate PID-I", pid.getI());
+    SmartDashboard.putNumber("DRI - Rotate PID-D", pid.getD());
   }
 
   /**
@@ -75,7 +75,7 @@ public class ContinuousRotateToAngle extends Command {
     degreeError = speakerPos.minus(Globals.EagleEye.position.getTranslation()).getAngle().getDegrees()
         - Globals.EagleEye.position.getRotation().getDegrees();
     degreeError = -degreeError;
-    SmartDashboard.putNumber("distance", speakerPos.minus(Globals.EagleEye.position.getTranslation()).getNorm());
+    SmartDashboard.putNumber("SHO - Distance", speakerPos.minus(Globals.EagleEye.position.getTranslation()).getNorm());
     targetDegree = Globals.EagleEye.position.getRotation().getDegrees() - degreeError;
 
     if (targetDegree > 180) {
@@ -84,18 +84,18 @@ public class ContinuousRotateToAngle extends Command {
       targetDegree += 360;
     }
 
-    SmartDashboard.putNumber("targetDegree", targetDegree);
+    SmartDashboard.putNumber("HOO - Target Angle", targetDegree);
 
-    double P = SmartDashboard.getNumber("PID-P", 1.0 / 150.0);
-    double I = SmartDashboard.getNumber("PID-I", 0.0);
-    double D = SmartDashboard.getNumber("PID-D", 0);
+    double P = SmartDashboard.getNumber("DRI - Rotate PID-P", 1.0 / 150.0);
+    double I = SmartDashboard.getNumber("DRI - Rotate PID-I", 0.0);
+    double D = SmartDashboard.getNumber("DRI - Rotate PID-D", 0);
 
     // Set PID numbers
     pid.setP(P);
     pid.setI(I);
     pid.setD(D);
 
-    SmartDashboard.putNumber("currentError", pid.getPositionError());
+    SmartDashboard.putNumber("DRI - Rotate Error", pid.getPositionError());
     direction = pid.calculate(swerve.getState().Pose.getRotation().getDegrees(), targetDegree);
 
     if (direction < 0.06 && direction > -0.06) {
@@ -104,7 +104,7 @@ public class ContinuousRotateToAngle extends Command {
     }
 
     direction = MathUtil.clamp(direction, -4, 4);
-    SmartDashboard.putNumber("Old direction", direction);
+    SmartDashboard.putNumber("DRI - Rotate Output", direction);
     double xIn = 0;
     double yIn = 0;
 

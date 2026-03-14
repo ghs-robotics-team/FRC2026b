@@ -73,6 +73,7 @@ public class HoodAngler extends SubsystemBase {
   @Override
   public void periodic() {
     hoodEncoderVal = encoder.getRaw();
-    SmartDashboard.putNumber("HOOD AbsPos", getPos()); // Doesn't show up
+    SmartDashboard.putNumber("HOO - Position", getPos());
+    SmartDashboard.putNumber("HOO - Motor Power", hoodAngler.get());
   }
 }

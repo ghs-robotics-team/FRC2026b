@@ -14,12 +14,12 @@ import edu.wpi.first.wpilibj2.command.Command;
  * field using PID control.
  */
 public class FaceTargetCommand extends Command {
-  private static final String kExecutingKey = "FT Executing";
-  private static final String kRotatingKey = "FT Rotating";
-  private static final String kTargetAngleKey = "FT TargetDeg";
-  private static final String kErrorAngleKey = "FT ErrorDeg";
-  private static final String kPKey = "FT P";
-  private static final String kDKey = "FT D";
+  private static final String kExecutingKey = "DRI - FT Executing";
+  private static final String kRotatingKey = "DRI - FT Rotating";
+  private static final String kTargetAngleKey = "DRI - FT Target Angle";
+  private static final String kErrorAngleKey = "DRI - FT Error Angle";
+  private static final String kPKey = "DRI - FT P";
+  private static final String kDKey = "DRI - FT D";
   private static final double kPDefault = 0.3;
   private static final double kDDefault = 0.01;
   private static final double kPMin = 0.0;
@@ -105,19 +105,19 @@ public class FaceTargetCommand extends Command {
     double currentAngle = currentPose.getRotation().getDegrees();
     double errorAngle = MathUtil.inputModulus(targetAngle - currentAngle, -180.0, 180.0);
 
-    SmartDashboard.putNumber("FT Cur Angle", currentAngle);
+    SmartDashboard.putNumber("DRI - FT Current Angle", currentAngle);
     SmartDashboard.putNumber(kTargetAngleKey, targetAngle);
     SmartDashboard.putNumber(kErrorAngleKey, errorAngle);
 
     double rotationOutputDegPerSec = rotationController.calculate(currentPose.getRotation().getDegrees(),
         targetAngle);
-    SmartDashboard.putNumber("FT Rot Output", rotationOutputDegPerSec);
+    SmartDashboard.putNumber("DRI - FT Rotation Output", rotationOutputDegPerSec);
 
     double rotationOutput = Units.degreesToRadians(rotationOutputDegPerSec);
-    SmartDashboard.putNumber("FT Rot Output RAD", rotationOutput);
+    SmartDashboard.putNumber("DRI - FT Rotation Output Rad", rotationOutput);
     // rotationOutput = MathUtil.clamp(rotationOutput, -maxAngularVelocity,
     // maxAngularVelocity);
-    SmartDashboard.putNumber("FT Rot Output CLAMP", rotationOutput);
+    SmartDashboard.putNumber("DRI - FT Rotation Output Clamp", rotationOutput);
 
     boolean rotating = true;
     if (rotationController.atSetpoint()) {
@@ -127,7 +127,7 @@ public class FaceTargetCommand extends Command {
       rotationOutput = Math.copySign(kMinAngularVelocityRadPerSec, rotationOutput);
     }
 
-    SmartDashboard.putNumber("FT Rot Output POST MIN", rotationOutput);
+    SmartDashboard.putNumber("DRI - FT Rotation Output Final", rotationOutput);
 
     SmartDashboard.putBoolean(kRotatingKey, rotating);
 

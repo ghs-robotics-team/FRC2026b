@@ -92,7 +92,9 @@ public class Intake extends SubsystemBase {
   @Override
   public void periodic() {
     deployAbsoluteEncoder = deployMotor.getAbsoluteEncoder().getPosition();
-    SmartDashboard.putNumber("INT Deploy Target Pos", Globals.targetPos.intakeDeployTarget);
-    SmartDashboard.putNumber("INT POS", deployAbsoluteEncoder);
+    SmartDashboard.putNumber("INT - Deploy Target", Globals.targetPos.intakeDeployTarget);
+    SmartDashboard.putNumber("INT - Deploy Position", deployAbsoluteEncoder);
+    SmartDashboard.putNumber("INT - Motor Power", intakeMotor.getAppliedOutput());
+    SmartDashboard.putNumber("INT - Deploy Power", deployMotor.getAppliedOutput());
   }
 }

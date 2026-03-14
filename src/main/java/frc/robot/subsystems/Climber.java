@@ -44,6 +44,8 @@ public class Climber extends SubsystemBase {
    */
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("CL POS", climbMotorEncoder);
+    climbMotorEncoder = climbMotor.getAbsoluteEncoder().getPosition();
+    SmartDashboard.putNumber("CLM - Position", climbMotorEncoder);
+    SmartDashboard.putNumber("CLM - Motor Power", climbMotor.getAppliedOutput());
   }
 }
