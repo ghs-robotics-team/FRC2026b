@@ -11,6 +11,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 //import frc.robot.subsystems.SwerveSubsystem;
+import frc.robot.Constants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 
 /**
@@ -36,9 +37,11 @@ public class RotateToAngleWithPose extends Command {
     pid.enableContinuousInput(-180, 180);
     addRequirements(swerve);
 
-    SmartDashboard.putNumber("PID-P", pid.getP());
-    SmartDashboard.putNumber("PID-I", pid.getI());
-    SmartDashboard.putNumber("PID-D", pid.getD());
+    if (Constants.OperatorConstants.WORKSHOP_MODE) {
+      SmartDashboard.putNumber("DRI - Rotate Pose PID-P", pid.getP());
+      SmartDashboard.putNumber("DRI - Rotate Pose PID-I", pid.getI());
+      SmartDashboard.putNumber("DRI - Rotate Pose PID-D", pid.getD());
+    }
   }
 
   /**
@@ -74,16 +77,27 @@ public class RotateToAngleWithPose extends Command {
    */
   @Override
   public void execute() {
-    double P = SmartDashboard.getNumber("PID-P", 1.0 / 150.0);
-    double I = SmartDashboard.getNumber("PID-I", 0.0);
-    double D = SmartDashboard.getNumber("PID-D", 0);
+    double P = SmartDashboard.getNumber("DRI - Rotate Pose PID-P", 1.0 / 150.0);
+    double I = SmartDashboard.getNumber("DRI - Rotate Pose PID-I", 0.0);
+    double D = SmartDashboard.getNumber("DRI - Rotate Pose PID-D", 0);
+
+    // Clamp PID values to reasonable ranges
+    P = Math.max(0.0, Math.min(0.5, P));
+    I = Math.max(0.0, Math.min(0.01, I));
+    D = Math.max(0.0, Math.min(0.05, D));
+
+    if (Constants.OperatorConstants.WORKSHOP_MODE) {
+      SmartDashboard.putNumber("DRI - Rotate Pose PID-P", P);
+      SmartDashboard.putNumber("DRI - Rotate Pose PID-I", I);
+      SmartDashboard.putNumber("DRI - Rotate Pose PID-D", D);
+    }
 
     pid.setP(P);
     pid.setI(I);
     pid.setD(D);
 
     // Calculates power using PID to move the motors to the target angle.
-    SmartDashboard.putNumber("currentError", pid.getPositionError());
+    SmartDashboard.putNumber("DRI - Rotate Error", pid.getPositionError());
     directionFactor = pid.calculate(swerve.getState().Pose.getRotation().getDegrees(), targetDegree);
 
     if (directionFactor < 0.06 && directionFactor > -0.06) {
@@ -92,7 +106,7 @@ public class RotateToAngleWithPose extends Command {
 
     // Fits direction into -4 to 4 range for swerve drive.
     directionFactor = MathUtil.clamp(directionFactor, -4, 4);
-    SmartDashboard.putNumber("Old direction", directionFactor);
+    SmartDashboard.putNumber("DRI - Rotate Output", directionFactor);
     if (pid.getPositionError() > -0.25 && pid.getPositionError() < 0.25) {
       // Dead Zone
       swerve.drive(0 , 0, 0);

@@ -27,7 +27,7 @@ public class PitchToSpeaker extends Command {
   public PitchToSpeaker(HoodAngler angler) {
     addRequirements(angler);
     this.angler = angler;
-    SmartDashboard.putNumber("Test Angle", Constants.SetPointConstants.TEST);
+    SmartDashboard.putNumber("HOO - Test Angle", Constants.SetPointConstants.TEST);
   }
 
   /**
@@ -50,8 +50,8 @@ public class PitchToSpeaker extends Command {
 
       new HoodAnglerPositionCommand(angler, targetAngle);
     }else{
-      SmartDashboard.putNumber("dist", ShootingHelpers.getTargetPos().getDistance(EagleEye.position.getTranslation()));
-      new HoodAnglerPositionCommand(angler, SmartDashboard.getNumber("Test Angle", Constants.SetPointConstants.TEST));
+      SmartDashboard.putNumber("SHO - Distance", ShootingHelpers.getTargetPos().getDistance(EagleEye.position.getTranslation()));
+      new HoodAnglerPositionCommand(angler, SmartDashboard.getNumber("HOO - Test Angle", Constants.SetPointConstants.TEST));
     }
   }
 

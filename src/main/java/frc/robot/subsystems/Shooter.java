@@ -80,5 +80,9 @@ public class Shooter extends SubsystemBase {
    */
   @Override
   public void periodic() {
+    SmartDashboard.putNumber("SHO - Top RPM", shooterTop.getEncoder().getVelocity());
+    SmartDashboard.putNumber("SHO - Bottom RPM", shooterBottom.getEncoder().getVelocity());
+    SmartDashboard.putNumber("SHO - Top Power", shooterTop.getAppliedOutput());
+    SmartDashboard.putNumber("SHO - Bottom Power", shooterBottom.getAppliedOutput());
   }
 }

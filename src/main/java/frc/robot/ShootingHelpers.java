@@ -59,6 +59,46 @@ public class ShootingHelpers {
   }
 
   /**
+   * Power interpolation based on speaker position test data.
+   *
+   * @hub Position of the speaker.
+   * @return Target shooter power (unitless, as recorded in deploy data).
+   */
+  public static double powerInterp(Translation2d hubPos) {
+    double distance = hubPos.minus(Globals.EagleEye.position.getTranslation()).getNorm();
+    SmartDashboard.putNumber("dist_power", distance);
+    Double[][] references = { { 0.0, 0.0 }, { 1.0, 1.0 } };
+    try {
+      references = Files.readAllLines(Paths.get("src", "main", "deploy", "shootingPowerData.txt"))
+          .stream()
+          .map(line -> line.trim().split("\\s+"))
+          .map(parts -> new double[] {
+              Double.parseDouble(parts[0]),
+              Double.parseDouble(parts[1])
+          })
+          .toList().toArray(Double[][]::new);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+
+    int index = -1;
+    for (int i = 0; i < references.length; i++) {
+      if (references[i][0] >= distance) {
+        index = i - 1;
+        break;
+      }
+    }
+    if (index == -1) {
+      return -1.0;
+    }
+
+    double interp = (distance - references[index][0]) / (references[index][0] - references[index + 1][0]);
+    double targetPower = (references[index][1] - references[index + 1][1]) * interp + references[index][1];
+
+    return targetPower;
+  }
+
+  /**
    * Gets the position of the speaker based on alliance color.
    * 
    * @param alliance Alliance color (Blue or Red).

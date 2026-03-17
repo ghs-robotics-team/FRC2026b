@@ -26,6 +26,29 @@ public class Intake extends SubsystemBase {
    * Nothing done in constructor.
    */
   public Intake() {
+    if (Constants.OperatorConstants.WORKSHOP_MODE) {
+      SmartDashboard.putNumber("INT - Deploy PID-P", 0.2);
+      SmartDashboard.putNumber("INT - Deploy PID-I", 0.0);
+      SmartDashboard.putNumber("INT - Deploy PID-D", 0.004);
+    }
+  }
+
+  /**
+   * Clamps PID values to reasonable ranges.
+   * P: 0.0 - 0.5, I: 0.0 - 0.01, D: 0.0 - 0.05
+   */
+  private void clampPIDValues() {
+    double p = SmartDashboard.getNumber("INT - Deploy PID-P", 0.2);
+    double i = SmartDashboard.getNumber("INT - Deploy PID-I", 0.0);
+    double d = SmartDashboard.getNumber("INT - Deploy PID-D", 0.004);
+
+    p = Math.max(0.0, Math.min(0.5, p));
+    i = Math.max(0.0, Math.min(0.01, i));
+    d = Math.max(0.0, Math.min(0.05, d));
+
+    SmartDashboard.putNumber("INT - Deploy PID-P", p);
+    SmartDashboard.putNumber("INT - Deploy PID-I", i);
+    SmartDashboard.putNumber("INT - Deploy PID-D", d);
   }
 
   /**
@@ -93,7 +116,13 @@ public class Intake extends SubsystemBase {
   @Override
   public void periodic() {
     deployAbsoluteEncoder = deployMotor.getAbsoluteEncoder().getPosition();
-    SmartDashboard.putNumber("INT Deploy Target Pos", Globals.targetPos.intakeDeployTarget);
-    SmartDashboard.putNumber("INT POS", deployAbsoluteEncoder);
+    SmartDashboard.putNumber("INT - Deploy Target", Globals.targetPos.intakeDeployTarget);
+    SmartDashboard.putNumber("INT - Deploy Position", deployAbsoluteEncoder);
+    SmartDashboard.putNumber("INT - Motor Power", intakeMotor.getAppliedOutput());
+    SmartDashboard.putNumber("INT - Deploy Power", deployMotor.getAppliedOutput());
+    
+    if (Constants.OperatorConstants.WORKSHOP_MODE) {
+      clampPIDValues();
+    }
   }
 }

@@ -41,5 +41,6 @@ public class Spindexer extends SubsystemBase {
    */
   @Override
   public void periodic() {
+    SmartDashboard.putNumber("SPX - Motor Power", indexer.getAppliedOutput());
   }
 }

@@ -35,9 +35,9 @@ public class HoodAnglerPositionCommand extends Command {
     this.pid = new PIDController(0.2, 0, 0.004);
     // ADD FEEDFORWARD ONCE K VALUES ARE TESTED.
 
-    SmartDashboard.putNumber("HOOD-PID-P", pid.getP());
-    SmartDashboard.putNumber("HOOD-PID-I", pid.getI());
-    SmartDashboard.putNumber("HOOD-PID-D", pid.getD());
+    SmartDashboard.putNumber("HOO - PID-P", pid.getP());
+    SmartDashboard.putNumber("HOO - PID-I", pid.getI());
+    SmartDashboard.putNumber("HOO - PID-D", pid.getD());
     addRequirements(hoodAngler);
   }
 
@@ -69,7 +69,7 @@ public class HoodAnglerPositionCommand extends Command {
 
     directionFactor = pid.calculate(currentPos, desiredPos);
     directionFactor = MathUtil.clamp(directionFactor, -1, 1);
-    SmartDashboard.putNumber("HOOD DirectionFactor", directionFactor);
+    SmartDashboard.putNumber("HOO - Direction Factor", directionFactor);
     if (pid.getPositionError() > -20 && pid.getPositionError() < 20) {
       // Dead Zone
       hoodAngler.adjust(0);

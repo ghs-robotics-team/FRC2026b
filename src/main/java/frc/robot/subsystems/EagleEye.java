@@ -115,10 +115,10 @@ public class EagleEye extends SubsystemBase {
         .getBotPoseEstimate_wpiBlue_MegaTag2("limelight-camb");
 
     if (limelightMeasurementA != null) {
-      SmartDashboard.putNumber("EEA NumTags", limelightMeasurementA.tagCount);
-      SmartDashboard.putNumber("EEA Avg Tag Dist", limelightMeasurementA.avgTagDist);
-      SmartDashboard.putNumber("EE Rotation Vel", Globals.EagleEye.rotVel);
-      SmartDashboard.putNumber("EE Total Vel", Math.hypot(Globals.EagleEye.xVel, Globals.EagleEye.yVel));
+      SmartDashboard.putNumber("VIS - A Tag Count", limelightMeasurementA.tagCount);
+      SmartDashboard.putNumber("VIS - A Avg Distance", limelightMeasurementA.avgTagDist);
+      SmartDashboard.putNumber("VIS - Rotation Velocity", Globals.EagleEye.rotVel);
+      SmartDashboard.putNumber("VIS - Total Velocity", Math.hypot(Globals.EagleEye.xVel, Globals.EagleEye.yVel));
 
       confidenceA = limelightMeasurement(limelightMeasurementA);
 
@@ -130,10 +130,10 @@ public class EagleEye extends SubsystemBase {
 
     if (limelightMeasurementB != null) {
 
-      SmartDashboard.putNumber("EEB NumTags", limelightMeasurementB.tagCount);
-      SmartDashboard.putNumber("EEB Avg Tag Dist", limelightMeasurementB.avgTagDist);
-      SmartDashboard.putNumber("EE Rotation Vel", Globals.EagleEye.rotVel);
-      SmartDashboard.putNumber("EE Total Vel", Math.hypot(Globals.EagleEye.xVel, Globals.EagleEye.yVel));
+      SmartDashboard.putNumber("VIS - B Tag Count", limelightMeasurementB.tagCount);
+      SmartDashboard.putNumber("VIS - B Avg Distance", limelightMeasurementB.avgTagDist);
+      SmartDashboard.putNumber("VIS - Rotation Velocity", Globals.EagleEye.rotVel);
+      SmartDashboard.putNumber("VIS - Total Velocity", Math.hypot(Globals.EagleEye.xVel, Globals.EagleEye.yVel));
 
       confidenceB = limelightMeasurement(limelightMeasurementB);
 
@@ -145,6 +145,10 @@ public class EagleEye extends SubsystemBase {
     }
     Globals.LastVisionMeasurement.confidenceA = confidenceA;
     Globals.LastVisionMeasurement.confidenceB = confidenceB;
+
+    // Display confidence levels on SmartDashboard
+    SmartDashboard.putNumber("VIS - Confidence A", confidenceA);
+    SmartDashboard.putNumber("VIS - Confidence B", confidenceB);
 
     // ===== SHOOTING DATA COLLECTION =====
     if (Constants.OperatorConstants.SHOOTING_DATA_COLLECTION_MODE) {

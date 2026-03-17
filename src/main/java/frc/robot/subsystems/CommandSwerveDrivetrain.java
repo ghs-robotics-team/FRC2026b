@@ -342,9 +342,13 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     SmartDashboard.putNumber("SS BotRotation", this.getState().Pose.getRotation().getDegrees());
     SmartDashboard.putNumber("SS Swerve-Botpose-x", Units.metersToInches(this.getState().Pose.getX()));
     SmartDashboard.putNumber("SS Swerve-Botpose-y", Units.metersToInches(this.getState().Pose.getY()));
-    SmartDashboard.putNumber("SS Swerve-Botpose-rot", Globals.EagleEye.position.getRotation().getDegrees());
-
+    
     Globals.EagleEye.position = this.getState().Pose;
+    SmartDashboard.putNumber("SS Swerve-Botpose-rot", this.getState().Pose.getRotation().getDegrees());
+    SmartDashboard.putNumber("SS EagleEye-X", Units.metersToInches(Globals.EagleEye.position.getX()));
+    SmartDashboard.putNumber("SS EagleEye-Y", Units.metersToInches(Globals.EagleEye.position.getY()));
+    SmartDashboard.putNumber("SS EagleEye-Rot", Globals.EagleEye.position.getRotation().getDegrees());
+    
     Globals.EagleEye.xVel = this.getState().Speeds.vxMetersPerSecond;
     Globals.EagleEye.yVel = this.getState().Speeds.vyMetersPerSecond;
     Globals.EagleEye.rotVel = this.getState().Speeds.omegaRadiansPerSecond;
