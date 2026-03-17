@@ -13,6 +13,7 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkFlexConfig;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 /**
  * Shoots game pieces at end of subsystem chain.
@@ -51,11 +52,9 @@ public class Shooter extends SubsystemBase {
    *              -1.0 and 1.0.
    */
   public void shoot(double power) {
-    /*
-     * if (Constants.OperatorConstants.DYNAMIC_POWER_CONTROL && power != 0) {
-     * power = SmartDashboard.getNumber("Shooting V", 0.1);
-     * }
-     */
+    if (Constants.OperatorConstants.DYNAMIC_POWER_CONTROL && power != 0) {
+      power = SmartDashboard.getNumber("Shooting V", 0.1);
+    }
     shooterTop.set(power);
     shooterBottom.set(power);
   }

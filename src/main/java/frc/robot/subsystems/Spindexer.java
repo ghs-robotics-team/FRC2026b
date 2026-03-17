@@ -6,6 +6,8 @@ package frc.robot.subsystems;
 
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Constants;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 /**
@@ -28,11 +30,9 @@ public class Spindexer extends SubsystemBase {
    *              -1.0 and 1.0.
    */
   public void run(double power) {
-    /*
-     * if (Constants.OperatorConstants.DYNAMIC_POWER_CONTROL && power != 0) {
-     * power = SmartDashboard.getNumber("Spindexer V", 0.1);
-     * }
-     */
+    if (Constants.OperatorConstants.DYNAMIC_POWER_CONTROL && power != 0) {
+      power = SmartDashboard.getNumber("Spindexer V", 0.1);
+    }
     indexer.set(-power);
   }
 
