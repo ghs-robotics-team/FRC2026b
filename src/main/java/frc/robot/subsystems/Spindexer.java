@@ -21,6 +21,7 @@ public class Spindexer extends SubsystemBase {
    * Nothing done in constructor.
    */
   public Spindexer() {
+    SmartDashboard.putNumber("Spindexer V", 0.0);
   }
 
   /**
@@ -31,7 +32,10 @@ public class Spindexer extends SubsystemBase {
    */
   public void run(double power) {
     if (Constants.OperatorConstants.DYNAMIC_POWER_CONTROL && power != 0) {
-      power = SmartDashboard.getNumber("Spindexer V", 0.1);
+      double dashboardPower = SmartDashboard.getNumber("Spindexer V", 0.0);
+      if (dashboardPower != 0) {
+        power = dashboardPower;
+      }
     }
     indexer.set(-power);
   }

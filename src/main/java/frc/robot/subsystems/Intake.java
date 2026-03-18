@@ -31,6 +31,8 @@ public class Intake extends SubsystemBase {
       SmartDashboard.putNumber("INT - Deploy PID-I", 0.0);
       SmartDashboard.putNumber("INT - Deploy PID-D", 0.004);
     }
+    SmartDashboard.putNumber("Intake V", 0.0);
+    SmartDashboard.putNumber("IntakeDeploy V", 0.0);
   }
 
   /**
@@ -59,8 +61,10 @@ public class Intake extends SubsystemBase {
    */
   public void intake(double power) {
     if (Constants.OperatorConstants.DYNAMIC_POWER_CONTROL && power != 0) {
-      // Override requested power entirely from SmartDashboard when enabled.
-      power = SmartDashboard.getNumber("Intake V", 0.1);
+      double dashboardPower = SmartDashboard.getNumber("Intake V", 0.0);
+      if (dashboardPower != 0) {
+        power = dashboardPower;
+      }
     }
     intakeMotor.set(-power);
   }
@@ -75,8 +79,10 @@ public class Intake extends SubsystemBase {
     // When limits are needed on position, check last years code for reference.
     // Needs PID.
     if (Constants.OperatorConstants.DYNAMIC_POWER_CONTROL && power != 0) {
-      // Dashboard overrides deploy power completely
-      power = SmartDashboard.getNumber("IntakeDeploy V", 0.1);
+      double dashboardPower = SmartDashboard.getNumber("IntakeDeploy V", 0.0);
+      if (dashboardPower != 0) {
+        power = dashboardPower;
+      }
     }
     /*
      * Tune location numbers

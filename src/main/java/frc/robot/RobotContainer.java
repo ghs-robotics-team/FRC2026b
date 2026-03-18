@@ -263,7 +263,7 @@ public class RobotContainer {
     SmartDashboard.putBoolean("Record Time Data", false);
     SmartDashboard.putNumber("Test Angle", Constants.SetPointConstants.TEST);
     SmartDashboard.putNumber("dist", 0.0);
-    SmartDashboard.putNumber("Shooting V", 0.1);
+    SmartDashboard.putNumber("Shooting V", 0.0);
     }
 
     private void configureBindings() {

@@ -31,6 +31,7 @@ public class HoodAngler extends SubsystemBase {
       SmartDashboard.putNumber("HOO - PID-I", 0.0);
       SmartDashboard.putNumber("HOO - PID-D", 0.004);
     }
+    SmartDashboard.putNumber("HOO - Target Position", hoodEncoderVal);
   }
 
   /**
@@ -59,11 +60,6 @@ public class HoodAngler extends SubsystemBase {
    *              between -1.0 and 1.0.
    */
   public void adjust(double power) {
-    // Needs limits
-    // Needs PID
-    if (Constants.OperatorConstants.DYNAMIC_POWER_CONTROL && power != 0) {
-      power = SmartDashboard.getNumber("HoodAngle V", 0.1);
-    }
     if (power <= 0) {
       if (getPos() <= 0) {
         hoodAngler.set(-power);

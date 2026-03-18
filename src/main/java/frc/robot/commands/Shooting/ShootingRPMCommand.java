@@ -4,7 +4,9 @@
 
 package frc.robot.commands.Shooting;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.subsystems.Shooter;
 
 /**
@@ -22,6 +24,9 @@ public class ShootingRPMCommand extends Command {
   public ShootingRPMCommand(Shooter shooter, double rpm) {
     this.shooter = shooter;
     this.rpm = rpm;
+    if (Constants.OperatorConstants.DYNAMIC_POWER_CONTROL) {
+      SmartDashboard.putNumber("Shooting RPM Override", rpm);
+    }
     addRequirements(shooter);
   }
 
@@ -38,7 +43,14 @@ public class ShootingRPMCommand extends Command {
    */
   @Override
   public void execute() {
-    shooter.shootTargetSpeed(rpm);
+    double rpmToUse = rpm;
+    if (Constants.OperatorConstants.DYNAMIC_POWER_CONTROL) {
+      double dashboardRpm = SmartDashboard.getNumber("Shooting RPM Override", 0.0);
+      if (dashboardRpm != 0) {
+        rpmToUse = dashboardRpm;
+      }
+    }
+    shooter.shootTargetSpeed(rpmToUse);
   }
 
   /**
