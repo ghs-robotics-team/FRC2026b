@@ -15,6 +15,9 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
@@ -254,6 +257,13 @@ public class RobotContainer {
         // Warmup PathPlanner to avoid Java pauses
         FollowPathCommand.warmupCommand().schedule();
         SmartDashboard.putData("Command Scheduler", CommandScheduler.getInstance());
+        
+    // SmartDashboard defaults for data collection and tuning
+    SmartDashboard.putBoolean("Record Data", false);
+    SmartDashboard.putBoolean("Record Time Data", false);
+    SmartDashboard.putNumber("Test Angle", Constants.SetPointConstants.TEST);
+    SmartDashboard.putNumber("dist", 0.0);
+    SmartDashboard.putNumber("Shooting V", 0.1);
     }
 
     private void configureBindings() {

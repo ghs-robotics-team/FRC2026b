@@ -2071,6 +2071,392 @@
           }
         ]
       }
+    },
+    {
+      "name": "Data Collection",
+      "grid_layout": {
+        "layouts": [
+          {
+            "title": "Recording Controls",
+            "x": 0.0,
+            "y": 0.0,
+            "width": 512.0,
+            "height": 360.0,
+            "type": "List Layout",
+            "properties": {
+              "label_position": "TOP"
+            },
+            "children": [
+              {
+                "title": "Record Data",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 256.0,
+                "height": 128.0,
+                "type": "Boolean Box",
+                "properties": {
+                  "topic": "/SmartDashboard/Record Data",
+                  "period": 0.06,
+                  "data_type": "boolean",
+                  "true_color": 4283215696,
+                  "false_color": 4294198070
+                }
+              },
+              {
+                "title": "Record Time Data",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 256.0,
+                "height": 128.0,
+                "type": "Boolean Box",
+                "properties": {
+                  "topic": "/SmartDashboard/Record Time Data",
+                  "period": 0.06,
+                  "data_type": "boolean",
+                  "true_color": 4283215696,
+                  "false_color": 4294198070
+                }
+              },
+              {
+                "title": "Test Angle",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 256.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/SmartDashboard/Test Angle",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": true
+                }
+              },
+              {
+                "title": "Shooting V",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 256.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/SmartDashboard/Shooting V",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": true
+                }
+              },
+              {
+                "title": "dist",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 256.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/SmartDashboard/dist",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": false
+                }
+              }
+            ]
+          },
+          {
+            "title": "Vision Debug",
+            "x": 512.0,
+            "y": 0.0,
+            "width": 1280.0,
+            "height": 1080.0,
+            "type": "Grid Layout",
+            "properties": {
+              "rows": 6,
+              "columns": 4
+            },
+            "children": [
+              {
+                "title": "VIS - A Tag Count",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 320.0,
+                "height": 120.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/SmartDashboard/VIS - A Tag Count",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": false
+                }
+              },
+              {
+                "title": "VIS - A Avg Distance",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 320.0,
+                "height": 120.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/SmartDashboard/VIS - A Avg Distance",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": false
+                }
+              },
+              {
+                "title": "VIS - A Confidence",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 320.0,
+                "height": 120.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/SmartDashboard/VIS - A Confidence",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": false
+                }
+              },
+              {
+                "title": "VIS - A Timestamp",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 320.0,
+                "height": 120.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/SmartDashboard/VIS - A Timestamp",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": false
+                }
+              },
+              {
+                "title": "VIS - A Latency",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 320.0,
+                "height": 120.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/SmartDashboard/VIS - A Latency",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": false
+                }
+              },
+              {
+                "title": "VIS - A Pose X",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 320.0,
+                "height": 120.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/SmartDashboard/VIS - A Pose X",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": false
+                }
+              },
+              {
+                "title": "VIS - A Pose Y",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 320.0,
+                "height": 120.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/SmartDashboard/VIS - A Pose Y",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": false
+                }
+              },
+              {
+                "title": "VIS - A Pose Yaw",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 320.0,
+                "height": 120.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/SmartDashboard/VIS - A Pose Yaw",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": false
+                }
+              },
+              {
+                "title": "VIS - A Fiducial IDs",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 640.0,
+                "height": 120.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/SmartDashboard/VIS - A Fiducial IDs",
+                  "period": 0.06,
+                  "data_type": "string",
+                  "show_submit_button": false
+                }
+              },
+              {
+                "title": "VIS - A Fiducial Count",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 320.0,
+                "height": 120.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/SmartDashboard/VIS - A Fiducial Count",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": false
+                }
+              },
+              {
+                "title": "VIS - B Tag Count",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 320.0,
+                "height": 120.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/SmartDashboard/VIS - B Tag Count",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": false
+                }
+              },
+              {
+                "title": "VIS - B Avg Distance",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 320.0,
+                "height": 120.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/SmartDashboard/VIS - B Avg Distance",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": false
+                }
+              },
+              {
+                "title": "VIS - B Confidence",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 320.0,
+                "height": 120.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/SmartDashboard/VIS - B Confidence",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": false
+                }
+              },
+              {
+                "title": "VIS - B Timestamp",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 320.0,
+                "height": 120.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/SmartDashboard/VIS - B Timestamp",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": false
+                }
+              },
+              {
+                "title": "VIS - B Latency",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 320.0,
+                "height": 120.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/SmartDashboard/VIS - B Latency",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": false
+                }
+              },
+              {
+                "title": "VIS - B Pose X",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 320.0,
+                "height": 120.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/SmartDashboard/VIS - B Pose X",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": false
+                }
+              },
+              {
+                "title": "VIS - B Pose Y",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 320.0,
+                "height": 120.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/SmartDashboard/VIS - B Pose Y",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": false
+                }
+              },
+              {
+                "title": "VIS - B Pose Yaw",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 320.0,
+                "height": 120.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/SmartDashboard/VIS - B Pose Yaw",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": false
+                }
+              },
+              {
+                "title": "VIS - B Fiducial IDs",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 640.0,
+                "height": 120.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/SmartDashboard/VIS - B Fiducial IDs",
+                  "period": 0.06,
+                  "data_type": "string",
+                  "show_submit_button": false
+                }
+              },
+              {
+                "title": "VIS - B Fiducial Count",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 320.0,
+                "height": 120.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/SmartDashboard/VIS - B Fiducial Count",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": false
+                }
+              }
+            ]
+          }
+        ]
+      }
     }
   ]
 }
