@@ -2030,7 +2030,7 @@
             "height": 360.0,
             "type": "Graph",
             "properties": {
-              "topic": "/SmartDashboard/VIS - Confidence A",
+              "topic": "/SmartDashboard/VIS - A Confidence",
               "period": 0.06,
               "data_type": "double",
               "time_displayed": 5.0,
@@ -2046,7 +2046,7 @@
             "height": 360.0,
             "type": "Graph",
             "properties": {
-              "topic": "/SmartDashboard/VIS - Confidence B",
+              "topic": "/SmartDashboard/VIS - B Confidence",
               "period": 0.06,
               "data_type": "double",
               "time_displayed": 5.0,
@@ -2115,14 +2115,14 @@
             }
           },
           {
-            "title": "Robot Rotation Velocity",
+            "title": "Robot Rotation Velocity A",
             "x": 0.0,
             "y": 1080.0,
             "width": 640.0,
             "height": 360.0,
             "type": "Graph",
             "properties": {
-              "topic": "/SmartDashboard/VIS - Rotation Velocity",
+              "topic": "/SmartDashboard/VIS - A Rotation Velocity",
               "period": 0.06,
               "data_type": "double",
               "time_displayed": 5.0,
@@ -2131,14 +2131,46 @@
             }
           },
           {
-            "title": "Robot Total Velocity",
+            "title": "Robot Rotation Velocity B",
             "x": 640.0,
             "y": 1080.0,
             "width": 640.0,
             "height": 360.0,
             "type": "Graph",
             "properties": {
-              "topic": "/SmartDashboard/VIS - Total Velocity",
+              "topic": "/SmartDashboard/VIS - B Rotation Velocity",
+              "period": 0.06,
+              "data_type": "double",
+              "time_displayed": 5.0,
+              "color": 4278238420,
+              "line_width": 2.0
+            }
+          },
+          {
+            "title": "Robot Total Velocity A",
+            "x": 0.0,
+            "y": 1440.0,
+            "width": 640.0,
+            "height": 360.0,
+            "type": "Graph",
+            "properties": {
+              "topic": "/SmartDashboard/VIS - A Total Velocity",
+              "period": 0.06,
+              "data_type": "double",
+              "time_displayed": 5.0,
+              "color": 4278238420,
+              "line_width": 2.0
+            }
+          },
+          {
+            "title": "Robot Total Velocity B",
+            "x": 640.0,
+            "y": 1440.0,
+            "width": 640.0,
+            "height": 360.0,
+            "type": "Graph",
+            "properties": {
+              "topic": "/SmartDashboard/VIS - B Total Velocity",
               "period": 0.06,
               "data_type": "double",
               "time_displayed": 5.0,
@@ -2217,6 +2249,146 @@
             "type": "Text Display",
             "properties": {
               "topic": "/SmartDashboard/dist",
+              "period": 0.06,
+              "data_type": "double",
+              "show_submit_button": false
+            }
+          },
+          {
+            "title": "VIS - A Tag Count",
+            "x": 0.0,
+            "y": 150.0,
+            "width": 100.0,
+            "height": 80.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/SmartDashboard/VIS - A Tag Count",
+              "period": 0.06,
+              "data_type": "double",
+              "show_submit_button": false
+            }
+          },
+          {
+            "title": "VIS - B Tag Count",
+            "x": 100.0,
+            "y": 150.0,
+            "width": 100.0,
+            "height": 80.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/SmartDashboard/VIS - B Tag Count",
+              "period": 0.06,
+              "data_type": "double",
+              "show_submit_button": false
+            }
+          },
+          {
+            "title": "VIS - A Confidence",
+            "x": 200.0,
+            "y": 150.0,
+            "width": 100.0,
+            "height": 80.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/SmartDashboard/VIS - A Confidence",
+              "period": 0.06,
+              "data_type": "double",
+              "show_submit_button": false
+            }
+          },
+          {
+            "title": "VIS - B Confidence",
+            "x": 300.0,
+            "y": 150.0,
+            "width": 100.0,
+            "height": 80.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/SmartDashboard/VIS - B Confidence",
+              "period": 0.06,
+              "data_type": "double",
+              "show_submit_button": false
+            }
+          },
+          {
+            "title": "VIS - A Avg Distance",
+            "x": 400.0,
+            "y": 150.0,
+            "width": 120.0,
+            "height": 80.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/SmartDashboard/VIS - A Avg Distance",
+              "period": 0.06,
+              "data_type": "double",
+              "show_submit_button": false
+            }
+          },
+          {
+            "title": "VIS - B Avg Distance",
+            "x": 520.0,
+            "y": 150.0,
+            "width": 120.0,
+            "height": 80.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/SmartDashboard/VIS - B Avg Distance",
+              "period": 0.06,
+              "data_type": "double",
+              "show_submit_button": false
+            }
+          },
+          {
+            "title": "VIS - A Rotation Velocity",
+            "x": 640.0,
+            "y": 150.0,
+            "width": 120.0,
+            "height": 80.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/SmartDashboard/VIS - A Rotation Velocity",
+              "period": 0.06,
+              "data_type": "double",
+              "show_submit_button": false
+            }
+          },
+          {
+            "title": "VIS - B Rotation Velocity",
+            "x": 760.0,
+            "y": 150.0,
+            "width": 120.0,
+            "height": 80.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/SmartDashboard/VIS - B Rotation Velocity",
+              "period": 0.06,
+              "data_type": "double",
+              "show_submit_button": false
+            }
+          },
+          {
+            "title": "VIS - A Total Velocity",
+            "x": 880.0,
+            "y": 150.0,
+            "width": 120.0,
+            "height": 80.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/SmartDashboard/VIS - A Total Velocity",
+              "period": 0.06,
+              "data_type": "double",
+              "show_submit_button": false
+            }
+          },
+          {
+            "title": "VIS - B Total Velocity",
+            "x": 1000.0,
+            "y": 150.0,
+            "width": 120.0,
+            "height": 80.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/SmartDashboard/VIS - B Total Velocity",
               "period": 0.06,
               "data_type": "double",
               "show_submit_button": false

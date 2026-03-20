@@ -353,6 +353,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     Globals.EagleEye.yVel = this.getState().Speeds.vyMetersPerSecond;
     Globals.EagleEye.rotVel = this.getState().Speeds.omegaRadiansPerSecond;
     Globals.EagleEye.rawGyroYaw = this.getPigeon2().getYaw().getValueAsDouble();
+
     }
 
     private void startSimThread() {
