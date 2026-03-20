@@ -2152,90 +2152,77 @@
     {
       "name": "Data Collection",
       "grid_layout": {
-        "layouts": [
+        "layouts": [],
+        "containers": [
           {
-            "title": "Recording Controls",
+            "title": "Record Data",
             "x": 0.0,
             "y": 0.0,
-            "width": 512.0,
-            "height": 360.0,
-            "type": "List Layout",
+            "width": 300.0,
+            "height": 150.0,
+            "type": "Toggle Button",
             "properties": {
-              "label_position": "TOP"
-            },
-            "children": [
-              {
-                "title": "Record Data",
-                "x": 0.0,
-                "y": 0.0,
-                "width": 256.0,
-                "height": 128.0,
-                "type": "Boolean Button",
-                "properties": {
-                  "topic": "/SmartDashboard/Record Data",
-                  "period": 0.06,
-                  "data_type": "boolean"
-                }
-              },
-              {
-                "title": "Record Time Data",
-                "x": 0.0,
-                "y": 0.0,
-                "width": 256.0,
-                "height": 128.0,
-                "type": "Boolean Button",
-                "properties": {
-                  "topic": "/SmartDashboard/Record Time Data",
-                  "period": 0.06,
-                  "data_type": "boolean"
-                }
-              },
-              {
-                "title": "Test Angle",
-                "x": 0.0,
-                "y": 0.0,
-                "width": 256.0,
-                "height": 128.0,
-                "type": "Text Display",
-                "properties": {
-                  "topic": "/SmartDashboard/Test Angle",
-                  "period": 0.06,
-                  "data_type": "double",
-                  "show_submit_button": true
-                }
-              },
-              {
-                "title": "Shooting V",
-                "x": 0.0,
-                "y": 0.0,
-                "width": 256.0,
-                "height": 128.0,
-                "type": "Text Display",
-                "properties": {
-                  "topic": "/SmartDashboard/Shooting V",
-                  "period": 0.06,
-                  "data_type": "double",
-                  "show_submit_button": true
-                }
-              },
-              {
-                "title": "dist",
-                "x": 0.0,
-                "y": 0.0,
-                "width": 256.0,
-                "height": 128.0,
-                "type": "Text Display",
-                "properties": {
-                  "topic": "/SmartDashboard/dist",
-                  "period": 0.06,
-                  "data_type": "double",
-                  "show_submit_button": false
-                }
-              }
-            ]
+              "topic": "/SmartDashboard/Record Data",
+              "period": 0.06,
+              "data_type": "boolean"
+            }
+          },
+          {
+            "title": "Record Time Data",
+            "x": 300.0,
+            "y": 0.0,
+            "width": 300.0,
+            "height": 150.0,
+            "type": "Toggle Button",
+            "properties": {
+              "topic": "/SmartDashboard/Record Time Data",
+              "period": 0.06,
+              "data_type": "boolean"
+            }
+          },
+          {
+            "title": "Test Angle",
+            "x": 600.0,
+            "y": 0.0,
+            "width": 250.0,
+            "height": 150.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/SmartDashboard/Test Angle",
+              "period": 0.06,
+              "data_type": "double",
+              "show_submit_button": true
+            }
+          },
+          {
+            "title": "Shooting V",
+            "x": 850.0,
+            "y": 0.0,
+            "width": 250.0,
+            "height": 150.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/SmartDashboard/Shooting V",
+              "period": 0.06,
+              "data_type": "double",
+              "show_submit_button": true
+            }
+          },
+          {
+            "title": "dist",
+            "x": 1100.0,
+            "y": 0.0,
+            "width": 180.0,
+            "height": 150.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/SmartDashboard/dist",
+              "period": 0.06,
+              "data_type": "double",
+              "show_submit_button": false
+            }
           }
-        ],
-        "containers": []
+        ]
       }
     }
   ]

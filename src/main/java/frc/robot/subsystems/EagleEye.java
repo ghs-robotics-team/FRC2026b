@@ -189,7 +189,7 @@ public class EagleEye extends SubsystemBase {
     SmartDashboard.putNumber("VIS - Confidence A", confidenceA);
     SmartDashboard.putNumber("VIS - Confidence B", confidenceB);
 
-    // ===== SHOOTING DATA COLLECTION =====
+    /*  ===== SHOOTING DATA COLLECTION =====
     if (Constants.OperatorConstants.SHOOTING_DATA_COLLECTION_MODE) {
       if (SmartDashboard.getBoolean("Record Data", false)) {
         File file = new File(Filesystem.getDeployDirectory(), "shootingData.txt");
@@ -246,6 +246,6 @@ public class EagleEye extends SubsystemBase {
       }
       // Save last button state
       Globals.shootingDataCollectionSettings.lastButtonState = button;
-    }
+    }*/
   }
 }

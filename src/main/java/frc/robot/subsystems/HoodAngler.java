@@ -86,6 +86,15 @@ public class HoodAngler extends SubsystemBase {
   }
 
   /**
+   * Get the current hood angle
+   * 
+   * @return The hood angle in encoder units.
+   */
+  public double getAngle() {
+    return hoodEncoderVal;
+  }
+
+  /**
    * Periodically updates the SmartDashboard with the current position of the hood
    * angler.
    */
