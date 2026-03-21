@@ -348,11 +348,13 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     SmartDashboard.putNumber("SS EagleEye-X", Units.metersToInches(Globals.EagleEye.position.getX()));
     SmartDashboard.putNumber("SS EagleEye-Y", Units.metersToInches(Globals.EagleEye.position.getY()));
     SmartDashboard.putNumber("SS EagleEye-Rot", Globals.EagleEye.position.getRotation().getDegrees());
+    SmartDashboard.putNumber("SS EagleEye-RotRaw", this.getPigeon2().getYaw().getValueAsDouble());
     
     Globals.EagleEye.xVel = this.getState().Speeds.vxMetersPerSecond;
     Globals.EagleEye.yVel = this.getState().Speeds.vyMetersPerSecond;
     Globals.EagleEye.rotVel = this.getState().Speeds.omegaRadiansPerSecond;
-    Globals.EagleEye.rawGyroYaw = this.getPigeon2().getYaw().getValueAsDouble();
+    Globals.EagleEye.rawGyroYaw = this.getState().Pose.getRotation().getDegrees();
+
     }
 
     private void startSimThread() {

@@ -20,6 +20,7 @@ public class FeedRoller extends SubsystemBase {
    * Nothing done in constructor.
    */
   public FeedRoller() {
+    SmartDashboard.putNumber("Feed Roll V", 0.0);
   }
 
   /**
@@ -37,7 +38,10 @@ public class FeedRoller extends SubsystemBase {
    */
   public void roll(double power) {
     if (Constants.OperatorConstants.DYNAMIC_POWER_CONTROL && power != 0) {
-      power = SmartDashboard.getNumber("Feed Roll V", 0.1);
+      double dashboardPower = SmartDashboard.getNumber("Feed Roll V", 0.0);
+      if (dashboardPower != 0) {
+        power = dashboardPower;
+      }
     }
     rollerMotor.set(power);
   }

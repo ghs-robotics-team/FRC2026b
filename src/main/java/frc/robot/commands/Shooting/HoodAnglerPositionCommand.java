@@ -8,6 +8,7 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.subsystems.HoodAngler;
 
 /**
@@ -67,7 +68,16 @@ public class HoodAnglerPositionCommand extends Command {
     pid.setI(I);
     pid.setD(D);
 
-    directionFactor = pid.calculate(currentPos, desiredPos);
+    double targetPos = desiredPos;
+    if (Constants.OperatorConstants.DYNAMIC_POWER_CONTROL) {
+      double dashboardPos = SmartDashboard.getNumber("HOO - Target Position", 0.0);
+      if (dashboardPos != 0) {
+        targetPos = dashboardPos;
+      }
+      SmartDashboard.putNumber("HOO - Target Position", targetPos);
+    }
+
+    directionFactor = pid.calculate(currentPos, targetPos);
     directionFactor = MathUtil.clamp(directionFactor, -1, 1);
     SmartDashboard.putNumber("HOO - Direction Factor", directionFactor);
     if (pid.getPositionError() > -20 && pid.getPositionError() < 20) {

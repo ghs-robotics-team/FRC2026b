@@ -7,7 +7,10 @@ package frc.robot.subsystems;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Paths;
+
+import java.util.Arrays;
+import java.util.stream.Collectors;
+import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotBase;
@@ -117,8 +120,8 @@ public class EagleEye extends SubsystemBase {
     if (limelightMeasurementA != null) {
       SmartDashboard.putNumber("VIS - A Tag Count", limelightMeasurementA.tagCount);
       SmartDashboard.putNumber("VIS - A Avg Distance", limelightMeasurementA.avgTagDist);
-      SmartDashboard.putNumber("VIS - Rotation Velocity", Globals.EagleEye.rotVel);
-      SmartDashboard.putNumber("VIS - Total Velocity", Math.hypot(Globals.EagleEye.xVel, Globals.EagleEye.yVel));
+      SmartDashboard.putNumber("VIS - A Rotation Velocity", Globals.EagleEye.rotVel);
+      SmartDashboard.putNumber("VIS - A Total Velocity", Math.hypot(Globals.EagleEye.xVel, Globals.EagleEye.yVel));
 
       confidenceA = limelightMeasurement(limelightMeasurementA);
 
@@ -126,14 +129,32 @@ public class EagleEye extends SubsystemBase {
       Globals.LastVisionMeasurement.timeStampA = limelightMeasurementA.timestampSeconds;
       Globals.LastVisionMeasurement.notRead = true;
 
+      // Extra debug output for camera A
+      SmartDashboard.putNumber("VIS - A Confidence", confidenceA);
+      SmartDashboard.putNumber("VIS - A Timestamp", limelightMeasurementA.timestampSeconds);
+      SmartDashboard.putNumber("VIS - A Latency", limelightMeasurementA.latency);
+      SmartDashboard.putNumber("VIS - A Avg Area", limelightMeasurementA.avgTagArea);
+      SmartDashboard.putNumber("VIS - A Pose X", limelightMeasurementA.pose.getTranslation().getX());
+      SmartDashboard.putNumber("VIS - A Pose Y", limelightMeasurementA.pose.getTranslation().getY());
+      SmartDashboard.putNumber("VIS - A Pose Yaw", Math.toDegrees(limelightMeasurementA.pose.getRotation().getRadians()));
+
+      if (limelightMeasurementA.rawFiducials != null && limelightMeasurementA.rawFiducials.length > 0) {
+        String idsA = Arrays.stream(limelightMeasurementA.rawFiducials).map(f -> String.valueOf(f.id)).collect(Collectors.joining(","));
+        SmartDashboard.putString("VIS - A Fiducial IDs", idsA);
+        SmartDashboard.putNumber("VIS - A Fiducial Count", limelightMeasurementA.rawFiducials.length);
+      } else {
+        SmartDashboard.putString("VIS - A Fiducial IDs", "");
+        SmartDashboard.putNumber("VIS - A Fiducial Count", 0);
+      }
+
     }
 
     if (limelightMeasurementB != null) {
 
       SmartDashboard.putNumber("VIS - B Tag Count", limelightMeasurementB.tagCount);
       SmartDashboard.putNumber("VIS - B Avg Distance", limelightMeasurementB.avgTagDist);
-      SmartDashboard.putNumber("VIS - Rotation Velocity", Globals.EagleEye.rotVel);
-      SmartDashboard.putNumber("VIS - Total Velocity", Math.hypot(Globals.EagleEye.xVel, Globals.EagleEye.yVel));
+      SmartDashboard.putNumber("VIS - B Rotation Velocity", Globals.EagleEye.rotVel);
+      SmartDashboard.putNumber("VIS - B Total Velocity", Math.hypot(Globals.EagleEye.xVel, Globals.EagleEye.yVel));
 
       confidenceB = limelightMeasurement(limelightMeasurementB);
 
@@ -141,6 +162,24 @@ public class EagleEye extends SubsystemBase {
       Globals.LastVisionMeasurement.positionB = limelightMeasurementB.pose;
       Globals.LastVisionMeasurement.timeStampB = limelightMeasurementB.timestampSeconds;
       Globals.LastVisionMeasurement.notRead = true;
+
+      // Extra debug output for camera B
+      SmartDashboard.putNumber("VIS - B Confidence", confidenceB);
+      SmartDashboard.putNumber("VIS - B Timestamp", limelightMeasurementB.timestampSeconds);
+      SmartDashboard.putNumber("VIS - B Latency", limelightMeasurementB.latency);
+      SmartDashboard.putNumber("VIS - B Avg Area", limelightMeasurementB.avgTagArea);
+      SmartDashboard.putNumber("VIS - B Pose X", limelightMeasurementB.pose.getTranslation().getX());
+      SmartDashboard.putNumber("VIS - B Pose Y", limelightMeasurementB.pose.getTranslation().getY());
+      SmartDashboard.putNumber("VIS - B Pose Yaw", Math.toDegrees(limelightMeasurementB.pose.getRotation().getRadians()));
+
+      if (limelightMeasurementB.rawFiducials != null && limelightMeasurementB.rawFiducials.length > 0) {
+        String idsB = Arrays.stream(limelightMeasurementB.rawFiducials).map(f -> String.valueOf(f.id)).collect(Collectors.joining(","));
+        SmartDashboard.putString("VIS - B Fiducial IDs", idsB);
+        SmartDashboard.putNumber("VIS - B Fiducial Count", limelightMeasurementB.rawFiducials.length);
+      } else {
+        SmartDashboard.putString("VIS - B Fiducial IDs", "");
+        SmartDashboard.putNumber("VIS - B Fiducial Count", 0);
+      }
 
     }
     Globals.LastVisionMeasurement.confidenceA = confidenceA;
@@ -150,12 +189,12 @@ public class EagleEye extends SubsystemBase {
     SmartDashboard.putNumber("VIS - Confidence A", confidenceA);
     SmartDashboard.putNumber("VIS - Confidence B", confidenceB);
 
-    // ===== SHOOTING DATA COLLECTION =====
+    /*  ===== SHOOTING DATA COLLECTION =====
     if (Constants.OperatorConstants.SHOOTING_DATA_COLLECTION_MODE) {
       if (SmartDashboard.getBoolean("Record Data", false)) {
-        File file = new File(Paths.get("src", "main", "deploy", "shootingData.txt").toUri());
-        try (FileWriter writer = new FileWriter(file)) {
-          // Dist Angle
+        File file = new File(Filesystem.getDeployDirectory(), "shootingData.txt");
+        try (FileWriter writer = new FileWriter(file, true)) {
+          // Dist Angle (append)
           writer.write(String.valueOf(SmartDashboard.getNumber("dist", 0)) + "  "
               + String.valueOf(SmartDashboard.getNumber("Test Angle", 0)) + "\n");
         } catch (IOException e) {
@@ -190,9 +229,9 @@ public class EagleEye extends SubsystemBase {
           double distance = Globals.shootingDataCollectionSettings.endPose.getTranslation()
               .getDistance(Globals.shootingDataCollectionSettings.startPose.getTranslation());
 
-          File file = new File(Paths.get("src", "main", "deploy", "shootingTimeData.txt").toUri());
-          try (FileWriter writer = new FileWriter(file)) {
-            // Dist Time
+          File file = new File(Filesystem.getDeployDirectory(), "shootingTimeData.txt");
+          try (FileWriter writer = new FileWriter(file, true)) {
+            // Dist Time (append)
             writer.write(String.valueOf(distance) + "  "
                 + String.valueOf(elapsedTime) + "\n");
           } catch (IOException e) {
@@ -207,6 +246,6 @@ public class EagleEye extends SubsystemBase {
       }
       // Save last button state
       Globals.shootingDataCollectionSettings.lastButtonState = button;
-    }
+    }*/
   }
 }

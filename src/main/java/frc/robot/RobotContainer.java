@@ -15,6 +15,9 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
@@ -86,7 +89,7 @@ public class RobotContainer {
     // Far-Shot Auto
     private final ShootingRPMCommand shootingFarShotAuto = new ShootingRPMCommand(shooter, 5146);
     private final HoodAnglerPositionCommand hoodAnglerFarShotAuto = new HoodAnglerPositionCommand(hoodAngler, 0); 
-    private final FeedRollOnly feedRollFarShotAuto = new FeedRollOnly(feedRoller, 1);
+    private final FeedRollOnly feedRollFarShotAuto = new FeedRollOnly(feedRoller, 0.5);
     private final SpindexOnlyCommand spindexOnlyFarShotAuto = new SpindexOnlyCommand(spindexer, 0.5); 
     private final ParallelCommandGroup farShotCommandAuto = new ParallelCommandGroup(
         shootingFarShotAuto.withTimeout(5), 
@@ -98,7 +101,7 @@ public class RobotContainer {
     // Mid-Shot Auto
     private final ShootingRPMCommand shootingMidShotAuto = new ShootingRPMCommand(shooter, 5146);
     private final HoodAnglerPositionCommand hoodAnglerMidShotAuto = new HoodAnglerPositionCommand(hoodAngler, 0); 
-    private final FeedRollOnly feedRollMidShotAuto = new FeedRollOnly(feedRoller, 1);
+    private final FeedRollOnly feedRollMidShotAuto = new FeedRollOnly(feedRoller, 0.5);
     private final SpindexOnlyCommand spindexOnlyMidShotAuto = new SpindexOnlyCommand(spindexer, 0.5); 
     private final ParallelCommandGroup midShotCommandAuto = new ParallelCommandGroup(
         shootingMidShotAuto.withTimeout(5), 
@@ -198,7 +201,7 @@ public class RobotContainer {
     );
 
     // Feed Roller
-    private final FeedRollOnly feedRollOnlyCommand = new FeedRollOnly(feedRoller, 1);
+    private final FeedRollOnly feedRollOnlyCommand = new FeedRollOnly(feedRoller, 0.5);
     private final SequentialCommandGroup feedRollRampDown = new FeedRollOnly(feedRoller, 0.75).withTimeout(0.25).andThen(
         new FeedRollOnly(feedRoller, 0.5).withTimeout(0.25).andThen(
         new FeedRollOnly(feedRoller, 0.25).withTimeout(0.25).andThen(
@@ -245,15 +248,16 @@ public class RobotContainer {
         }
         configureBindings();
 
-        // Set default commands
-        if (Constants.EagleEyeConstants.EAGLEEYE_ENABLED)
-        {
-            eagleEye.setDefaultCommand(eagleEyeCommand);
-        }
-
         // Warmup PathPlanner to avoid Java pauses
         FollowPathCommand.warmupCommand().schedule();
         SmartDashboard.putData("Command Scheduler", CommandScheduler.getInstance());
+        
+    // SmartDashboard defaults for data collection and tuning
+    SmartDashboard.putBoolean("Record Data", false);
+    SmartDashboard.putBoolean("Record Time Data", false);
+    SmartDashboard.putNumber("Test Angle", Constants.SetPointConstants.TEST);
+    SmartDashboard.putNumber("dist", 0.0);
+    SmartDashboard.putNumber("Shooting V", 0.0);
     }
 
     private void configureBindings() {

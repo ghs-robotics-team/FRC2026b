@@ -8,6 +8,7 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.subsystems.Intake;
 
 /**
@@ -67,7 +68,16 @@ public class IntakeDeployPositionCommand extends Command {
     pid.setI(I);
     pid.setD(D);
 
-    directionFactor = pid.calculate(currentPos, desiredPos);
+    double targetPos = desiredPos;
+    if (Constants.OperatorConstants.DYNAMIC_POWER_CONTROL) {
+      double dashboardPos = SmartDashboard.getNumber("INT - Deploy Target Position", 0.0);
+      if (dashboardPos != 0) {
+        targetPos = dashboardPos;
+      }
+      SmartDashboard.putNumber("INT - Deploy Target Position", targetPos);
+    }
+
+    directionFactor = pid.calculate(currentPos, targetPos);
     directionFactor = MathUtil.clamp(directionFactor, -1, 1);
     SmartDashboard.putNumber("INT - Direction Factor", directionFactor);
     if (pid.getPositionError() > -20 && pid.getPositionError() < 20) {

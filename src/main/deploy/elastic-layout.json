@@ -3,522 +3,285 @@
   "grid_size": 128,
   "tabs": [
     {
+      "name": "Vision",
+      "grid_layout": {
+        "layouts": [],
+        "containers": [
+          {
+            "title": "Vision Confidence A",
+            "x": 0.0,
+            "y": 0.0,
+            "width": 640.0,
+            "height": 360.0,
+            "type": "Graph",
+            "properties": {
+              "topic": "/SmartDashboard/VIS - A Confidence",
+              "period": 0.06,
+              "data_type": "double",
+              "time_displayed": 5.0,
+              "color": 4278238420,
+              "line_width": 2.0
+            }
+          },
+          {
+            "title": "Vision Confidence B",
+            "x": 640.0,
+            "y": 0.0,
+            "width": 640.0,
+            "height": 360.0,
+            "type": "Graph",
+            "properties": {
+              "topic": "/SmartDashboard/VIS - B Confidence",
+              "period": 0.06,
+              "data_type": "double",
+              "time_displayed": 5.0,
+              "color": 4278238420,
+              "line_width": 2.0
+            }
+          },
+          {
+            "title": "EEA Tag Count",
+            "x": 0.0,
+            "y": 360.0,
+            "width": 640.0,
+            "height": 360.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/SmartDashboard/VIS - A Tag Count",
+              "period": 0.06,
+              "data_type": "double",
+              "show_submit_button": false
+            }
+          },
+          {
+            "title": "EEB Tag Count",
+            "x": 640.0,
+            "y": 360.0,
+            "width": 640.0,
+            "height": 360.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/SmartDashboard/VIS - B Tag Count",
+              "period": 0.06,
+              "data_type": "double",
+              "show_submit_button": false
+            }
+          },
+          {
+            "title": "EEA Avg Tag Distance",
+            "x": 0.0,
+            "y": 720.0,
+            "width": 640.0,
+            "height": 360.0,
+            "type": "Graph",
+            "properties": {
+              "topic": "/SmartDashboard/VIS - A Avg Distance",
+              "period": 0.06,
+              "data_type": "double",
+              "time_displayed": 5.0,
+              "color": 4278238420,
+              "line_width": 2.0
+            }
+          },
+          {
+            "title": "EEB Avg Tag Distance",
+            "x": 640.0,
+            "y": 720.0,
+            "width": 640.0,
+            "height": 360.0,
+            "type": "Graph",
+            "properties": {
+              "topic": "/SmartDashboard/VIS - B Avg Distance",
+              "period": 0.06,
+              "data_type": "double",
+              "time_displayed": 5.0,
+              "color": 4278238420,
+              "line_width": 2.0
+            }
+          },
+          {
+            "title": "Robot Rotation Velocity A",
+            "x": 0.0,
+            "y": 1080.0,
+            "width": 640.0,
+            "height": 360.0,
+            "type": "Graph",
+            "properties": {
+              "topic": "/SmartDashboard/VIS - A Rotation Velocity",
+              "period": 0.06,
+              "data_type": "double",
+              "time_displayed": 5.0,
+              "color": 4278238420,
+              "line_width": 2.0
+            }
+          },
+          {
+            "title": "Robot Rotation Velocity B",
+            "x": 640.0,
+            "y": 1080.0,
+            "width": 640.0,
+            "height": 360.0,
+            "type": "Graph",
+            "properties": {
+              "topic": "/SmartDashboard/VIS - B Rotation Velocity",
+              "period": 0.06,
+              "data_type": "double",
+              "time_displayed": 5.0,
+              "color": 4278238420,
+              "line_width": 2.0
+            }
+          },
+          {
+            "title": "Robot Total Velocity A",
+            "x": 0.0,
+            "y": 1440.0,
+            "width": 640.0,
+            "height": 360.0,
+            "type": "Graph",
+            "properties": {
+              "topic": "/SmartDashboard/VIS - A Total Velocity",
+              "period": 0.06,
+              "data_type": "double",
+              "time_displayed": 5.0,
+              "color": 4278238420,
+              "line_width": 2.0
+            }
+          },
+          {
+            "title": "Robot Total Velocity B",
+            "x": 640.0,
+            "y": 1440.0,
+            "width": 640.0,
+            "height": 360.0,
+            "type": "Graph",
+            "properties": {
+              "topic": "/SmartDashboard/VIS - B Total Velocity",
+              "period": 0.06,
+              "data_type": "double",
+              "time_displayed": 5.0,
+              "color": 4278238420,
+              "line_width": 2.0
+            }
+          },
+          {
+            "title": "VIS - Confidence A",
+            "x": 1280.0,
+            "y": 128.0,
+            "width": 128.0,
+            "height": 128.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/SmartDashboard/VIS - Confidence A",
+              "period": 0.06,
+              "data_type": "double",
+              "show_submit_button": false
+            }
+          },
+          {
+            "title": "VIS - Confidence B",
+            "x": 1408.0,
+            "y": 128.0,
+            "width": 128.0,
+            "height": 128.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/SmartDashboard/VIS - Confidence B",
+              "period": 0.06,
+              "data_type": "double",
+              "show_submit_button": false
+            }
+          },
+          {
+            "title": "SS AConfidence",
+            "x": 1280.0,
+            "y": 256.0,
+            "width": 128.0,
+            "height": 128.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/SmartDashboard/SS AConfidence",
+              "period": 0.06,
+              "data_type": "double",
+              "show_submit_button": false
+            }
+          },
+          {
+            "title": "SS BConfidence",
+            "x": 1408.0,
+            "y": 256.0,
+            "width": 128.0,
+            "height": 128.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/SmartDashboard/SS BConfidence",
+              "period": 0.06,
+              "data_type": "double",
+              "show_submit_button": false
+            }
+          },
+          {
+            "title": "SS EagleEye-Rot",
+            "x": 1280.0,
+            "y": 384.0,
+            "width": 128.0,
+            "height": 128.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/SmartDashboard/SS EagleEye-Rot",
+              "period": 0.06,
+              "data_type": "double",
+              "show_submit_button": false
+            }
+          },
+          {
+            "title": "SS Swerve-Botpose-x",
+            "x": 1280.0,
+            "y": 512.0,
+            "width": 128.0,
+            "height": 128.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/SmartDashboard/SS Swerve-Botpose-x",
+              "period": 0.06,
+              "data_type": "double",
+              "show_submit_button": false
+            }
+          },
+          {
+            "title": "SS EagleEye-X",
+            "x": 1408.0,
+            "y": 512.0,
+            "width": 128.0,
+            "height": 128.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/SmartDashboard/SS EagleEye-X",
+              "period": 0.06,
+              "data_type": "double",
+              "show_submit_button": false
+            }
+          },
+          {
+            "title": "SS EagleEye-RotRaw",
+            "x": 1408.0,
+            "y": 384.0,
+            "width": 128.0,
+            "height": 128.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/SmartDashboard/SS EagleEye-RotRaw",
+              "period": 0.06,
+              "data_type": "double",
+              "show_submit_button": false
+            }
+          }
+        ]
+      }
+    },
+    {
       "name": "Odometry",
       "grid_layout": {
-        "layouts": [
-          {
-            "title": "frontleft",
-            "x": 512.0,
-            "y": 0.0,
-            "width": 256.0,
-            "height": 640.0,
-            "type": "List Layout",
-            "properties": {
-              "label_position": "TOP"
-            },
-            "children": [
-              {
-                "title": "Absolute Encoder Read Issue",
-                "x": 0.0,
-                "y": 0.0,
-                "width": 128.0,
-                "height": 128.0,
-                "type": "Boolean Box",
-                "properties": {
-                  "topic": "/SmartDashboard/swerve/modules/frontleft/Absolute Encoder Read Issue",
-                  "period": 0.06,
-                  "data_type": "boolean",
-                  "true_color": 4283215696,
-                  "false_color": 4294198070,
-                  "true_icon": "None",
-                  "false_icon": "None"
-                }
-              },
-              {
-                "title": "Adjusted Absolute Encoder",
-                "x": 0.0,
-                "y": 0.0,
-                "width": 128.0,
-                "height": 128.0,
-                "type": "Text Display",
-                "properties": {
-                  "topic": "/SmartDashboard/swerve/modules/frontleft/Adjusted Absolute Encoder",
-                  "period": 0.06,
-                  "data_type": "double",
-                  "show_submit_button": false
-                }
-              },
-              {
-                "title": "Angle Setpoint",
-                "x": 0.0,
-                "y": 0.0,
-                "width": 128.0,
-                "height": 128.0,
-                "type": "Text Display",
-                "properties": {
-                  "topic": "/SmartDashboard/swerve/modules/frontleft/Angle Setpoint",
-                  "period": 0.06,
-                  "data_type": "double",
-                  "show_submit_button": false
-                }
-              },
-              {
-                "title": "Raw Absolute Encoder",
-                "x": 0.0,
-                "y": 0.0,
-                "width": 128.0,
-                "height": 128.0,
-                "type": "Text Display",
-                "properties": {
-                  "topic": "/SmartDashboard/swerve/modules/frontleft/Raw Absolute Encoder",
-                  "period": 0.06,
-                  "data_type": "double",
-                  "show_submit_button": false
-                }
-              },
-              {
-                "title": "Raw Angle Encoder",
-                "x": 0.0,
-                "y": 0.0,
-                "width": 128.0,
-                "height": 128.0,
-                "type": "Text Display",
-                "properties": {
-                  "topic": "/SmartDashboard/swerve/modules/frontleft/Raw Angle Encoder",
-                  "period": 0.06,
-                  "data_type": "double",
-                  "show_submit_button": false
-                }
-              },
-              {
-                "title": "Raw Drive Encoder",
-                "x": 0.0,
-                "y": 0.0,
-                "width": 128.0,
-                "height": 128.0,
-                "type": "Text Display",
-                "properties": {
-                  "topic": "/SmartDashboard/swerve/modules/frontleft/Raw Drive Encoder",
-                  "period": 0.06,
-                  "data_type": "double",
-                  "show_submit_button": false
-                }
-              },
-              {
-                "title": "Raw Drive Velocity",
-                "x": 0.0,
-                "y": 0.0,
-                "width": 128.0,
-                "height": 128.0,
-                "type": "Text Display",
-                "properties": {
-                  "topic": "/SmartDashboard/swerve/modules/frontleft/Raw Drive Velocity",
-                  "period": 0.06,
-                  "data_type": "double",
-                  "show_submit_button": false
-                }
-              },
-              {
-                "title": "Speed Setpoint",
-                "x": 0.0,
-                "y": 0.0,
-                "width": 128.0,
-                "height": 128.0,
-                "type": "Text Display",
-                "properties": {
-                  "topic": "/SmartDashboard/swerve/modules/frontleft/Speed Setpoint",
-                  "period": 0.06,
-                  "data_type": "double",
-                  "show_submit_button": false
-                }
-              }
-            ]
-          },
-          {
-            "title": "frontright",
-            "x": 768.0,
-            "y": 0.0,
-            "width": 256.0,
-            "height": 640.0,
-            "type": "List Layout",
-            "properties": {
-              "label_position": "TOP"
-            },
-            "children": [
-              {
-                "title": "Absolute Encoder Read Issue",
-                "x": 0.0,
-                "y": 0.0,
-                "width": 128.0,
-                "height": 128.0,
-                "type": "Boolean Box",
-                "properties": {
-                  "topic": "/SmartDashboard/swerve/modules/frontright/Absolute Encoder Read Issue",
-                  "period": 0.06,
-                  "data_type": "boolean",
-                  "true_color": 4283215696,
-                  "false_color": 4294198070,
-                  "true_icon": "None",
-                  "false_icon": "None"
-                }
-              },
-              {
-                "title": "Adjusted Absolute Encoder",
-                "x": 0.0,
-                "y": 0.0,
-                "width": 128.0,
-                "height": 128.0,
-                "type": "Text Display",
-                "properties": {
-                  "topic": "/SmartDashboard/swerve/modules/frontright/Adjusted Absolute Encoder",
-                  "period": 0.06,
-                  "data_type": "double",
-                  "show_submit_button": false
-                }
-              },
-              {
-                "title": "Angle Setpoint",
-                "x": 0.0,
-                "y": 0.0,
-                "width": 128.0,
-                "height": 128.0,
-                "type": "Text Display",
-                "properties": {
-                  "topic": "/SmartDashboard/swerve/modules/frontright/Angle Setpoint",
-                  "period": 0.06,
-                  "data_type": "double",
-                  "show_submit_button": false
-                }
-              },
-              {
-                "title": "Raw Absolute Encoder",
-                "x": 0.0,
-                "y": 0.0,
-                "width": 128.0,
-                "height": 128.0,
-                "type": "Text Display",
-                "properties": {
-                  "topic": "/SmartDashboard/swerve/modules/frontright/Raw Absolute Encoder",
-                  "period": 0.06,
-                  "data_type": "double",
-                  "show_submit_button": false
-                }
-              },
-              {
-                "title": "Raw Angle Encoder",
-                "x": 0.0,
-                "y": 0.0,
-                "width": 128.0,
-                "height": 128.0,
-                "type": "Text Display",
-                "properties": {
-                  "topic": "/SmartDashboard/swerve/modules/frontright/Raw Angle Encoder",
-                  "period": 0.06,
-                  "data_type": "double",
-                  "show_submit_button": false
-                }
-              },
-              {
-                "title": "Raw Drive Encoder",
-                "x": 0.0,
-                "y": 0.0,
-                "width": 128.0,
-                "height": 128.0,
-                "type": "Text Display",
-                "properties": {
-                  "topic": "/SmartDashboard/swerve/modules/frontright/Raw Drive Encoder",
-                  "period": 0.06,
-                  "data_type": "double",
-                  "show_submit_button": false
-                }
-              },
-              {
-                "title": "Raw Drive Velocity",
-                "x": 0.0,
-                "y": 0.0,
-                "width": 128.0,
-                "height": 128.0,
-                "type": "Text Display",
-                "properties": {
-                  "topic": "/SmartDashboard/swerve/modules/frontright/Raw Drive Velocity",
-                  "period": 0.06,
-                  "data_type": "double",
-                  "show_submit_button": false
-                }
-              },
-              {
-                "title": "Speed Setpoint",
-                "x": 0.0,
-                "y": 0.0,
-                "width": 128.0,
-                "height": 128.0,
-                "type": "Text Display",
-                "properties": {
-                  "topic": "/SmartDashboard/swerve/modules/frontright/Speed Setpoint",
-                  "period": 0.06,
-                  "data_type": "double",
-                  "show_submit_button": false
-                }
-              }
-            ]
-          },
-          {
-            "title": "backleft",
-            "x": 1024.0,
-            "y": 0.0,
-            "width": 256.0,
-            "height": 640.0,
-            "type": "List Layout",
-            "properties": {
-              "label_position": "TOP"
-            },
-            "children": [
-              {
-                "title": "Absolute Encoder Read Issue",
-                "x": 0.0,
-                "y": 0.0,
-                "width": 128.0,
-                "height": 128.0,
-                "type": "Boolean Box",
-                "properties": {
-                  "topic": "/SmartDashboard/swerve/modules/backleft/Absolute Encoder Read Issue",
-                  "period": 0.06,
-                  "data_type": "boolean",
-                  "true_color": 4283215696,
-                  "false_color": 4294198070,
-                  "true_icon": "None",
-                  "false_icon": "None"
-                }
-              },
-              {
-                "title": "Adjusted Absolute Encoder",
-                "x": 0.0,
-                "y": 0.0,
-                "width": 128.0,
-                "height": 128.0,
-                "type": "Text Display",
-                "properties": {
-                  "topic": "/SmartDashboard/swerve/modules/backleft/Adjusted Absolute Encoder",
-                  "period": 0.06,
-                  "data_type": "double",
-                  "show_submit_button": false
-                }
-              },
-              {
-                "title": "Angle Setpoint",
-                "x": 0.0,
-                "y": 0.0,
-                "width": 128.0,
-                "height": 128.0,
-                "type": "Text Display",
-                "properties": {
-                  "topic": "/SmartDashboard/swerve/modules/backleft/Angle Setpoint",
-                  "period": 0.06,
-                  "data_type": "double",
-                  "show_submit_button": false
-                }
-              },
-              {
-                "title": "Raw Absolute Encoder",
-                "x": 0.0,
-                "y": 0.0,
-                "width": 128.0,
-                "height": 128.0,
-                "type": "Text Display",
-                "properties": {
-                  "topic": "/SmartDashboard/swerve/modules/backleft/Raw Absolute Encoder",
-                  "period": 0.06,
-                  "data_type": "double",
-                  "show_submit_button": false
-                }
-              },
-              {
-                "title": "Raw Angle Encoder",
-                "x": 0.0,
-                "y": 0.0,
-                "width": 128.0,
-                "height": 128.0,
-                "type": "Text Display",
-                "properties": {
-                  "topic": "/SmartDashboard/swerve/modules/backleft/Raw Angle Encoder",
-                  "period": 0.06,
-                  "data_type": "double",
-                  "show_submit_button": false
-                }
-              },
-              {
-                "title": "Raw Drive Encoder",
-                "x": 0.0,
-                "y": 0.0,
-                "width": 128.0,
-                "height": 128.0,
-                "type": "Text Display",
-                "properties": {
-                  "topic": "/SmartDashboard/swerve/modules/backleft/Raw Drive Encoder",
-                  "period": 0.06,
-                  "data_type": "double",
-                  "show_submit_button": false
-                }
-              },
-              {
-                "title": "Raw Drive Velocity",
-                "x": 0.0,
-                "y": 0.0,
-                "width": 128.0,
-                "height": 128.0,
-                "type": "Text Display",
-                "properties": {
-                  "topic": "/SmartDashboard/swerve/modules/backleft/Raw Drive Velocity",
-                  "period": 0.06,
-                  "data_type": "double",
-                  "show_submit_button": false
-                }
-              },
-              {
-                "title": "Speed Setpoint",
-                "x": 0.0,
-                "y": 0.0,
-                "width": 128.0,
-                "height": 128.0,
-                "type": "Text Display",
-                "properties": {
-                  "topic": "/SmartDashboard/swerve/modules/backleft/Speed Setpoint",
-                  "period": 0.06,
-                  "data_type": "double",
-                  "show_submit_button": false
-                }
-              }
-            ]
-          },
-          {
-            "title": "backright",
-            "x": 1280.0,
-            "y": 0.0,
-            "width": 256.0,
-            "height": 640.0,
-            "type": "List Layout",
-            "properties": {
-              "label_position": "TOP"
-            },
-            "children": [
-              {
-                "title": "Absolute Encoder Read Issue",
-                "x": 0.0,
-                "y": 0.0,
-                "width": 128.0,
-                "height": 128.0,
-                "type": "Boolean Box",
-                "properties": {
-                  "topic": "/SmartDashboard/swerve/modules/backright/Absolute Encoder Read Issue",
-                  "period": 0.06,
-                  "data_type": "boolean",
-                  "true_color": 4283215696,
-                  "false_color": 4294198070,
-                  "true_icon": "None",
-                  "false_icon": "None"
-                }
-              },
-              {
-                "title": "Adjusted Absolute Encoder",
-                "x": 0.0,
-                "y": 0.0,
-                "width": 128.0,
-                "height": 128.0,
-                "type": "Text Display",
-                "properties": {
-                  "topic": "/SmartDashboard/swerve/modules/backright/Adjusted Absolute Encoder",
-                  "period": 0.06,
-                  "data_type": "double",
-                  "show_submit_button": false
-                }
-              },
-              {
-                "title": "Angle Setpoint",
-                "x": 0.0,
-                "y": 0.0,
-                "width": 128.0,
-                "height": 128.0,
-                "type": "Text Display",
-                "properties": {
-                  "topic": "/SmartDashboard/swerve/modules/backright/Angle Setpoint",
-                  "period": 0.06,
-                  "data_type": "double",
-                  "show_submit_button": false
-                }
-              },
-              {
-                "title": "Raw Absolute Encoder",
-                "x": 0.0,
-                "y": 0.0,
-                "width": 128.0,
-                "height": 128.0,
-                "type": "Text Display",
-                "properties": {
-                  "topic": "/SmartDashboard/swerve/modules/backright/Raw Absolute Encoder",
-                  "period": 0.06,
-                  "data_type": "double",
-                  "show_submit_button": false
-                }
-              },
-              {
-                "title": "Raw Angle Encoder",
-                "x": 0.0,
-                "y": 0.0,
-                "width": 128.0,
-                "height": 128.0,
-                "type": "Text Display",
-                "properties": {
-                  "topic": "/SmartDashboard/swerve/modules/backright/Raw Angle Encoder",
-                  "period": 0.06,
-                  "data_type": "double",
-                  "show_submit_button": false
-                }
-              },
-              {
-                "title": "Raw Drive Encoder",
-                "x": 0.0,
-                "y": 0.0,
-                "width": 128.0,
-                "height": 128.0,
-                "type": "Text Display",
-                "properties": {
-                  "topic": "/SmartDashboard/swerve/modules/backright/Raw Drive Encoder",
-                  "period": 0.06,
-                  "data_type": "double",
-                  "show_submit_button": false
-                }
-              },
-              {
-                "title": "Raw Drive Velocity",
-                "x": 0.0,
-                "y": 0.0,
-                "width": 128.0,
-                "height": 128.0,
-                "type": "Text Display",
-                "properties": {
-                  "topic": "/SmartDashboard/swerve/modules/backright/Raw Drive Velocity",
-                  "period": 0.06,
-                  "data_type": "double",
-                  "show_submit_button": false
-                }
-              },
-              {
-                "title": "Speed Setpoint",
-                "x": 0.0,
-                "y": 0.0,
-                "width": 128.0,
-                "height": 128.0,
-                "type": "Text Display",
-                "properties": {
-                  "topic": "/SmartDashboard/swerve/modules/backright/Speed Setpoint",
-                  "period": 0.06,
-                  "data_type": "double",
-                  "show_submit_button": false
-                }
-              }
-            ]
-          }
-        ],
+        "layouts": [],
         "containers": [
           {
             "title": "Rotation (Pigeon)",
@@ -582,6 +345,62 @@
               "show_robot_rotation": true,
               "show_desired_states": true,
               "angle_offset": 0.0
+            }
+          },
+          {
+            "title": "robot_orientation_set",
+            "x": 512.0,
+            "y": 0.0,
+            "width": 1024.0,
+            "height": 128.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/limelight-cama/robot_orientation_set",
+              "period": 0.06,
+              "data_type": "double[]",
+              "show_submit_button": false
+            }
+          },
+          {
+            "title": "robot_orientation_set",
+            "x": 512.0,
+            "y": 256.0,
+            "width": 1024.0,
+            "height": 128.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/limelight-camb/robot_orientation_set",
+              "period": 0.06,
+              "data_type": "double[]",
+              "show_submit_button": false
+            }
+          },
+          {
+            "title": "botpose_orb_wpiblue",
+            "x": 512.0,
+            "y": 384.0,
+            "width": 1024.0,
+            "height": 128.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/limelight-camb/botpose_orb_wpiblue",
+              "period": 0.06,
+              "data_type": "double[]",
+              "show_submit_button": false
+            }
+          },
+          {
+            "title": "botpose_orb_wpiblue",
+            "x": 512.0,
+            "y": 128.0,
+            "width": 1024.0,
+            "height": 128.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/limelight-cama/botpose_orb_wpiblue",
+              "period": 0.06,
+              "data_type": "double[]",
+              "show_submit_button": false
             }
           }
         ]
@@ -1309,6 +1128,40 @@
               "data_type": "double",
               "show_submit_button": false
             }
+          },
+          {
+            "title": "Shooting V (Dynamic Power)",
+            "x": 1280.0,
+            "y": 0.0,
+            "width": 212.0,
+            "height": 240.0,
+            "type": "Number Slider",
+            "properties": {
+              "topic": "/SmartDashboard/Shooting V",
+              "period": 0.06,
+              "data_type": "double",
+              "min_value": 0.0,
+              "max_value": 1.0,
+              "divisions": 50,
+              "update_continuously": false
+            }
+          },
+          {
+            "title": "Shooting RPM Override",
+            "x": 1280.0,
+            "y": 256.0,
+            "width": 256.0,
+            "height": 256.0,
+            "type": "Number Slider",
+            "properties": {
+              "topic": "/SmartDashboard/Shooting RPM Override",
+              "period": 0.06,
+              "data_type": "double",
+              "min_value": 0.0,
+              "max_value": 6700.0,
+              "divisions": 60,
+              "update_continuously": false
+            }
           }
         ]
       }
@@ -1430,45 +1283,20 @@
             }
           },
           {
-            "title": "HOO PID P Value",
-            "x": 1274.0,
-            "y": 0.0,
-            "width": 212.0,
-            "height": 240.0,
-            "type": "Text Display",
+            "title": "HOO - Target Position",
+            "x": 1280.0,
+            "y": 384.0,
+            "width": 256.0,
+            "height": 256.0,
+            "type": "Number Slider",
             "properties": {
-              "topic": "/SmartDashboard/HOO - PID-P",
+              "topic": "/SmartDashboard/HOO - Target Position",
               "period": 0.06,
               "data_type": "double",
-              "show_submit_button": false
-            }
-          },
-          {
-            "title": "HOO PID I Value",
-            "x": 1274.0,
-            "y": 240.0,
-            "width": 212.0,
-            "height": 240.0,
-            "type": "Text Display",
-            "properties": {
-              "topic": "/SmartDashboard/HOO - PID-I",
-              "period": 0.06,
-              "data_type": "double",
-              "show_submit_button": false
-            }
-          },
-          {
-            "title": "HOO PID D Value",
-            "x": 1274.0,
-            "y": 480.0,
-            "width": 212.0,
-            "height": 240.0,
-            "type": "Text Display",
-            "properties": {
-              "topic": "/SmartDashboard/HOO - PID-D",
-              "period": 0.06,
-              "data_type": "double",
-              "show_submit_button": false
+              "min_value": -1400.0,
+              "max_value": 0.0,
+              "divisions": 50,
+              "update_continuously": false
             }
           }
         ]
@@ -1631,6 +1459,40 @@
               "data_type": "double",
               "show_submit_button": false
             }
+          },
+          {
+            "title": "Intake V (Dynamic Power)",
+            "x": 1486.0,
+            "y": 0.0,
+            "width": 212.0,
+            "height": 240.0,
+            "type": "Number Slider",
+            "properties": {
+              "topic": "/SmartDashboard/Intake V",
+              "period": 0.06,
+              "data_type": "double",
+              "min_value": 0.0,
+              "max_value": 1.0,
+              "divisions": 50,
+              "update_continuously": false
+            }
+          },
+          {
+            "title": "IntakeDeploy V (Dynamic Power)",
+            "x": 1486.0,
+            "y": 240.0,
+            "width": 212.0,
+            "height": 240.0,
+            "type": "Number Slider",
+            "properties": {
+              "topic": "/SmartDashboard/IntakeDeploy V",
+              "period": 0.06,
+              "data_type": "double",
+              "min_value": 0.0,
+              "max_value": 1.0,
+              "divisions": 50,
+              "update_continuously": false
+            }
           }
         ]
       }
@@ -1669,6 +1531,23 @@
               "data_type": "double",
               "show_submit_button": false
             }
+          },
+          {
+            "title": "Spindexer V (Dynamic Power)",
+            "x": 1280.0,
+            "y": 0.0,
+            "width": 212.0,
+            "height": 240.0,
+            "type": "Number Slider",
+            "properties": {
+              "topic": "/SmartDashboard/Spindexer V",
+              "period": 0.06,
+              "data_type": "double",
+              "min_value": 0.0,
+              "max_value": 1.0,
+              "divisions": 50,
+              "update_continuously": false
+            }
           }
         ]
       }
@@ -1706,6 +1585,23 @@
               "period": 0.06,
               "data_type": "double",
               "show_submit_button": false
+            }
+          },
+          {
+            "title": "Feed Roll V (Dynamic Power)",
+            "x": 1280.0,
+            "y": 0.0,
+            "width": 212.0,
+            "height": 240.0,
+            "type": "Number Slider",
+            "properties": {
+              "topic": "/SmartDashboard/Feed Roll V",
+              "period": 0.06,
+              "data_type": "double",
+              "min_value": 0.0,
+              "max_value": 1.0,
+              "divisions": 50,
+              "update_continuously": false
             }
           }
         ]
@@ -1941,48 +1837,84 @@
       }
     },
     {
-      "name": "Vision",
+      "name": "Data Collection",
       "grid_layout": {
         "layouts": [],
         "containers": [
           {
-            "title": "Vision Confidence A",
+            "title": "Record Data",
             "x": 0.0,
             "y": 0.0,
-            "width": 640.0,
-            "height": 360.0,
-            "type": "Graph",
+            "width": 300.0,
+            "height": 150.0,
+            "type": "Toggle Button",
             "properties": {
-              "topic": "/SmartDashboard/VIS - Confidence A",
+              "topic": "/SmartDashboard/Record Data",
               "period": 0.06,
-              "data_type": "double",
-              "time_displayed": 5.0,
-              "color": 4278238420,
-              "line_width": 2.0
+              "data_type": "boolean"
             }
           },
           {
-            "title": "Vision Confidence B",
-            "x": 640.0,
+            "title": "Record Time Data",
+            "x": 300.0,
             "y": 0.0,
-            "width": 640.0,
-            "height": 360.0,
-            "type": "Graph",
+            "width": 300.0,
+            "height": 150.0,
+            "type": "Toggle Button",
             "properties": {
-              "topic": "/SmartDashboard/VIS - Confidence B",
+              "topic": "/SmartDashboard/Record Time Data",
               "period": 0.06,
-              "data_type": "double",
-              "time_displayed": 5.0,
-              "color": 4278238420,
-              "line_width": 2.0
+              "data_type": "boolean"
             }
           },
           {
-            "title": "EEA Tag Count",
+            "title": "Test Angle",
+            "x": 600.0,
+            "y": 0.0,
+            "width": 250.0,
+            "height": 150.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/SmartDashboard/Test Angle",
+              "period": 0.06,
+              "data_type": "double",
+              "show_submit_button": true
+            }
+          },
+          {
+            "title": "Shooting V",
+            "x": 850.0,
+            "y": 0.0,
+            "width": 250.0,
+            "height": 150.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/SmartDashboard/Shooting V",
+              "period": 0.06,
+              "data_type": "double",
+              "show_submit_button": true
+            }
+          },
+          {
+            "title": "dist",
+            "x": 1100.0,
+            "y": 0.0,
+            "width": 180.0,
+            "height": 150.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/SmartDashboard/dist",
+              "period": 0.06,
+              "data_type": "double",
+              "show_submit_button": false
+            }
+          },
+          {
+            "title": "VIS - A Tag Count",
             "x": 0.0,
-            "y": 360.0,
-            "width": 640.0,
-            "height": 360.0,
+            "y": 150.0,
+            "width": 100.0,
+            "height": 80.0,
             "type": "Text Display",
             "properties": {
               "topic": "/SmartDashboard/VIS - A Tag Count",
@@ -1992,11 +1924,11 @@
             }
           },
           {
-            "title": "EEB Tag Count",
-            "x": 640.0,
-            "y": 360.0,
-            "width": 640.0,
-            "height": 360.0,
+            "title": "VIS - B Tag Count",
+            "x": 100.0,
+            "y": 150.0,
+            "width": 100.0,
+            "height": 80.0,
             "type": "Text Display",
             "properties": {
               "topic": "/SmartDashboard/VIS - B Tag Count",
@@ -2006,67 +1938,115 @@
             }
           },
           {
-            "title": "EEA Avg Tag Distance",
-            "x": 0.0,
-            "y": 720.0,
-            "width": 640.0,
-            "height": 360.0,
-            "type": "Graph",
+            "title": "VIS - A Confidence",
+            "x": 200.0,
+            "y": 150.0,
+            "width": 100.0,
+            "height": 80.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/SmartDashboard/VIS - A Confidence",
+              "period": 0.06,
+              "data_type": "double",
+              "show_submit_button": false
+            }
+          },
+          {
+            "title": "VIS - B Confidence",
+            "x": 300.0,
+            "y": 150.0,
+            "width": 100.0,
+            "height": 80.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/SmartDashboard/VIS - B Confidence",
+              "period": 0.06,
+              "data_type": "double",
+              "show_submit_button": false
+            }
+          },
+          {
+            "title": "VIS - A Avg Distance",
+            "x": 400.0,
+            "y": 150.0,
+            "width": 120.0,
+            "height": 80.0,
+            "type": "Text Display",
             "properties": {
               "topic": "/SmartDashboard/VIS - A Avg Distance",
               "period": 0.06,
               "data_type": "double",
-              "time_displayed": 5.0,
-              "color": 4278238420,
-              "line_width": 2.0
+              "show_submit_button": false
             }
           },
           {
-            "title": "EEB Avg Tag Distance",
-            "x": 640.0,
-            "y": 720.0,
-            "width": 640.0,
-            "height": 360.0,
-            "type": "Graph",
+            "title": "VIS - B Avg Distance",
+            "x": 520.0,
+            "y": 150.0,
+            "width": 120.0,
+            "height": 80.0,
+            "type": "Text Display",
             "properties": {
               "topic": "/SmartDashboard/VIS - B Avg Distance",
               "period": 0.06,
               "data_type": "double",
-              "time_displayed": 5.0,
-              "color": 4278238420,
-              "line_width": 2.0
+              "show_submit_button": false
             }
           },
           {
-            "title": "Robot Rotation Velocity",
-            "x": 0.0,
-            "y": 1080.0,
-            "width": 640.0,
-            "height": 360.0,
-            "type": "Graph",
-            "properties": {
-              "topic": "/SmartDashboard/VIS - Rotation Velocity",
-              "period": 0.06,
-              "data_type": "double",
-              "time_displayed": 5.0,
-              "color": 4278238420,
-              "line_width": 2.0
-            }
-          },
-          {
-            "title": "Robot Total Velocity",
+            "title": "VIS - A Rotation Velocity",
             "x": 640.0,
-            "y": 1080.0,
-            "width": 640.0,
-            "height": 360.0,
-            "type": "Graph",
+            "y": 150.0,
+            "width": 120.0,
+            "height": 80.0,
+            "type": "Text Display",
             "properties": {
-              "topic": "/SmartDashboard/VIS - Total Velocity",
+              "topic": "/SmartDashboard/VIS - A Rotation Velocity",
               "period": 0.06,
               "data_type": "double",
-              "time_displayed": 5.0,
-              "color": 4278238420,
-              "line_width": 2.0
+              "show_submit_button": false
+            }
+          },
+          {
+            "title": "VIS - B Rotation Velocity",
+            "x": 760.0,
+            "y": 150.0,
+            "width": 120.0,
+            "height": 80.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/SmartDashboard/VIS - B Rotation Velocity",
+              "period": 0.06,
+              "data_type": "double",
+              "show_submit_button": false
+            }
+          },
+          {
+            "title": "VIS - A Total Velocity",
+            "x": 880.0,
+            "y": 150.0,
+            "width": 120.0,
+            "height": 80.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/SmartDashboard/VIS - A Total Velocity",
+              "period": 0.06,
+              "data_type": "double",
+              "show_submit_button": false
+            }
+          },
+          {
+            "title": "VIS - B Total Velocity",
+            "x": 1000.0,
+            "y": 150.0,
+            "width": 120.0,
+            "height": 80.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/SmartDashboard/VIS - B Total Velocity",
+              "period": 0.06,
+              "data_type": "double",
+              "show_submit_button": false
             }
           }
         ]

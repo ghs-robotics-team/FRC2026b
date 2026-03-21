@@ -33,6 +33,8 @@ public class Shooter extends SubsystemBase {
     SmartDashboard.putNumber("SH PID-P", 0.0002);
     SmartDashboard.putNumber("SH PID-I", 0.0);
     SmartDashboard.putNumber("SH PID-D", 0.00);
+    SmartDashboard.putNumber("Shooting V", 0.0);
+    SmartDashboard.putNumber("Shooting RPM", 0.0);
 
     config.closedLoop.pid(0.01, 0, 0);
 
@@ -53,13 +55,23 @@ public class Shooter extends SubsystemBase {
    */
   public void shoot(double power) {
     if (Constants.OperatorConstants.DYNAMIC_POWER_CONTROL && power != 0) {
-      power = SmartDashboard.getNumber("Shooting V", 0.1);
+      double dashboardPower = SmartDashboard.getNumber("Shooting V", 0.0);
+      if (dashboardPower != 0) {
+        power = dashboardPower;
+      }
     }
     shooterTop.set(power);
     shooterBottom.set(power);
   }
 
   public void shootTargetSpeed(double rpm) {
+    if (Constants.OperatorConstants.DYNAMIC_POWER_CONTROL) {
+      double dashboardRPM = SmartDashboard.getNumber("Shooting RPM", 0.0);
+      if (dashboardRPM != 0) {
+        rpm = dashboardRPM;
+      }
+    }
+
     double P = SmartDashboard.getNumber("SH PID-P", 0.0002);
     double I = SmartDashboard.getNumber("SH PID-I", 0.0);
     double D = SmartDashboard.getNumber("SH PID-D", 0);
