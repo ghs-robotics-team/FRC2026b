@@ -212,12 +212,13 @@ public class RobotContainer {
     private final SendableChooser<Command> autoChooser;
 
     public RobotContainer() {
-        autoChooser = AutoBuilder.buildAutoChooser("Far Shot (No Movement)");
-        SmartDashboard.putData("Auto Mode", autoChooser);
-
         NamedCommands.registerCommand("Far Shot", farShotCommandAuto);
         NamedCommands.registerCommand("Mid Shot", midShotCommandAuto);
         NamedCommands.registerCommand("Climb", climbCommandAuto);
+
+        autoChooser = AutoBuilder.buildAutoChooser("Far Shot (No Movement)");
+        SmartDashboard.putData("Auto Mode", autoChooser);
+
 
         if (Constants.EagleEyeConstants.EAGLEEYE_ENABLED) {
             eagleEye = new EagleEye();
@@ -336,8 +337,8 @@ public class RobotContainer {
 
         // Left Bumper Button - Intaking
         buttonsXbox.leftBumper().whileTrue(new ParallelCommandGroup(
-            intakeOnlyCommand, 
-            spindexOnlyCommandIntake)
+            intakeOnlyCommand/** , 
+            spindexOnlyCommandIntake*/)
         );
         buttonsXbox.leftBumper().onFalse(new ParallelCommandGroup(
             intakeRampDown, 

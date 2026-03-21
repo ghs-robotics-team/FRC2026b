@@ -12,6 +12,7 @@ import java.util.Arrays;
 import java.util.stream.Collectors;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.Timer;
@@ -19,6 +20,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.EagleEyeConstants;
+import frc.robot.commands.TargetPoints;
 import frc.robot.Globals;
 import frc.robot.LimelightHelpers;
 
@@ -188,6 +190,10 @@ public class EagleEye extends SubsystemBase {
     // Display confidence levels on SmartDashboard
     SmartDashboard.putNumber("VIS - Confidence A", confidenceA);
     SmartDashboard.putNumber("VIS - Confidence B", confidenceB);
+
+    double distance = TargetPoints.HUB_POS.pose.getTranslation()
+    .minus(Globals.EagleEye.position.getTranslation()).getNorm();
+    SmartDashboard.putNumber("dist", distance);
 
     /*  ===== SHOOTING DATA COLLECTION =====
     if (Constants.OperatorConstants.SHOOTING_DATA_COLLECTION_MODE) {
