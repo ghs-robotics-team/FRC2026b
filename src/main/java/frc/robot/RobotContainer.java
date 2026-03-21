@@ -9,7 +9,6 @@ import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.FollowPathCommand;
-
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
@@ -88,27 +87,34 @@ public class RobotContainer {
 
     // Far-Shot Auto
     private final ShootingRPMCommand shootingFarShotAuto = new ShootingRPMCommand(shooter, 5146);
-    private final HoodAnglerPositionCommand hoodAnglerFarShotAuto = new HoodAnglerPositionCommand(hoodAngler, 0); 
+    private final ShootingRPMCommand shootingFarShotTwoAuto = new ShootingRPMCommand(shooter, 5146);
+    private final HoodAnglerPositionCommand hoodAnglerFarShotAuto = new HoodAnglerPositionCommand(hoodAngler, 0);
+    private final HoodAnglerPositionCommand hoodAnglerFarShotTwoAuto = new HoodAnglerPositionCommand(hoodAngler, 0); 
     private final FeedRollOnly feedRollFarShotAuto = new FeedRollOnly(feedRoller, 0.5);
     private final SpindexOnlyCommand spindexOnlyFarShotAuto = new SpindexOnlyCommand(spindexer, 0.5); 
-    private final ParallelCommandGroup farShotCommandAuto = new ParallelCommandGroup(
-        shootingFarShotAuto.withTimeout(5), 
-        hoodAnglerFarShotAuto.withTimeout(5),
-        feedRollFarShotAuto.withTimeout(5), 
-        spindexOnlyFarShotAuto.withTimeout(5)
+    private final ParallelCommandGroup farShotPrepAuto = new ParallelCommandGroup(shootingFarShotTwoAuto, hoodAnglerFarShotTwoAuto);
+    private final ParallelCommandGroup farShotAllAuto = new ParallelCommandGroup(
+            shootingFarShotAuto, 
+            hoodAnglerFarShotAuto, 
+            feedRollFarShotAuto, 
+            spindexOnlyFarShotAuto
     );
 
     // Mid-Shot Auto
-    private final ShootingRPMCommand shootingMidShotAuto = new ShootingRPMCommand(shooter, 5146);
-    private final HoodAnglerPositionCommand hoodAnglerMidShotAuto = new HoodAnglerPositionCommand(hoodAngler, 0); 
+    private final ShootingRPMCommand shootingMidShotAuto = new ShootingRPMCommand(shooter, 4031);
+    private final ShootingRPMCommand shootingMidShotTwoAuto = new ShootingRPMCommand(shooter, 4031);
+    private final HoodAnglerPositionCommand hoodAnglerMidShotAuto = new HoodAnglerPositionCommand(hoodAngler, 0);
+    private final HoodAnglerPositionCommand hoodAnglerMidShotTwoAuto = new HoodAnglerPositionCommand(hoodAngler, 0);
     private final FeedRollOnly feedRollMidShotAuto = new FeedRollOnly(feedRoller, 0.5);
     private final SpindexOnlyCommand spindexOnlyMidShotAuto = new SpindexOnlyCommand(spindexer, 0.5); 
-    private final ParallelCommandGroup midShotCommandAuto = new ParallelCommandGroup(
-        shootingMidShotAuto.withTimeout(5), 
-        hoodAnglerMidShotAuto.withTimeout(5),
-        feedRollMidShotAuto.withTimeout(5), 
-        spindexOnlyMidShotAuto.withTimeout(5)
+    private final ParallelCommandGroup midShotPrepAuto = new ParallelCommandGroup(shootingMidShotTwoAuto, hoodAnglerMidShotTwoAuto);
+    private final ParallelCommandGroup midShotAllAuto = new ParallelCommandGroup(
+            shootingMidShotAuto, 
+            hoodAnglerMidShotAuto, 
+            feedRollMidShotAuto, 
+            spindexOnlyMidShotAuto
     );
+
 
     // Auto Shoot Auto
 
@@ -212,8 +218,10 @@ public class RobotContainer {
     private final SendableChooser<Command> autoChooser;
 
     public RobotContainer() {
-        NamedCommands.registerCommand("Far Shot", farShotCommandAuto);
-        NamedCommands.registerCommand("Mid Shot", midShotCommandAuto);
+        NamedCommands.registerCommand("Far Shot", farShotPrepAuto.withTimeout(2)
+            .andThen(farShotAllAuto).withTimeout(5));
+        NamedCommands.registerCommand("Mid Shot", midShotPrepAuto.withTimeout(2)
+            .andThen(midShotAllAuto).withTimeout(5));
         NamedCommands.registerCommand("Climb", climbCommandAuto);
 
         autoChooser = AutoBuilder.buildAutoChooser("Far Shot (No Movement)");
@@ -337,8 +345,8 @@ public class RobotContainer {
 
         // Left Bumper Button - Intaking
         buttonsXbox.leftBumper().whileTrue(new ParallelCommandGroup(
-            intakeOnlyCommand/** , 
-            spindexOnlyCommandIntake*/)
+            intakeOnlyCommand, 
+            spindexOnlyCommandIntake)
         );
         buttonsXbox.leftBumper().onFalse(new ParallelCommandGroup(
             intakeRampDown, 

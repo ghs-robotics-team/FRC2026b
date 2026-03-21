@@ -5,12 +5,6 @@
     "data": {
       "commands": [
         {
-          "type": "named",
-          "data": {
-            "name": "Mid Shot"
-          }
-        },
-        {
           "type": "path",
           "data": {
             "pathName": "Hub to Tower"
