@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 public enum TargetPoints {
     TAG_28(new Pose2d(Units.inchesToMeters(180.08), Units.inchesToMeters(24.85), Rotation2d.fromDegrees(180))),
     TAG_25(new Pose2d(Units.inchesToMeters(157.79), Units.inchesToMeters(172.32), Rotation2d.fromDegrees(180)));
+    HUB_POS(new Pose2d(4.6256, 4.0346, 0));
     
     public Pose2d pose;
     private static final double RED_BLUE_OFFSET = Units.inchesToMeters(8.57); // 8.57 inches in meters
