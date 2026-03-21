@@ -5,8 +5,6 @@
 package frc.robot;
 
 import com.ctre.phoenix6.HootAutoReplay;
-
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;

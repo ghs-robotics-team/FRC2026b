@@ -4,21 +4,13 @@
 
 package frc.robot.subsystems;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-
 import java.util.Arrays;
 import java.util.stream.Collectors;
-import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotBase;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
 import frc.robot.Constants.EagleEyeConstants;
 import frc.robot.commands.TargetPoints;
 import frc.robot.Globals;
