@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
@@ -240,8 +241,8 @@ public class RobotContainer {
         // Connect the controllers before binding
         if (Constants.OperatorConstants.XBOX_DRIVE) {
             driverXbox = new CommandXboxController(0);
-            if (DriverStation.isJoystickConnected(1)) {
-                buttonsXbox = new CommandXboxController(1);
+            if (DriverStation.isJoystickConnected(2)) {
+                buttonsXbox = new CommandXboxController(2);
             } else {
                 buttonsXbox = driverXbox;
             }
@@ -325,6 +326,7 @@ public class RobotContainer {
         );
 
         if (OperatorConstants.XBOX_DRIVE) {
+            driverXbox.rightBumper().onTrue(drivetrain.runOnce(drivetrain::seedFieldCentric));
         } else {
             new JoystickButton(leftJoystick, 4).onTrue(drivetrain.runOnce(drivetrain::seedFieldCentric));
         }
@@ -342,12 +344,12 @@ public class RobotContainer {
 
         // Left Bumper Button - Intaking
         buttonsXbox.leftBumper().whileTrue(new ParallelCommandGroup(
-            intakeOnlyCommand, 
-            spindexOnlyCommandIntake)
+            intakeOnlyCommand 
+            /*spindexOnlyCommandIntake*/ )
         );
         buttonsXbox.leftBumper().onFalse(new ParallelCommandGroup(
-            intakeRampDown, 
-            spindexRampDownIntake)
+            intakeRampDown 
+            /*spindexRampDownIntake*/)
         );
 
         // Menu Button - Outtaking
@@ -365,16 +367,16 @@ public class RobotContainer {
         buttonsXbox.pov(270).whileTrue(deployIntake);
         
         // A Button - Far Pass
-        buttonsXbox.a().whileTrue(farPassCommand); 
+        buttonsXbox.a().whileTrue(new ParallelCommandGroup(farPassCommand, new WaitCommand(0.5).andThen(new SpindexOnlyCommand(spindexer, 0.5)), new WaitCommand(0.5).andThen(new FeedRollOnly(feedRoller, 0.5)))); 
         buttonsXbox.a().onFalse(shootingRampDown);
         // B Button - Mid Pass
-        buttonsXbox.b().whileTrue(midPassCommand); 
+        buttonsXbox.b().whileTrue(new ParallelCommandGroup(midPassCommand, new WaitCommand(0.5).andThen(new SpindexOnlyCommand(spindexer, 0.5)), new WaitCommand(0.5).andThen(new FeedRollOnly(feedRoller, 0.5)))); 
         buttonsXbox.b().onFalse(shootingRampDown);
         // X Button - Far Shot
-        buttonsXbox.x().whileTrue(farShotCommand); 
+        buttonsXbox.x().whileTrue((new ParallelCommandGroup(farShotCommand, new WaitCommand(0.5).andThen(new SpindexOnlyCommand(spindexer, 0.5)), new WaitCommand(0.5).andThen(new FeedRollOnly(feedRoller, 0.5))))); 
         buttonsXbox.x().onFalse(shootingRampDown);
         // Y Button - Mid Shot
-        buttonsXbox.y().whileTrue(midShotCommand);
+        buttonsXbox.y().whileTrue((new ParallelCommandGroup(midShotCommand, new WaitCommand(0.5).andThen(new SpindexOnlyCommand(spindexer, 0.5)), new WaitCommand(0.5).andThen(new FeedRollOnly(feedRoller, 0.5)))));
         buttonsXbox.y().onFalse(shootingRampDown);
     
         drivetrain.registerTelemetry(logger::telemeterize);

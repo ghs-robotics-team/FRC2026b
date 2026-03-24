@@ -72,10 +72,10 @@ public final class Constants {
     public static final boolean SHOOTING_DATA_COLLECTION_MODE = false;
 
     // Dynamically Control Subsystem power
-    public static final boolean  DYNAMIC_POWER_CONTROL = true;
+    public static final boolean  DYNAMIC_POWER_CONTROL = false;
 
     // XBOX mode
-    public static final boolean XBOX_DRIVE = false;
+    public static final boolean XBOX_DRIVE = true;
   }
 
   /**
