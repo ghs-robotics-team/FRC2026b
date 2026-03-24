@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
@@ -234,9 +235,42 @@ public class RobotContainer {
             eagleEyeCommand = null;
         }
 
-        autoRotate = new ContinuousRotateToAngle(drivetrain, 
-        (DoubleSupplier) () -> MathUtil.applyDeadband(-leftJoystick.getY() * MaxSpeed, OperatorConstants.TRANSLATION_DEADBAND),
-        (DoubleSupplier) () -> MathUtil.applyDeadband(-leftJoystick.getX() * MaxSpeed, OperatorConstants.ROTATION_DEADBAND));
+        if (OperatorConstants.XBOX_DRIVE){
+            autoRotate = new ContinuousRotateToAngle(drivetrain, 
+                (DoubleSupplier) () -> MathUtil.applyDeadband(
+                        MathUtil.clamp(
+                            Math.pow(driverXbox.getLeftY(), 2), 
+                            -1, 
+                            1
+                        ) * Math.signum(driverXbox.getLeftY()), 
+                        OperatorConstants.TRANSLATION_DEADBAND) * MaxSpeed,
+                (DoubleSupplier) () -> MathUtil.applyDeadband(
+                        MathUtil.clamp(
+                            Math.pow(driverXbox.getLeftX(), 2), 
+                            -1, 
+                            1
+                        ) * Math.signum(driverXbox.getLeftX()), 
+                        OperatorConstants.TRANSLATION_DEADBAND) * MaxSpeed
+                );
+        } else {
+            autoRotate = new ContinuousRotateToAngle(drivetrain, 
+                (DoubleSupplier) () -> MathUtil.applyDeadband(
+                        MathUtil.clamp(
+                            Math.pow(leftJoystick.getY(), 2), 
+                            -1, 
+                            1
+                        ) * Math.signum(leftJoystick.getY()), 
+                        OperatorConstants.TRANSLATION_DEADBAND) * MaxSpeed,
+                (DoubleSupplier) () -> MathUtil.applyDeadband(
+                        MathUtil.clamp(
+                            Math.pow(rightJoystick.getX(), 2), 
+                            -1, 
+                            1
+                        ) * Math.signum(rightJoystick.getX()), 
+                        OperatorConstants.TRANSLATION_DEADBAND) * MaxSpeed
+                );
+        }
+
 
         // Connect the controllers before binding
         if (Constants.OperatorConstants.XBOX_DRIVE) {
@@ -373,10 +407,17 @@ public class RobotContainer {
         buttonsXbox.b().whileTrue(new ParallelCommandGroup(midPassCommand, new WaitCommand(0.5).andThen(new SpindexOnlyCommand(spindexer, 0.5)), new WaitCommand(0.5).andThen(new FeedRollOnly(feedRoller, 0.5)))); 
         buttonsXbox.b().onFalse(shootingRampDown);
         // X Button - Far Shot
-        buttonsXbox.x().whileTrue((new ParallelCommandGroup(farShotCommand, new WaitCommand(0.5).andThen(new SpindexOnlyCommand(spindexer, 0.5)), new WaitCommand(0.5).andThen(new FeedRollOnly(feedRoller, 0.5))))); 
+        buttonsXbox.x().whileTrue(new InstantCommand(() -> {
+            if (ShootingHelpers.getHubPos(DriverStation.getAlliance().get()).getDistance(Globals.EagleEye.position.getTranslation()) < 2) {
+                midShotCommand.schedule();
+            } else {
+                farShotCommand.schedule();
+            }
+            //buttonsXbox.x().whileTrue((new ParallelCommandGroup(farShotCommand, new WaitCommand(0.5).andThen(new SpindexOnlyCommand(spindexer, 0.5)), new WaitCommand(0.5).andThen(new FeedRollOnly(feedRoller, 0.5))))); 
+        })); 
         buttonsXbox.x().onFalse(shootingRampDown);
         // Y Button - Mid Shot
-        buttonsXbox.y().whileTrue((new ParallelCommandGroup(midShotCommand, new WaitCommand(0.5).andThen(new SpindexOnlyCommand(spindexer, 0.5)), new WaitCommand(0.5).andThen(new FeedRollOnly(feedRoller, 0.5)))));
+        buttonsXbox.y().whileTrue(midShotCommand);
         buttonsXbox.y().onFalse(shootingRampDown);
     
         drivetrain.registerTelemetry(logger::telemeterize);
