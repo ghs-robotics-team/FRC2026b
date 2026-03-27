@@ -361,7 +361,7 @@ public class RobotContainer {
         );
 
         if (OperatorConstants.XBOX_DRIVE) {
-            driverXbox.rightBumper().onTrue(drivetrain.runOnce(drivetrain::seedFieldCentric));
+            driverXbox.a().onTrue(drivetrain.runOnce(drivetrain::seedFieldCentric));
         } else {
             new JoystickButton(leftJoystick, 4).onTrue(drivetrain.runOnce(drivetrain::seedFieldCentric));
         }
@@ -387,9 +387,13 @@ public class RobotContainer {
             /*spindexRampDownIntake*/)
         );
 
-        // Menu Button - Outtaking
+        /* Menu Button - Outtaking
         buttonsXbox.button(7).whileTrue(outtakeOnlyCommand); 
-        buttonsXbox.button(7).onFalse(outtakeRampDown);
+        buttonsXbox.button(7).onFalse(outtakeRampDown);*/ 
+
+        driverXbox.leftBumper().whileTrue(outtakeOnlyCommand);
+        driverXbox.leftBumper().whileFalse(outtakeRampDown);
+
 
         // DPad Up - Climb Up
         buttonsXbox.pov(0).whileTrue(climbOnlyCommandUp); 
