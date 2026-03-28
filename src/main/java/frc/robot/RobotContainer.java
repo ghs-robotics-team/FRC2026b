@@ -276,11 +276,7 @@ public class RobotContainer {
         // Connect the controllers before binding
         if (Constants.OperatorConstants.XBOX_DRIVE) {
             driverXbox = new CommandXboxController(0);
-            if (DriverStation.isJoystickConnected(2)) {
-                buttonsXbox = new CommandXboxController(2);
-            } else {
-                buttonsXbox = driverXbox;
-            }
+            buttonsXbox = new CommandXboxController(2);
             rightJoystick = null; // Not used in Xbox mode
             leftJoystick = null; // Not used in Xbox mode
         } else {
