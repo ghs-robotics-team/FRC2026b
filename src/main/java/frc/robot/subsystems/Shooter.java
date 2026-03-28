@@ -26,9 +26,12 @@ public class Shooter extends SubsystemBase {
   SparkFlexConfig config = new SparkFlexConfig();
   SparkClosedLoopController controllerTop;
   SparkClosedLoopController controllerBottom;
+  double lastPower;
 
   public Shooter() {
     // Configure the internal PID of the motor
+
+    lastPower = 0;
 
     SmartDashboard.putNumber("SH PID-P", 0.0002);
     SmartDashboard.putNumber("SH PID-I", 0.0);
@@ -60,8 +63,12 @@ public class Shooter extends SubsystemBase {
         power = dashboardPower;
       }
     }
-    shooterTop.set(power);
-    shooterBottom.set(power);
+    if (lastPower != power){
+      shooterTop.set(power);
+      shooterBottom.set(power);
+      lastPower = power;
+    }
+    
   }
 
   public void shootTargetSpeed(double rpm) {

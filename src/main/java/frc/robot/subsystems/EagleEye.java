@@ -98,20 +98,20 @@ public class EagleEye extends SubsystemBase {
      */
 
     // If we don't update confidence then we don't send the measurement
-    double confidenceA = 0;
+    //double confidenceA = 0;
     double confidenceB = 0;
 
     LimelightHelpers.SetRobotOrientation("limelight-camb", Globals.EagleEye.rawGyroYaw, 0, 0,
         0, 0, 0);
-    LimelightHelpers.SetRobotOrientation("limelight-cama", Globals.EagleEye.rawGyroYaw, 0, 0,
-        0, 0, 0);
+    //LimelightHelpers.SetRobotOrientation("limelight-cama", Globals.EagleEye.rawGyroYaw, 0, 0,
+    //    0, 0, 0);
 
-    LimelightHelpers.PoseEstimate limelightMeasurementA = LimelightHelpers
-        .getBotPoseEstimate_wpiBlue_MegaTag2("limelight-cama");
+    //LimelightHelpers.PoseEstimate limelightMeasurementA = LimelightHelpers
+    //    .getBotPoseEstimate_wpiBlue_MegaTag2("limelight-cama");
     LimelightHelpers.PoseEstimate limelightMeasurementB = LimelightHelpers
         .getBotPoseEstimate_wpiBlue_MegaTag2("limelight-camb");
 
-    if (limelightMeasurementA != null) {
+    /*if (limelightMeasurementA != null) {
       SmartDashboard.putNumber("VIS - A Tag Count", limelightMeasurementA.tagCount);
       SmartDashboard.putNumber("VIS - A Avg Distance", limelightMeasurementA.avgTagDist);
       SmartDashboard.putNumber("VIS - A Rotation Velocity", Globals.EagleEye.rotVel);
@@ -131,7 +131,7 @@ public class EagleEye extends SubsystemBase {
       SmartDashboard.putNumber("VIS - A Pose X", limelightMeasurementA.pose.getTranslation().getX());
       SmartDashboard.putNumber("VIS - A Pose Y", limelightMeasurementA.pose.getTranslation().getY());
       SmartDashboard.putNumber("VIS - A Pose Yaw", Math.toDegrees(limelightMeasurementA.pose.getRotation().getRadians()));
-
+    
       if (limelightMeasurementA.rawFiducials != null && limelightMeasurementA.rawFiducials.length > 0) {
         String idsA = Arrays.stream(limelightMeasurementA.rawFiducials).map(f -> String.valueOf(f.id)).collect(Collectors.joining(","));
         SmartDashboard.putString("VIS - A Fiducial IDs", idsA);
@@ -140,9 +140,9 @@ public class EagleEye extends SubsystemBase {
         SmartDashboard.putString("VIS - A Fiducial IDs", "");
         SmartDashboard.putNumber("VIS - A Fiducial Count", 0);
       }
-
+    
     }
-
+    */
     if (limelightMeasurementB != null) {
 
       SmartDashboard.putNumber("VIS - B Tag Count", limelightMeasurementB.tagCount);
@@ -176,11 +176,11 @@ public class EagleEye extends SubsystemBase {
       }
 
     }
-    Globals.LastVisionMeasurement.confidenceA = confidenceA;
+    //Globals.LastVisionMeasurement.confidenceA = confidenceA;
     Globals.LastVisionMeasurement.confidenceB = confidenceB;
 
     // Display confidence levels on SmartDashboard
-    SmartDashboard.putNumber("VIS - Confidence A", confidenceA);
+    //SmartDashboard.putNumber("VIS - Confidence A", confidenceA);
     SmartDashboard.putNumber("VIS - Confidence B", confidenceB);
 
     double distance = TargetPoints.HUB_POS.pose.getTranslation()
