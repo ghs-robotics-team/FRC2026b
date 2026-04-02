@@ -16,12 +16,14 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
  */
 public class Spindexer extends SubsystemBase {
   SparkFlex indexer = new SparkFlex(4, MotorType.kBrushless);
+  double lastPower;
 
   /**
    * Nothing done in constructor.
    */
   public Spindexer() {
     SmartDashboard.putNumber("Spindexer V", 0.0);
+    lastPower = 0.0;
   }
 
   /**
@@ -37,7 +39,10 @@ public class Spindexer extends SubsystemBase {
         power = dashboardPower;
       }
     }
-    indexer.set(-power);
+    if (lastPower != power) {
+      indexer.set(-power);
+      lastPower = power;
+    }
   }
 
   /**

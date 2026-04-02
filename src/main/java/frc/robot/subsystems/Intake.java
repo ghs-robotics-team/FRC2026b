@@ -21,6 +21,7 @@ public class Intake extends SubsystemBase {
   SparkFlex intakeMotor = new SparkFlex(24, MotorType.kBrushless);
   SparkMax deployMotor = new SparkMax(27, MotorType.kBrushless);
   double deployAbsoluteEncoder = deployMotor.getAbsoluteEncoder().getPosition();
+  double lastPower;
 
   /**
    * Nothing done in constructor.
@@ -33,6 +34,7 @@ public class Intake extends SubsystemBase {
     }
     SmartDashboard.putNumber("Intake V", 0.0);
     SmartDashboard.putNumber("IntakeDeploy V", 0.0);
+    lastPower = 0.0;
   }
 
   /**
@@ -66,7 +68,11 @@ public class Intake extends SubsystemBase {
         power = dashboardPower;
       }
     }
-    intakeMotor.set(-power);
+    if (lastPower != power) {
+      intakeMotor.set(-power);
+      lastPower = power;
+    }
+
   }
 
   /**

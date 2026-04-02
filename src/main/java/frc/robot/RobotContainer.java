@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.StatusFrame;
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -226,7 +227,7 @@ public class RobotContainer {
         autoChooser = AutoBuilder.buildAutoChooser("Far Shot (No Movement)");
         SmartDashboard.putData("Auto Mode", autoChooser);
 
-        
+
 
 
         if (Constants.EagleEyeConstants.EAGLEEYE_ENABLED) {
@@ -274,6 +275,19 @@ public class RobotContainer {
                 );
         }
 
+        drivetrain.getModule(0).getDriveMotor().getDeviceTemp().setUpdateFrequency(4);
+        drivetrain.getModule(0).getSteerMotor().getDeviceTemp().setUpdateFrequency(4);
+
+        drivetrain.getModule(1).getDriveMotor().getDeviceTemp().setUpdateFrequency(4);
+        drivetrain.getModule(1).getSteerMotor().getDeviceTemp().setUpdateFrequency(4);
+
+        drivetrain.getModule(2).getDriveMotor().getDeviceTemp().setUpdateFrequency(4);
+        drivetrain.getModule(2).getSteerMotor().getDeviceTemp().setUpdateFrequency(4);
+
+        drivetrain.getModule(3).getDriveMotor().getDeviceTemp().setUpdateFrequency(4);
+        drivetrain.getModule(3).getSteerMotor().getDeviceTemp().setUpdateFrequency(4);
+
+        
 
         // Connect the controllers before binding
         if (Constants.OperatorConstants.XBOX_DRIVE) {
