@@ -26,7 +26,6 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.ClimbOnlyCommand;
 import frc.robot.commands.EagleEyeCommand;
 import frc.robot.commands.Autonomous.ContinuousRotateToAngle;
 import frc.robot.commands.Intaking.IntakeOnlyCommand;
@@ -38,7 +37,6 @@ import frc.robot.commands.Shooting.ShootingOnlyCommand;
 import frc.robot.commands.Shooting.ShootingRPMCommand;
 import frc.robot.commands.Shooting.SpindexOnlyCommand;
 import frc.robot.generated.TunerConstants;
-import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.EagleEye;
 import frc.robot.subsystems.FeedRoller;
@@ -75,7 +73,7 @@ public class RobotContainer {
     private final HoodAngler hoodAngler = new HoodAngler();
     private final Intake intake =  new Intake();
     private final Shooter shooter = new Shooter();
-    private final Climber climber = new Climber();
+
     private final Spindexer spindexer = new Spindexer();
     private final FeedRoller feedRoller = new FeedRoller();
 
@@ -119,15 +117,6 @@ public class RobotContainer {
     // Auto Shoot Auto
 
     // Intake Auto
-
-    // Climb Auto
-    private final ClimbOnlyCommand climbUpCommandAuto = new ClimbOnlyCommand(climber, 0.5);
-    private final ClimbOnlyCommand climbDownCommandAuto = new ClimbOnlyCommand(climber, -0.5);
-    private final SequentialCommandGroup climbCommandAuto = new SequentialCommandGroup(
-        climbUpCommandAuto.withTimeout(5), 
-        climbDownCommandAuto.withTimeout(3)
-    );
-
 
 
     /**<----------Teleop Commands---------->*/
@@ -191,10 +180,6 @@ public class RobotContainer {
         new ShootingOnlyCommand(shooter, .1).withTimeout(.1))
     );
 
-    // Climb
-    private final ClimbOnlyCommand climbOnlyCommandUp = new ClimbOnlyCommand(climber, 0.5);
-    private final ClimbOnlyCommand climbOnlyCommandDown = new ClimbOnlyCommand(climber, -0.5);
-
     // Spindex 
     private final SpindexOnlyCommand spindexOnlyCommandShoot = new SpindexOnlyCommand(spindexer, 0.3);
     private final SequentialCommandGroup spindexRampDownShoot = new SpindexOnlyCommand(spindexer, 0.25).withTimeout(0.25).andThen(
@@ -222,7 +207,6 @@ public class RobotContainer {
             .andThen(farShotAllAuto).withTimeout(5));
         NamedCommands.registerCommand("Mid Shot", midShotPrepAuto.withTimeout(2)
             .andThen(midShotAllAuto).withTimeout(5));
-        NamedCommands.registerCommand("Climb", climbCommandAuto);
 
         autoChooser = AutoBuilder.buildAutoChooser("Far Shot (No Movement)");
         SmartDashboard.putData("Auto Mode", autoChooser);
@@ -406,11 +390,6 @@ public class RobotContainer {
         driverXbox.leftBumper().whileTrue(outtakeOnlyCommand);
         driverXbox.leftBumper().whileFalse(outtakeRampDown);
 
-
-        // DPad Up - Climb Up
-        buttonsXbox.pov(0).whileTrue(climbOnlyCommandUp); 
-        // DPad Down - Climb Down
-        buttonsXbox.pov(180).whileTrue(climbOnlyCommandDown); 
 
         // DPad Right - Hood Angle Up
         buttonsXbox.pov(90).whileTrue(deployIntakeDown);
