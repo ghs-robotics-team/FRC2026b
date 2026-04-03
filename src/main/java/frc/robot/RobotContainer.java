@@ -28,6 +28,8 @@ import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.EagleEyeCommand;
 import frc.robot.commands.Autonomous.ContinuousRotateToAngle;
+import frc.robot.commands.Autonomous.ContinuousRotateToAllianceWall;
+import frc.robot.commands.Autonomous.RotateToAllianceWall;
 import frc.robot.commands.Intaking.IntakeOnlyCommand;
 import frc.robot.commands.Intaking.PositionIntakeCommand;
 import frc.robot.commands.Shooting.FeedRollOnly;
@@ -80,6 +82,7 @@ public class RobotContainer {
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
     private final EagleEyeCommand eagleEyeCommand;
     private final ContinuousRotateToAngle autoRotate;
+    private final ContinuousRotateToAllianceWall rotateToAllianceWall;
 
     /**<----------Autonomous Commands---------->*/
 
@@ -240,8 +243,40 @@ public class RobotContainer {
                         ) * Math.signum(driverXbox.getLeftX()), 
                         OperatorConstants.TRANSLATION_DEADBAND) * MaxSpeed
                 );
+                rotateToAllianceWall = new ContinuousRotateToAllianceWall(drivetrain, 
+                (DoubleSupplier) () -> MathUtil.applyDeadband(
+                        MathUtil.clamp(
+                            Math.pow(driverXbox.getLeftY(), 2), 
+                            -1, 
+                            1
+                        ) * Math.signum(driverXbox.getLeftY()), 
+                        OperatorConstants.TRANSLATION_DEADBAND) * MaxSpeed,
+                (DoubleSupplier) () -> MathUtil.applyDeadband(
+                        MathUtil.clamp(
+                            Math.pow(driverXbox.getLeftX(), 2), 
+                            -1, 
+                            1
+                        ) * Math.signum(driverXbox.getLeftX()), 
+                        OperatorConstants.TRANSLATION_DEADBAND) * MaxSpeed
+                );
         } else {
             autoRotate = new ContinuousRotateToAngle(drivetrain, 
+                (DoubleSupplier) () -> MathUtil.applyDeadband(
+                        MathUtil.clamp(
+                            Math.pow(leftJoystick.getY(), 2), 
+                            -1, 
+                            1
+                        ) * Math.signum(leftJoystick.getY()), 
+                        OperatorConstants.TRANSLATION_DEADBAND) * MaxSpeed,
+                (DoubleSupplier) () -> MathUtil.applyDeadband(
+                        MathUtil.clamp(
+                            Math.pow(rightJoystick.getX(), 2), 
+                            -1, 
+                            1
+                        ) * Math.signum(rightJoystick.getX()), 
+                        OperatorConstants.TRANSLATION_DEADBAND) * MaxSpeed
+                );
+                rotateToAllianceWall = new ContinuousRotateToAllianceWall(drivetrain, 
                 (DoubleSupplier) () -> MathUtil.applyDeadband(
                         MathUtil.clamp(
                             Math.pow(leftJoystick.getY(), 2), 
@@ -395,7 +430,10 @@ public class RobotContainer {
         buttonsXbox.pov(90).whileTrue(deployIntakeDown);
         // DPad Left - Hood Angle Down
         buttonsXbox.pov(270).whileTrue(deployIntake);
-        
+        // DPad Up - Rotate to Angle
+        //buttonsXbox.pov(0).whileTrue(autoRotate);
+        // DPad Doown - Rotate to Alliance Wall
+        //buttonsXbox.pov(180).whileTrue(rotateToAllianceWall);
         // A Button - Far Pass
         buttonsXbox.a().whileTrue(new ParallelCommandGroup(farPassCommand, new WaitCommand(0.5).andThen(new SpindexOnlyCommand(spindexer, 0.5)), new WaitCommand(0.5).andThen(new FeedRollOnly(feedRoller, 0.5)))); 
         buttonsXbox.a().onFalse(shootingRampDown);
