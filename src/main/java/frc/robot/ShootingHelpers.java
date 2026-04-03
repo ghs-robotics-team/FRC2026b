@@ -16,7 +16,7 @@ public class ShootingHelpers {
   /**
    * Angle interpolation based on speaker position test data.
    * 
-   * @hub Position of the speaker.
+   * @param hubPos Position of the speaker.
    * @return Target angle in degrees.
    */
   public static double angleInterp(Translation2d hubPos) {
@@ -61,7 +61,7 @@ public class ShootingHelpers {
   /**
    * Power interpolation based on speaker position test data.
    *
-   * @hub Position of the speaker.
+   * @param hubPos Position of the speaker.
    * @return Target shooter power (unitless, as recorded in deploy data).
    */
   public static double powerInterp(Translation2d hubPos) {
@@ -118,7 +118,7 @@ public class ShootingHelpers {
    * Time interpolation based on speaker position test data to factor in
    * robot movement to the target position.
    * 
-   * @hub Position of the speaker.
+   * @param hubPos Position of the speaker.
    * @return Target time in seconds.
    */
   public static double timeInterp(Translation2d hubPos) {

@@ -16,9 +16,9 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
  * Effecting where the balls are angled when shot.
  */
 public class HoodAngler extends SubsystemBase {
-  SparkMax hoodAngler = new SparkMax(14, MotorType.kBrushed);
-  Encoder encoder = new Encoder(8, 9);
-  double hoodEncoderVal = encoder.getRaw();
+  private SparkMax hoodAngler = new SparkMax(14, MotorType.kBrushed);
+  private Encoder encoder = new Encoder(8, 9);
+  private double hoodEncoderVal = encoder.getRaw();
 
   /**
    * Nothing done in constructor.

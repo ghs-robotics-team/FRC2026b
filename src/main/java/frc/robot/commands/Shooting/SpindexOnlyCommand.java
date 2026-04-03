@@ -11,8 +11,8 @@ import frc.robot.subsystems.Spindexer;
  * Runs the spindexer only.
  */
 public class SpindexOnlyCommand extends Command {
-  Spindexer spindexer;
-  double power;
+  private Spindexer spindexer;
+  private double power;
 
   /**
    * Creates a new SpindexOnlyCommand.

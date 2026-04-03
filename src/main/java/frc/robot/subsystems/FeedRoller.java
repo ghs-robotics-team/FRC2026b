@@ -35,6 +35,7 @@ public class FeedRoller extends SubsystemBase {
    * 
    * @param power Power to run the motor at, ranging from -1 to 1.
    */
+  @SuppressWarnings("unused")
   public void roll(double power) {
     if (Constants.OperatorConstants.DYNAMIC_POWER_CONTROL && power != 0) {
       double dashboardPower = SmartDashboard.getNumber("Feed Roll V", 0.0);

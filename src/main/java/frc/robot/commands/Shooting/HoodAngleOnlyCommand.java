@@ -11,8 +11,8 @@ import frc.robot.subsystems.HoodAngler;
  * Command to set the hood angle only, without running the shooter or spindexer.
  */
 public class HoodAngleOnlyCommand extends Command {
-  HoodAngler hoodAngler;
-  double power;
+  private HoodAngler hoodAngler;
+  private double power;
 
   /**
    * Creates a new HoodAngleOnlyCommand.

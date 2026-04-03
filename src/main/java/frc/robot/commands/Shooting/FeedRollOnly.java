@@ -11,8 +11,8 @@ import frc.robot.subsystems.FeedRoller;
  * Command to run the feed roller only.
  */
 public class FeedRollOnly extends Command {
-  FeedRoller feedRoller;
-  double power;
+  private FeedRoller feedRoller;
+  private double power;
 
   /**
    * Creates a new FeedRollOnly command.

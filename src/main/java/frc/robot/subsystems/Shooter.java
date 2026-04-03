@@ -21,16 +21,15 @@ import frc.robot.Constants;
  * shot.
  */
 public class Shooter extends SubsystemBase {
-  SparkFlex shooterTop = new SparkFlex(18, MotorType.kBrushless);
-  SparkFlex shooterBottom = new SparkFlex(8, MotorType.kBrushless);
-  SparkFlexConfig config = new SparkFlexConfig();
-  SparkClosedLoopController controllerTop;
-  SparkClosedLoopController controllerBottom;
-  double lastPower;
+  private SparkFlex shooterTop = new SparkFlex(18, MotorType.kBrushless);
+  private SparkFlex shooterBottom = new SparkFlex(8, MotorType.kBrushless);
+  private SparkFlexConfig config = new SparkFlexConfig();
+  private SparkClosedLoopController controllerTop;
+  private SparkClosedLoopController controllerBottom;
+  private double lastPower;
 
   public Shooter() {
     // Configure the internal PID of the motor
-
     lastPower = 0;
 
     SmartDashboard.putNumber("SH PID-P", 0.0002);
@@ -56,6 +55,7 @@ public class Shooter extends SubsystemBase {
    * @param power The power level to set the shooter motor to, typically between
    *              -1.0 and 1.0.
    */
+  @SuppressWarnings("unused")
   public void shoot(double power) {
     if (Constants.OperatorConstants.DYNAMIC_POWER_CONTROL && power != 0) {
       double dashboardPower = SmartDashboard.getNumber("Shooting V", 0.0);
@@ -90,6 +90,7 @@ public class Shooter extends SubsystemBase {
 
     controllerTop.setSetpoint(rpm, ControlType.kVelocity);
     controllerBottom.setSetpoint(rpm, ControlType.kVelocity);
+    
     // SmartDashboard.putNumber("Shooter RPM", rpm);
     // SmartDashboard.putNumber("Shooter Error", config.pid);
   }

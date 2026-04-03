@@ -13,8 +13,8 @@ import frc.robot.subsystems.HoodAngler;
  * Command to hold the hood angler at a steady position using a PID controller.
  */
 public class HoodSteady extends Command {
-  HoodAngler hoodAngler;
-  PIDController pid;
+  private HoodAngler hoodAngler;
+  private PIDController pid;
 
   /**
    * Creates the hood angler and PID controller.

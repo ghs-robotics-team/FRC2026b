@@ -14,11 +14,7 @@ import frc.robot.ShootingHelpers;
  * Command adjusts shooter angle based on interpolation done in ShootingHelpers.
  */
 public class PitchToSpeaker extends Command {
-  HoodAngler angler;
-  double shootAngle;
-  double direction;
-  double lastMeasurement = 0;
-  public boolean found;
+  private HoodAngler angler;
 
   /**
    * Sets HoodAngler and adds it as a requirement.
@@ -27,7 +23,7 @@ public class PitchToSpeaker extends Command {
   public PitchToSpeaker(HoodAngler angler) {
     addRequirements(angler);
     this.angler = angler;
-    SmartDashboard.putNumber("HOO - Test Angle", Constants.SetPointConstants.TEST);
+    SmartDashboard.putNumber("PTS - Test Angle", Constants.SetPointConstants.TEST);
   }
 
   /**
@@ -50,8 +46,8 @@ public class PitchToSpeaker extends Command {
 
       new HoodAnglerPositionCommand(angler, targetAngle);
     }else{
-      SmartDashboard.putNumber("SHO - Distance", ShootingHelpers.getTargetPos().getDistance(EagleEye.position.getTranslation()));
-      new HoodAnglerPositionCommand(angler, SmartDashboard.getNumber("HOO - Test Angle", Constants.SetPointConstants.TEST));
+      SmartDashboard.putNumber("PTS - Distance", ShootingHelpers.getTargetPos().getDistance(EagleEye.position.getTranslation()));
+      new HoodAnglerPositionCommand(angler, SmartDashboard.getNumber("PTS - Test Angle", Constants.SetPointConstants.TEST));
     }
   }
 

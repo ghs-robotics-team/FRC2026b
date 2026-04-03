@@ -4,7 +4,6 @@
 
 package frc.robot;
 
-import com.ctre.phoenix.motorcontrol.StatusFrame;
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -17,7 +16,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -29,11 +27,9 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.EagleEyeCommand;
 import frc.robot.commands.Autonomous.ContinuousRotateToAngle;
 import frc.robot.commands.Autonomous.ContinuousRotateToAllianceWall;
-import frc.robot.commands.Autonomous.RotateToAllianceWall;
 import frc.robot.commands.Intaking.IntakeOnlyCommand;
 import frc.robot.commands.Intaking.PositionIntakeCommand;
 import frc.robot.commands.Shooting.FeedRollOnly;
-import frc.robot.commands.Shooting.HoodAngleOnlyCommand;
 import frc.robot.commands.Shooting.HoodAnglerPositionCommand;
 import frc.robot.commands.Shooting.ShootingOnlyCommand;
 import frc.robot.commands.Shooting.ShootingRPMCommand;
@@ -56,10 +52,13 @@ public class RobotContainer {
     private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
             .withDeadband(MaxSpeed * OperatorConstants.TRANSLATION_DEADBAND).withRotationalDeadband(MaxAngularRate * OperatorConstants.ROTATION_DEADBAND) // Add a deadband
             .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
+
+    /* Other Settings
     private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
     private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
     private final SwerveRequest.RobotCentric forwardStraight = new SwerveRequest.RobotCentric()
             .withDriveRequestType(DriveRequestType.OpenLoopVoltage);
+    */
 
     private final Telemetry logger = new Telemetry(MaxSpeed);
 
@@ -81,7 +80,9 @@ public class RobotContainer {
 
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
     private final EagleEyeCommand eagleEyeCommand;
+    @SuppressWarnings("unused")
     private final ContinuousRotateToAngle autoRotate;
+    @SuppressWarnings("unused")
     private final ContinuousRotateToAllianceWall rotateToAllianceWall;
 
     /**<----------Autonomous Commands---------->*/
@@ -117,16 +118,17 @@ public class RobotContainer {
     );
 
 
-    // Auto Shoot Auto
+    // Auto Shoot Auto (Later)
 
-    // Intake Auto
+
+    // Intake Auto (Later)
 
 
     /**<----------Teleop Commands---------->*/
 
     // Mid-Shot
     private final ShootingRPMCommand shootingMidShot = new ShootingRPMCommand(shooter, 2800);
-    private final HoodAnglerPositionCommand hoodAngleMidShot = new HoodAnglerPositionCommand(hoodAngler, 0 /*who knows */);
+    private final HoodAnglerPositionCommand hoodAngleMidShot = new HoodAnglerPositionCommand(hoodAngler, 0);
     private final ParallelCommandGroup midShotCommand = new ParallelCommandGroup(
         shootingMidShot, 
         hoodAngleMidShot
@@ -134,7 +136,7 @@ public class RobotContainer {
 
     // Far-Shot
     private final ShootingRPMCommand shootingFarShot = new ShootingRPMCommand(shooter, 5146);
-    private final HoodAnglerPositionCommand hoodAngleFarShot = new HoodAnglerPositionCommand(hoodAngler, 0 /*who knows */);
+    private final HoodAnglerPositionCommand hoodAngleFarShot = new HoodAnglerPositionCommand(hoodAngler, 0);
     private final ParallelCommandGroup farShotCommand = new ParallelCommandGroup(
         shootingFarShot, 
         hoodAngleFarShot
@@ -142,7 +144,7 @@ public class RobotContainer {
 
     // Mid-Pass
     private final ShootingRPMCommand shootingMidPass = new ShootingRPMCommand(shooter, 5644);
-    private final HoodAnglerPositionCommand hoodAngleMidPass = new HoodAnglerPositionCommand(hoodAngler, -600 /*who knows */);
+    private final HoodAnglerPositionCommand hoodAngleMidPass = new HoodAnglerPositionCommand(hoodAngler, -600);
     private final ParallelCommandGroup midPassCommand = new ParallelCommandGroup(
         shootingMidPass, 
         hoodAngleMidPass
@@ -150,17 +152,15 @@ public class RobotContainer {
 
     // Far-Pass
     private final ShootingRPMCommand shootingFarPass = new ShootingRPMCommand(shooter, 10000);
-    private final HoodAnglerPositionCommand hoodAngleFarPass = new HoodAnglerPositionCommand(hoodAngler, -900 /*who knows */);
+    private final HoodAnglerPositionCommand hoodAngleFarPass = new HoodAnglerPositionCommand(hoodAngler, -900);
     private final ParallelCommandGroup farPassCommand = new ParallelCommandGroup(shootingFarPass, hoodAngleFarPass);
 
-    // Hood Angle Only
-    private final HoodAngleOnlyCommand hoodAngleOnlyCommandUp = new HoodAngleOnlyCommand(hoodAngler, 0.1);
-    private final HoodAngleOnlyCommand hoodAngleOnlyCommandDown = new HoodAngleOnlyCommand(hoodAngler, -0.1);
-
-    // Hood Angle Positioning Commands
+    /* 
+     Hood Angle Positioning Commands
     private final HoodAnglerPositionCommand hoodAngleLowPosition = new HoodAnglerPositionCommand(hoodAngler, -1050);
     private final HoodAnglerPositionCommand hoodAngleMiddlePosition = new HoodAnglerPositionCommand(hoodAngler, -650);
     private final HoodAnglerPositionCommand hoodAngleHighPosition = new HoodAnglerPositionCommand(hoodAngler, -100);
+    */
 
     // Intaking / Outtaking
     private final IntakeOnlyCommand intakeOnlyCommand = new IntakeOnlyCommand(intake, 0.7);
@@ -177,7 +177,6 @@ public class RobotContainer {
     private final PositionIntakeCommand deployIntakeDown = new PositionIntakeCommand(intake, 0.1);
 
     // Shooting
-    private final ShootingOnlyCommand shootingOnlyCommand = new ShootingOnlyCommand(shooter, .75);
     private final SequentialCommandGroup shootingRampDown = new ShootingOnlyCommand(shooter, 0.5).withTimeout(.25).andThen(
         new ShootingOnlyCommand(shooter, .25).withTimeout(.25).andThen(
         new ShootingOnlyCommand(shooter, .1).withTimeout(.1))
@@ -186,11 +185,6 @@ public class RobotContainer {
     // Spindex 
     private final SpindexOnlyCommand spindexOnlyCommandShoot = new SpindexOnlyCommand(spindexer, 0.3);
     private final SequentialCommandGroup spindexRampDownShoot = new SpindexOnlyCommand(spindexer, 0.25).withTimeout(0.25).andThen(
-        new SpindexOnlyCommand(spindexer, 0.1).withTimeout(0.25)
-    );
-
-    private final SpindexOnlyCommand spindexOnlyCommandIntake = new SpindexOnlyCommand(spindexer, 0.5);
-    private final SequentialCommandGroup spindexRampDownIntake = new SpindexOnlyCommand(spindexer, 0.25).withTimeout(0.25).andThen(
         new SpindexOnlyCommand(spindexer, 0.1).withTimeout(0.25)
     );
 
@@ -213,9 +207,6 @@ public class RobotContainer {
 
         autoChooser = AutoBuilder.buildAutoChooser("Far Shot (No Movement)");
         SmartDashboard.putData("Auto Mode", autoChooser);
-
-
-
 
         if (Constants.EagleEyeConstants.EAGLEEYE_ENABLED) {
             eagleEye = new EagleEye();
@@ -307,7 +298,6 @@ public class RobotContainer {
         drivetrain.getModule(3).getSteerMotor().getDeviceTemp().setUpdateFrequency(4);
 
         
-
         // Connect the controllers before binding
         if (Constants.OperatorConstants.XBOX_DRIVE) {
             driverXbox = new CommandXboxController(0);
@@ -418,10 +408,6 @@ public class RobotContainer {
             /*spindexRampDownIntake*/)
         );
 
-        /* Menu Button - Outtaking
-        buttonsXbox.button(7).whileTrue(outtakeOnlyCommand); 
-        buttonsXbox.button(7).onFalse(outtakeRampDown);*/ 
-
         driverXbox.leftBumper().whileTrue(outtakeOnlyCommand);
         driverXbox.leftBumper().whileFalse(outtakeRampDown);
 
@@ -430,16 +416,20 @@ public class RobotContainer {
         buttonsXbox.pov(90).whileTrue(deployIntakeDown);
         // DPad Left - Hood Angle Down
         buttonsXbox.pov(270).whileTrue(deployIntake);
+
         // DPad Up - Rotate to Angle
         //buttonsXbox.pov(0).whileTrue(autoRotate);
         // DPad Doown - Rotate to Alliance Wall
         //buttonsXbox.pov(180).whileTrue(rotateToAllianceWall);
+
         // A Button - Far Pass
         buttonsXbox.a().whileTrue(new ParallelCommandGroup(farPassCommand, new WaitCommand(0.5).andThen(new SpindexOnlyCommand(spindexer, 0.5)), new WaitCommand(0.5).andThen(new FeedRollOnly(feedRoller, 0.5)))); 
         buttonsXbox.a().onFalse(shootingRampDown);
+        
         // B Button - Mid Pass
         buttonsXbox.b().whileTrue(new ParallelCommandGroup(midPassCommand, new WaitCommand(0.5).andThen(new SpindexOnlyCommand(spindexer, 0.5)), new WaitCommand(0.5).andThen(new FeedRollOnly(feedRoller, 0.5)))); 
         buttonsXbox.b().onFalse(shootingRampDown);
+        
         // X Button - Far Shot
         buttonsXbox.x().whileTrue(new InstantCommand(() -> {
             if (ShootingHelpers.getHubPos(DriverStation.getAlliance().get()).getDistance(Globals.EagleEye.position.getTranslation()) < 2) {
@@ -450,6 +440,7 @@ public class RobotContainer {
             //buttonsXbox.x().whileTrue((new ParallelCommandGroup(farShotCommand, new WaitCommand(0.5).andThen(new SpindexOnlyCommand(spindexer, 0.5)), new WaitCommand(0.5).andThen(new FeedRollOnly(feedRoller, 0.5))))); 
         })); 
         buttonsXbox.x().onFalse(shootingRampDown);
+        
         // Y Button - Mid Shot
         buttonsXbox.y().whileTrue(midShotCommand);
         buttonsXbox.y().onFalse(shootingRampDown);

@@ -15,8 +15,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
  * and shooter.
  */
 public class Spindexer extends SubsystemBase {
-  SparkFlex indexer = new SparkFlex(4, MotorType.kBrushless);
-  double lastPower;
+  private SparkFlex indexer = new SparkFlex(4, MotorType.kBrushless);
+  private double lastPower;
 
   /**
    * Nothing done in constructor.
@@ -32,6 +32,7 @@ public class Spindexer extends SubsystemBase {
    * @param power The power level to set the indexer motor to, typically between
    *              -1.0 and 1.0.
    */
+  @SuppressWarnings("unused")
   public void run(double power) {
     if (Constants.OperatorConstants.DYNAMIC_POWER_CONTROL && power != 0) {
       double dashboardPower = SmartDashboard.getNumber("Spindexer V", 0.0);

@@ -15,8 +15,8 @@ import frc.robot.commands.TargetPoints;
  * auto-pathfinding.
  */
 public class DriveToPointCommand extends Command {
-  TargetPoints point;
-  String heading;
+  private TargetPoints point;
+  private String heading;
 
   /**
    * Sets point and heading for the command.

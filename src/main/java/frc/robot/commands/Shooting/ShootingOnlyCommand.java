@@ -11,8 +11,8 @@ import frc.robot.subsystems.Shooter;
  * Runs the shooter motor only.
  */
 public class ShootingOnlyCommand extends Command {
-  Shooter shooter;
-  double power;
+  private Shooter shooter;
+  private double power;
 
   /**
    * Creates a new ShootingOnlyCommand.

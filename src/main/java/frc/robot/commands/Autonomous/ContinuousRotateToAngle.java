@@ -23,14 +23,13 @@ import frc.robot.subsystems.CommandSwerveDrivetrain;
  * while allowing translation.
  */
 public class ContinuousRotateToAngle extends Command {
-  CommandSwerveDrivetrain swerve;
-  double degreeError;
-  PIDController pid;
-  double direction;
-  double targetDegree;
-  DoubleSupplier translationX;
-  DoubleSupplier translationY;
-  public boolean found;
+  private CommandSwerveDrivetrain swerve;
+  private double degreeError;
+  private PIDController pid;
+  private double direction;
+  private double targetDegree;
+  private DoubleSupplier translationX;
+  private DoubleSupplier translationY;
 
   /**
    * Sets SwerveSubsystem and initializes PIDController.
@@ -69,6 +68,7 @@ public class ContinuousRotateToAngle extends Command {
   @Override
   public void execute() {
     Translation2d speakerPos = ShootingHelpers.getTargetPos();
+
     /*if (DriverStation.getAlliance().get() == Alliance.Blue) {
       speakerPos = new Translation2d(0.02, 5.5826);
     } else {
@@ -78,7 +78,7 @@ public class ContinuousRotateToAngle extends Command {
     degreeError = speakerPos.minus(Globals.EagleEye.position.getTranslation()).getAngle().getDegrees()
         - Globals.EagleEye.position.getRotation().getDegrees();
     degreeError = -degreeError;
-    SmartDashboard.putNumber("SHO - Distance", speakerPos.minus(Globals.EagleEye.position.getTranslation()).getNorm());
+    SmartDashboard.putNumber("CRA - Distance", speakerPos.minus(Globals.EagleEye.position.getTranslation()).getNorm());
     targetDegree = Globals.EagleEye.position.getRotation().getDegrees() - degreeError;
 
     if (targetDegree > 180) {
@@ -87,20 +87,19 @@ public class ContinuousRotateToAngle extends Command {
       targetDegree += 360;
     }
 
-    SmartDashboard.putNumber("HOO - Target Angle", targetDegree);
+    SmartDashboard.putNumber("CRA - Target Angle", targetDegree);
 
-    double P = SmartDashboard.getNumber("DRI - Rotate Continuous PID-P", 0.08);
-    double I = SmartDashboard.getNumber("DRI - Rotate Continuous PID-I", 0.0);
-    double D = SmartDashboard.getNumber("DRI - Rotate Continuous PID-D", 0.004);
-
+    double P = SmartDashboard.getNumber("CRA - Rotate Continuous PID-P", 0.08);
+    double I = SmartDashboard.getNumber("CRA - Rotate Continuous PID-I", 0.0);
+    double D = SmartDashboard.getNumber("CRA - Rotate Continuous PID-D", 0.004);
     // Clamp PID values to safe ranges
     if (Constants.OperatorConstants.WORKSHOP_MODE) {
       P = Math.max(0.0, Math.min(0.5, P));
       I = Math.max(0.0, Math.min(0.01, I));
       D = Math.max(0.0, Math.min(0.05, D));
-      SmartDashboard.putNumber("DRI - Rotate Continuous PID-P", P);
-      SmartDashboard.putNumber("DRI - Rotate Continuous PID-I", I);
-      SmartDashboard.putNumber("DRI - Rotate Continuous PID-D", D);
+      SmartDashboard.putNumber("CRA - Rotate Continuous PID-P", P);
+      SmartDashboard.putNumber("CRA - Rotate Continuous PID-I", I);
+      SmartDashboard.putNumber("CRA - Rotate Continuous PID-D", D);
     }
 
     // Set PID numbers
@@ -113,11 +112,11 @@ public class ContinuousRotateToAngle extends Command {
 
     if (direction < 0.06 && direction > -0.06) {
       direction = Math.copySign(0.06, direction);
-
     }
 
     direction = MathUtil.clamp(direction, -4, 4);
-    SmartDashboard.putNumber("DRI - Rotate Output", direction);
+    SmartDashboard.putNumber("CRA - Rotate Output", direction);
+    
     double xIn = 0;
     double yIn = 0;
 

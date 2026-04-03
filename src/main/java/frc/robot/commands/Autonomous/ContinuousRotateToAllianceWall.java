@@ -7,30 +7,24 @@ package frc.robot.commands.Autonomous;
 import java.util.function.DoubleSupplier;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Globals;
-import frc.robot.ShootingHelpers;
 import frc.robot.Constants;
-import frc.robot.Constants.OperatorConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 
 /**
- * Command that continuously rotates the robot to face a specific angle using PID control 
+ * Command that continuously rotates the robot to face the alliance wall using PID control 
  * while allowing translation.
  */
 public class ContinuousRotateToAllianceWall extends Command {
-  CommandSwerveDrivetrain swerve;
-  double degreeError;
-  PIDController pid;
-  double direction;
-  double targetDegree;
-  DoubleSupplier translationX;
-  DoubleSupplier translationY;
-  public boolean found;
+  private CommandSwerveDrivetrain swerve;
+  private PIDController pid;
+  private double direction;
+  private double targetDegree;
+  private DoubleSupplier translationX;
+  private DoubleSupplier translationY;
 
   /**
    * Sets SwerveSubsystem and initializes PIDController.
@@ -47,9 +41,9 @@ public class ContinuousRotateToAllianceWall extends Command {
     pid.enableContinuousInput(-180, 180);
 
     if (Constants.OperatorConstants.WORKSHOP_MODE) {
-      SmartDashboard.putNumber("DRI - Rotate Continuous PID-P", 0.08);
-      SmartDashboard.putNumber("DRI - Rotate Continuous PID-I", 0.0);
-      SmartDashboard.putNumber("DRI - Rotate Continuous PID-D", 0.004);
+      SmartDashboard.putNumber("CRAW - Rotate Continuous PID-P", 0.08);
+      SmartDashboard.putNumber("CRAW - Rotate Continuous PID-I", 0.0);
+      SmartDashboard.putNumber("CRAW - Rotate Continuous PID-D", 0.004);
     }
   }
 
@@ -62,9 +56,7 @@ public class ContinuousRotateToAllianceWall extends Command {
   }
 
   /**
-   * Continuously gets seen targets from Limelight, gets angle error to target,
-   * and calculates target angle to rotate to while updating SmartDashboard.
-   * Also allows translation control while rotating to target angle.
+   * Calculates PID power to motors based on angle error to alliance wall
    */
   @Override
   public void execute() {
@@ -101,11 +93,11 @@ public class ContinuousRotateToAllianceWall extends Command {
 
     if (direction < 0.06 && direction > -0.06) {
       direction = Math.copySign(0.06, direction);
-
     }
 
     direction = MathUtil.clamp(direction, -4, 4);
-    SmartDashboard.putNumber("DRI - Rotate Output", direction);
+    SmartDashboard.putNumber("CRAW - Rotate Output", direction);
+    
     double xIn = 0;
     double yIn = 0;
 

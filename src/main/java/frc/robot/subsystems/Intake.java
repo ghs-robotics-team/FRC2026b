@@ -18,10 +18,10 @@ import frc.robot.Globals;
  * Feeds into Spindexer, which feeds into Shooter.
  */
 public class Intake extends SubsystemBase {
-  SparkFlex intakeMotor = new SparkFlex(24, MotorType.kBrushless);
-  SparkMax deployMotor = new SparkMax(27, MotorType.kBrushless);
-  double deployAbsoluteEncoder = deployMotor.getAbsoluteEncoder().getPosition();
-  double lastPower;
+  private SparkFlex intakeMotor = new SparkFlex(24, MotorType.kBrushless);
+  private SparkMax deployMotor = new SparkMax(27, MotorType.kBrushless);
+  private double deployAbsoluteEncoder = deployMotor.getAbsoluteEncoder().getPosition();
+  private double lastPower;
 
   /**
    * Nothing done in constructor.
@@ -61,6 +61,7 @@ public class Intake extends SubsystemBase {
    * @param power The power level to set the deploy motor to, typically between
    *              -1.0 and 1.0.
    */
+  @SuppressWarnings("unused")
   public void intake(double power) {
     if (Constants.OperatorConstants.DYNAMIC_POWER_CONTROL && power != 0) {
       double dashboardPower = SmartDashboard.getNumber("Intake V", 0.0);
@@ -72,7 +73,6 @@ public class Intake extends SubsystemBase {
       intakeMotor.set(-power);
       lastPower = power;
     }
-
   }
 
   /**
@@ -81,6 +81,7 @@ public class Intake extends SubsystemBase {
    * @param power The power level to set the deploy motor to, typically between
    *              -1.0 and 1.0.
    */
+  @SuppressWarnings("unused")
   public void deploy(double power) {
     // When limits are needed on position, check last years code for reference.
     // Needs PID.
@@ -90,6 +91,7 @@ public class Intake extends SubsystemBase {
         power = dashboardPower;
       }
     }
+
     /*
      * Tune location numbers
      * if(power<=0){

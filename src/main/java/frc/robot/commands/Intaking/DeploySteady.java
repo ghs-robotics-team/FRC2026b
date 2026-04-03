@@ -14,8 +14,8 @@ import frc.robot.subsystems.Intake;
  * a PID controller.
  */
 public class DeploySteady extends Command {
-  Intake intake;
-  PIDController pid;
+  private Intake intake;
+  private PIDController pid;
 
   /**
    * Creates the PID controller and sets the intake subsystem as a requirement.
@@ -52,7 +52,6 @@ public class DeploySteady extends Command {
     } else {
       intake.deploy(direction); // Move Arm
     }
-
   }
 
   /**

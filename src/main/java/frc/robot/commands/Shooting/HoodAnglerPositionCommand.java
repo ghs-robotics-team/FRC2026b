@@ -31,7 +31,6 @@ public class HoodAnglerPositionCommand extends Command {
   public HoodAnglerPositionCommand(HoodAngler hoodAngler, double desiredPos) {
     this.hoodAngler = hoodAngler;
     this.desiredPos = desiredPos;
-    // this.currentPos = SmartDashboard.getNumber("HOOD Pos", 0);
     this.currentPos = hoodAngler.getPos();
     this.pid = new PIDController(0.2, 0, 0.004);
     // ADD FEEDFORWARD ONCE K VALUES ARE TESTED.

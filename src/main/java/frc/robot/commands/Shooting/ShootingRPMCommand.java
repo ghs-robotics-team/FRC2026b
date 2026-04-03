@@ -13,8 +13,8 @@ import frc.robot.subsystems.Shooter;
  * Command to run the shooter at a specific RPM using a PID controller in the Shooter subsystem.
  */
 public class ShootingRPMCommand extends Command {
-  Shooter shooter;
-  double rpm;
+  private Shooter shooter;
+  private double rpm;
 
   /**
    * Creates a new ShootingOnlyCommand.
