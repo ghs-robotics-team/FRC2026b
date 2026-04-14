@@ -103,8 +103,8 @@ public class RobotContainer {
     );
 
     // Mid-Shot Auto
-    private final ShootingRPMCommand shootingMidShotAuto = new ShootingRPMCommand(shooter, 4031);
-    private final ShootingRPMCommand shootingMidShotTwoAuto = new ShootingRPMCommand(shooter, 4031);
+    private final ShootingRPMCommand shootingMidShotAuto = new ShootingRPMCommand(shooter, 3500);
+    private final ShootingRPMCommand shootingMidShotTwoAuto = new ShootingRPMCommand(shooter, 3500);
     private final HoodAnglerPositionCommand hoodAnglerMidShotAuto = new HoodAnglerPositionCommand(hoodAngler, 0);
     private final HoodAnglerPositionCommand hoodAnglerMidShotTwoAuto = new HoodAnglerPositionCommand(hoodAngler, 0);
     private final FeedRollOnly feedRollMidShotAuto = new FeedRollOnly(feedRoller, 0.5);
@@ -200,10 +200,28 @@ public class RobotContainer {
     private final SendableChooser<Command> autoChooser;
 
     public RobotContainer() {
-        NamedCommands.registerCommand("Far Shot", farShotPrepAuto.withTimeout(2)
-            .andThen(farShotAllAuto).withTimeout(5));
         NamedCommands.registerCommand("Mid Shot", midShotPrepAuto.withTimeout(2)
-            .andThen(midShotAllAuto).withTimeout(5));
+                .andThen(new ShootingRPMCommand(shooter, 3500)).alongWith(
+                                new ParallelCommandGroup(
+                                new HoodAnglerPositionCommand(hoodAngler, 0),
+                                new FeedRollOnly(feedRoller, 0.5),
+                                new SpindexOnlyCommand(spindexer, 0.5)).withTimeout(2)
+                                .andThen(
+                                        new FeedRollOnly(feedRoller, -0.5)
+                                                .alongWith(new SpindexOnlyCommand(spindexer, -0.5)).withTimeout(0.25))
+                                .andThen(new ParallelCommandGroup(
+                                        new HoodAnglerPositionCommand(hoodAngler, 0),
+                                        new FeedRollOnly(feedRoller, 0.5),
+                                        new SpindexOnlyCommand(spindexer, 0.5)).withTimeout(2))
+                                .andThen(new FeedRollOnly(feedRoller, -0.5)
+                                        .alongWith(new SpindexOnlyCommand(spindexer, -0.5))
+                                        .withTimeout(0.25))
+                                .andThen(new ParallelCommandGroup(
+                                        new HoodAnglerPositionCommand(hoodAngler, 0),
+                                        new FeedRollOnly(feedRoller, 0.5),
+                                        new SpindexOnlyCommand(spindexer, 0.5)))
+                                .withTimeout(0.25)
+                                ));
 
         autoChooser = AutoBuilder.buildAutoChooser("Far Shot (No Movement)");
         SmartDashboard.putData("Auto Mode", autoChooser);
@@ -315,9 +333,6 @@ public class RobotContainer {
         FollowPathCommand.warmupCommand().schedule();
         SmartDashboard.putData("Command Scheduler", CommandScheduler.getInstance());
         
-    // SmartDashboard defaults for data collection and tuning
-    SmartDashboard.putBoolean("Record Data", false);
-    SmartDashboard.putBoolean("Record Time Data", false);
     SmartDashboard.putNumber("Test Angle", Constants.SetPointConstants.TEST);
     SmartDashboard.putNumber("dist", 0.0);
     SmartDashboard.putNumber("Shooting V", 0.0);
@@ -426,12 +441,12 @@ public class RobotContainer {
         //buttonsXbox.pov(180).whileTrue(rotateToAllianceWall);
 
         // A Button - Far Pass
-        buttonsXbox.a().whileTrue(new ParallelCommandGroup(farPassCommand, new WaitCommand(0.5).andThen(new SpindexOnlyCommand(spindexer, 0.5)), new WaitCommand(0.5).andThen(new FeedRollOnly(feedRoller, 0.5)))); 
+        buttonsXbox.a().whileTrue(new ParallelCommandGroup(farPassCommand, new WaitCommand(0.5))); 
         buttonsXbox.a().onFalse(shootingRampDown);
         //buttonsXbox.a().whileTrue(new SpindexOnlyCommand(spindexer, 0.5));
         
         // B Button - Mid Pass
-        buttonsXbox.b().whileTrue(new ParallelCommandGroup(midPassCommand, new WaitCommand(0.5).andThen(new SpindexOnlyCommand(spindexer, 0.5)), new WaitCommand(0.5).andThen(new FeedRollOnly(feedRoller, 0.5)))); 
+        buttonsXbox.b().whileTrue(new ParallelCommandGroup(midPassCommand, new WaitCommand(0.5))); 
         buttonsXbox.b().onFalse(shootingRampDown);
         
         // Y Button - Far Shot
