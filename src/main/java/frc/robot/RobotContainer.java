@@ -127,7 +127,7 @@ public class RobotContainer {
     /**<----------Teleop Commands---------->*/
 
     // Mid-Shot
-    private final ShootingRPMCommand shootingMidShot = new ShootingRPMCommand(shooter, 2800);
+    private final ShootingRPMCommand shootingMidShot = new ShootingRPMCommand(shooter, 3500);
     private final HoodAnglerPositionCommand hoodAngleMidShot = new HoodAnglerPositionCommand(hoodAngler, 0);
     private final ParallelCommandGroup midShotCommand = new ParallelCommandGroup(
         shootingMidShot, 
@@ -183,7 +183,7 @@ public class RobotContainer {
     );
 
     // Spindex 
-    private final SpindexOnlyCommand spindexOnlyCommandShoot = new SpindexOnlyCommand(spindexer, 0.3);
+    private final SpindexOnlyCommand spindexOnlyCommandShoot = new SpindexOnlyCommand(spindexer, 0.75);
     private final SequentialCommandGroup spindexRampDownShoot = new SpindexOnlyCommand(spindexer, 0.25).withTimeout(0.25).andThen(
         new SpindexOnlyCommand(spindexer, 0.1).withTimeout(0.25)
     );
@@ -417,6 +417,9 @@ public class RobotContainer {
         // DPad Left - Hood Angle Down
         buttonsXbox.pov(270).whileTrue(deployIntake);
 
+        // DPad Up - Unjam
+        buttonsXbox.pov(180).whileTrue(new FeedRollOnly(feedRoller, -0.5).alongWith(new SpindexOnlyCommand(spindexer, -0.5)));
+
         // DPad Up - Rotate to Angle
         //buttonsXbox.pov(0).whileTrue(autoRotate);
         // DPad Doown - Rotate to Alliance Wall
@@ -425,25 +428,19 @@ public class RobotContainer {
         // A Button - Far Pass
         buttonsXbox.a().whileTrue(new ParallelCommandGroup(farPassCommand, new WaitCommand(0.5).andThen(new SpindexOnlyCommand(spindexer, 0.5)), new WaitCommand(0.5).andThen(new FeedRollOnly(feedRoller, 0.5)))); 
         buttonsXbox.a().onFalse(shootingRampDown);
+        //buttonsXbox.a().whileTrue(new SpindexOnlyCommand(spindexer, 0.5));
         
         // B Button - Mid Pass
         buttonsXbox.b().whileTrue(new ParallelCommandGroup(midPassCommand, new WaitCommand(0.5).andThen(new SpindexOnlyCommand(spindexer, 0.5)), new WaitCommand(0.5).andThen(new FeedRollOnly(feedRoller, 0.5)))); 
         buttonsXbox.b().onFalse(shootingRampDown);
         
-        // X Button - Far Shot
-        buttonsXbox.x().whileTrue(new InstantCommand(() -> {
-            if (ShootingHelpers.getHubPos(DriverStation.getAlliance().get()).getDistance(Globals.EagleEye.position.getTranslation()) < 2) {
-                midShotCommand.schedule();
-            } else {
-                farShotCommand.schedule();
-            }
-            //buttonsXbox.x().whileTrue((new ParallelCommandGroup(farShotCommand, new WaitCommand(0.5).andThen(new SpindexOnlyCommand(spindexer, 0.5)), new WaitCommand(0.5).andThen(new FeedRollOnly(feedRoller, 0.5))))); 
-        })); 
-        buttonsXbox.x().onFalse(shootingRampDown);
-        
-        // Y Button - Mid Shot
-        buttonsXbox.y().whileTrue(midShotCommand);
+        // Y Button - Far Shot
+        buttonsXbox.y().whileTrue(farShotCommand); 
         buttonsXbox.y().onFalse(shootingRampDown);
+        
+        // X Button - Mid Shot
+        buttonsXbox.x().whileTrue(midShotCommand);
+        buttonsXbox.x().onFalse(shootingRampDown);
     
         drivetrain.registerTelemetry(logger::telemeterize);
     }

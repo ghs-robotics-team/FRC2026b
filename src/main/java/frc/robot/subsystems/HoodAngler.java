@@ -17,7 +17,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
  */
 public class HoodAngler extends SubsystemBase {
   private SparkMax hoodAngler = new SparkMax(14, MotorType.kBrushed);
-  private Encoder encoder = new Encoder(0, 1);
+  private Encoder encoder = new Encoder(1, 0);
   private double hoodEncoderVal = encoder.getRaw();
 
   /**

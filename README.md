@@ -53,3 +53,5 @@
 | Intake Spin | 11 |
 | Feed Roller | 13 |
 | Top Shooter | 18 |
+| Intake Motor 1 | 24 |
+| Intake Motor 2 | 27 |
