@@ -4,19 +4,21 @@
 
 package frc.robot;
 
+import java.util.function.DoubleSupplier;
+
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.FollowPathCommand;
+
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
@@ -25,8 +27,10 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.EagleEyeCommand;
-import frc.robot.commands.Autonomous.ContinuousRotateToAngle;
+import frc.robot.commands.PDHCommand;
 import frc.robot.commands.Autonomous.ContinuousRotateToAllianceWall;
+import frc.robot.commands.Autonomous.ContinuousRotateToAngle;
+import frc.robot.commands.Intaking.IntakeDeployPositionCommand;
 import frc.robot.commands.Intaking.IntakeOnlyCommand;
 import frc.robot.commands.Intaking.PositionIntakeCommand;
 import frc.robot.commands.Shooting.FeedRollOnly;
@@ -41,8 +45,8 @@ import frc.robot.subsystems.FeedRoller;
 import frc.robot.subsystems.HoodAngler;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.PDHShell;
 import frc.robot.subsystems.Spindexer;
-import java.util.function.DoubleSupplier;
 
 public class RobotContainer {
     /**<----------Drivetrain---------->*/
@@ -77,6 +81,8 @@ public class RobotContainer {
 
     private final Spindexer spindexer = new Spindexer();
     private final FeedRoller feedRoller = new FeedRoller();
+    
+    private final PDHShell pdhShell = new PDHShell();
 
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
     private final EagleEyeCommand eagleEyeCommand;
@@ -126,6 +132,7 @@ public class RobotContainer {
 
     /**<----------Teleop Commands---------->*/
 
+    private final PDHCommand pdhCommand = new PDHCommand(pdhShell);
     // Mid-Shot
     private final ShootingRPMCommand shootingMidShot = new ShootingRPMCommand(shooter, 3500);
     private final HoodAnglerPositionCommand hoodAngleMidShot = new HoodAnglerPositionCommand(hoodAngler, 0);
@@ -163,7 +170,7 @@ public class RobotContainer {
     */
 
     // Intaking / Outtaking
-    private final IntakeOnlyCommand intakeOnlyCommand = new IntakeOnlyCommand(intake, 0.7);
+    private final IntakeOnlyCommand intakeOnlyCommand = new IntakeOnlyCommand(intake, 0.85);
     private final SequentialCommandGroup intakeRampDown = new IntakeOnlyCommand(intake, 0.25).withTimeout(0.25).andThen(
         new IntakeOnlyCommand(intake, 0.1).withTimeout(0.25)
     );
@@ -173,8 +180,8 @@ public class RobotContainer {
         new IntakeOnlyCommand(intake, -0.1).withTimeout(0.25)
     );
 
-    private final PositionIntakeCommand deployIntake = new PositionIntakeCommand(intake, -0.1);
-    private final PositionIntakeCommand deployIntakeDown = new PositionIntakeCommand(intake, 0.1);
+    private final PositionIntakeCommand deployIntake = new PositionIntakeCommand(intake, -0.10);
+    private final PositionIntakeCommand deployIntakeDown = new PositionIntakeCommand(intake, 0.10);
 
     // Shooting
     private final SequentialCommandGroup shootingRampDown = new ShootingOnlyCommand(shooter, 0.5).withTimeout(.25).andThen(
@@ -200,30 +207,48 @@ public class RobotContainer {
     private final SendableChooser<Command> autoChooser;
 
     public RobotContainer() {
-        NamedCommands.registerCommand("Mid Shot", midShotPrepAuto.withTimeout(2)
-                .andThen(new ShootingRPMCommand(shooter, 3500)).alongWith(
-                                new ParallelCommandGroup(
-                                new HoodAnglerPositionCommand(hoodAngler, 0),
-                                new FeedRollOnly(feedRoller, 0.5),
-                                new SpindexOnlyCommand(spindexer, 0.5)).withTimeout(2)
-                                .andThen(
-                                        new FeedRollOnly(feedRoller, -0.5)
-                                                .alongWith(new SpindexOnlyCommand(spindexer, -0.5)).withTimeout(0.25))
-                                .andThen(new ParallelCommandGroup(
-                                        new HoodAnglerPositionCommand(hoodAngler, 0),
-                                        new FeedRollOnly(feedRoller, 0.5),
-                                        new SpindexOnlyCommand(spindexer, 0.5)).withTimeout(2))
-                                .andThen(new FeedRollOnly(feedRoller, -0.5)
-                                        .alongWith(new SpindexOnlyCommand(spindexer, -0.5))
-                                        .withTimeout(0.25))
-                                .andThen(new ParallelCommandGroup(
-                                        new HoodAnglerPositionCommand(hoodAngler, 0),
-                                        new FeedRollOnly(feedRoller, 0.5),
-                                        new SpindexOnlyCommand(spindexer, 0.5)))
-                                .withTimeout(0.25)
-                                ));
+       NamedCommands.registerCommand("Mid Shot", Commands.sequence(
+                Commands.parallel(
+                        new FeedRollOnly(feedRoller, -0.75),
+                        new ShootingRPMCommand(shooter, 4000),
+                        new SpindexOnlyCommand(spindexer, -0.5)
+                ).withTimeout(0.25),
+                Commands.parallel(
+                        new ShootingRPMCommand(shooter, 4000),
+                        new HoodAnglerPositionCommand(hoodAngler, 0)
+                ).withTimeout(0.25),
+                Commands.parallel(
+                        new HoodAnglerPositionCommand(hoodAngler, 0),
+                        new FeedRollOnly(feedRoller, 0.75),
+                        new ShootingRPMCommand(shooter, 4000),
+                        new SpindexOnlyCommand(spindexer, 0.5)
+                ).withTimeout(2),
+                Commands.parallel(
+                        new FeedRollOnly(feedRoller, -0.75),
+                        new ShootingRPMCommand(shooter, 4000),
+                        new SpindexOnlyCommand(spindexer, -0.5)
+                ).withTimeout(0.25),
+                Commands.parallel(
+                        new HoodAnglerPositionCommand(hoodAngler, 0),
+                        new FeedRollOnly(feedRoller, 0.75),
+                        new ShootingRPMCommand(shooter, 4000),
+                        new SpindexOnlyCommand(spindexer, 0.5)
+                        //new PositionIntakeCommand(intake, 0.15)
+                ).withTimeout(2),
+                Commands.parallel(
+                        new FeedRollOnly(feedRoller, -0.75),
+                        new ShootingRPMCommand(shooter, 4000),
+                        new SpindexOnlyCommand(spindexer, -0.5)
+                ).withTimeout(0.25),
+                Commands.parallel(
+                        new HoodAnglerPositionCommand(hoodAngler, 0),
+                        new FeedRollOnly(feedRoller, 0.75),
+                        new ShootingRPMCommand(shooter, 4000),
+                        new SpindexOnlyCommand(spindexer, 0.5)
+                ).withTimeout(2)
+        ));
 
-        autoChooser = AutoBuilder.buildAutoChooser("Far Shot (No Movement)");
+        autoChooser = AutoBuilder.buildAutoChooser("Mid Shot");
         SmartDashboard.putData("Auto Mode", autoChooser);
 
         if (Constants.EagleEyeConstants.EAGLEEYE_ENABLED) {
@@ -234,6 +259,8 @@ public class RobotContainer {
             eagleEye = null;
             eagleEyeCommand = null;
         }
+
+        pdhShell.setDefaultCommand(pdhCommand);
 
         if (OperatorConstants.XBOX_DRIVE){
             autoRotate = new ContinuousRotateToAngle(drivetrain, 

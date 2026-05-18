@@ -22,10 +22,10 @@ import frc.robot.Constants;
  */
 public class Shooter extends SubsystemBase {
   private SparkFlex shooterTop = new SparkFlex(18, MotorType.kBrushless);
-  private SparkFlex shooterBottom = new SparkFlex(8, MotorType.kBrushless);
+  //private SparkFlex shooterBottom = new SparkFlex(8, MotorType.kBrushless);
   private SparkFlexConfig config = new SparkFlexConfig();
   private SparkClosedLoopController controllerTop;
-  private SparkClosedLoopController controllerBottom;
+  //private SparkClosedLoopController controllerBottom;
   private double lastPower;
 
   public Shooter() {
@@ -41,11 +41,11 @@ public class Shooter extends SubsystemBase {
     config.closedLoop.pid(0.01, 0, 0);
 
     shooterTop.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
-    shooterBottom.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
+    //shooterBottom.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
 
     // Created PID controllers
     controllerTop = shooterTop.getClosedLoopController();
-    controllerBottom = shooterBottom.getClosedLoopController();
+    //controllerBottom = shooterBottom.getClosedLoopController();
 
   }
 
@@ -65,7 +65,7 @@ public class Shooter extends SubsystemBase {
     }
     if (lastPower != power){
       shooterTop.set(power);
-      shooterBottom.set(power);
+      //shooterBottom.set(power);
       lastPower = power;
     }
     
@@ -86,10 +86,10 @@ public class Shooter extends SubsystemBase {
     config.closedLoop.pid(P, I, D);
 
     shooterTop.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
-    shooterBottom.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
+    //shooterBottom.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
 
     controllerTop.setSetpoint(rpm, ControlType.kVelocity);
-    controllerBottom.setSetpoint(rpm, ControlType.kVelocity);
+    //controllerBottom.setSetpoint(rpm, ControlType.kVelocity);
     
     // SmartDashboard.putNumber("Shooter RPM", rpm);
     // SmartDashboard.putNumber("Shooter Error", config.pid);
@@ -101,8 +101,8 @@ public class Shooter extends SubsystemBase {
   @Override
   public void periodic() {
     SmartDashboard.putNumber("SHO - Top RPM", shooterTop.getEncoder().getVelocity());
-    SmartDashboard.putNumber("SHO - Bottom RPM", shooterBottom.getEncoder().getVelocity());
+    //SmartDashboard.putNumber("SHO - Bottom RPM", shooterBottom.getEncoder().getVelocity());
     SmartDashboard.putNumber("SHO - Top Power", shooterTop.getAppliedOutput());
-    SmartDashboard.putNumber("SHO - Bottom Power", shooterBottom.getAppliedOutput());
+    //SmartDashboard.putNumber("SHO - Bottom Power", shooterBottom.getAppliedOutput());
   }
 }
